@@ -1,6 +1,96 @@
 <template>
 <section class="p-t-20">
 
+
+<section v-if="box_indicador">
+<div class="container-fluid">
+<div class="content-wrapper">
+<div class="content-header">
+
+    <div class="row">
+        <div class="col-md-11">
+            <h3>[PE:1] RESULTADOS PARA A SOCIEDADE</h3>
+            <br>
+            <h5>[OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde </h5>
+            <br>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="hide_box_indicador()"> 
+                <i class="fas fa-plus"></i> fechar
+            </button>
+        </div>    
+    </div>
+
+<div class="row" v-for="n in 10">
+<div class="col-md-12">
+<div class="card">
+<div class="card-body">
+
+    <div class="col-md-12 espaco1">
+        <h4 style="color:maroon;">Número de leitos de UTI pediátrica implantados</h4>
+    </div>            
+
+    <div class="col-md-12 espaco1">
+        <b>Meta agregada:</b> <br>CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos
+    </div>
+
+    <div class="col-md-12 espaco1" v-for="n in 6" style="margin-bottom:10px;">
+        
+        <h5>2019</h5>
+        <div class="row">
+            <div class="col-md-4">                        
+                <b>Meta agregada:</b> <br>Número de leitos de UTI pediátrica implantados
+            </div>
+
+            <div class="col-md-4">
+                <b>Realizado:</b> <br>Número de leitos de UTI pediátrica implantados                        
+            </div>
+
+            <div class="col-md-4">                        
+                <b>Situação:</b> <br>Número de leitos de UTI pediátrica implantados                        
+            </div>            
+        </div>
+
+        
+    </div>        
+    
+    <div class="col-md-12 espaco1">
+    <div class="row">
+        <div class="col-md-3">
+            <b>Realizado acumulado:</b> <br> reforma realizada e mobiliários e equipamentos adquiridos
+        </div>
+
+        <div class="col-md-3">
+            <b>Execução agregada:</b> <br> 99.9999999%
+        </div>
+
+        <div class="col-md-3">
+            <b>Status:</b> <br> FEITO 
+        </div>
+
+        <div class="col-md-3">
+            <b>Responsável:</b> <br>SES, SCOM, SEGG
+        </div>
+    </div>
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<!--  -->
+
+
+
+
+
+<section v-if="box_main">
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -9,9 +99,9 @@
             <div class="row">            
                 <div class="col-lg-11">
                     <h2 class="title-5 m-b-35">
-                        <!-- <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="get_perspectiva()"> 
+                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="get_perspectiva()"> 
                             <i class="fas fa-plus"></i>
-                        </button> -->
+                        </button>
 
                         Perspectiva 
                     </h2>
@@ -41,10 +131,6 @@
                             
                                 <div style="margin-bottom: 15px;">
                                     <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
-                                        
-                                        <!-- <button  data-toggle="modal">
-                                            <i class="fas fa-align-justify"></i>
-                                        </button> -->
                                         <button class="btn btn-outline-secondary">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </button>
@@ -54,14 +140,11 @@
                                         <button class="btn btn-outline-info">
                                             <i class="fas fa-plus"></i>
                                         </button>
-
                                     </div>
-                                    <b>
-                                        [OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde
-                                    </b>    
+                                    <b> [OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde </b>
                                 </div>
                                 
-                                <div style="margin-left: 15px; margin-bottom: 10px;">
+                                <div style="margin-left: 15px; margin-bottom: 10px;" v-for="n in 6">
                                     <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">                                       
                                         <button class="btn btn-outline-secondary">
                                             <i class="fa fa-pencil-square-o"></i>
@@ -73,25 +156,22 @@
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
-
                                     <a href="#" data-toggle="modal" data-target="#exampleModal">[ES:1.1.1] Estruturar e fortalecer unidades ambulatoriais e hospitalares da rede própria</a>
+
+                                    <!-- indicadores -->                                                                        
+                                    <div style="margin: 10px 0 10px 30px;">
+                                        [1:1:4:EST] Fortalecer a Rede de Atenção à Saúde do Trabalhador
+                                    </div>
+                                    <div style="margin: 10px 0 10px 30px;">
+                                         [1:1:5:EST] Fortalecer a Política de Educação Permanente em Saúde tendo como foco a valorização e qualificação dos trabalhadores do SUS e de seus processos de trabalho
+                                    </div>
+                                    <div style="margin: 10px 0 10px 30px;">
+                                         [1:2:2:EST] Implantar o PlanificaSus (Organização da Atenção Ambulatorial Especializada em Rede com a Atenção Primária à Saúde) na Região de Saúde de Lagarto e de Itabaiana
+                                    </div>
+
                                 </div>
 
-                                <div style="margin-left: 15px;">
-                                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
-                                        <button class="btn btn-outline-secondary">
-                                            <i class="fa fa-pencil-square-o"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                        <button class="btn btn-outline-info">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    [ES:1.1.1] Estruturar e fortalecer unidades ambulatoriais e hospitalares da rede própria
-                                </div>                                
-
+                                
                         </div>
                     </div>
 
@@ -103,6 +183,7 @@
         </div>            
     </div>            
 </div>
+</section>
 
 
 <!-- Modal -->
@@ -117,90 +198,94 @@
       </div>
       <div class="modal-body">
         
-        <div class="row">            
+        <div class="row" v-for="n in 1">            
 
-            <div class="col-md-12">
+            <div class="col-md-12 espaco1">
                 <b>Nome:</b> <br>Número de leitos de UTI pediátrica implantados                
             </div>            
 
-            <div class="col-md-12">
+            <div class="col-md-12 espaco1">
                 <b>Meta agregada:</b> <br>CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 espaco1">
+                
+                <h3>2019</h3>
                 <div class="row">
-                    <div class="col-md-4">
-                        meta 2019 
+                    <div class="col-md-4">                        
+                        <b>Meta agregada:</b> <br>Número de leitos de UTI pediátrica implantados
                     </div>
 
                     <div class="col-md-4">
-                        realizado 2019
+                        <b>Realizado:</b> <br>Número de leitos de UTI pediátrica implantados                        
                     </div>
 
-                    <div class="col-md-4">
-                        situação 2019
+                    <div class="col-md-4">                        
+                        <b>Situação:</b> <br>Número de leitos de UTI pediátrica implantados                        
                     </div>
                 </div>
-                    
+                <br>                
+
+                <h3>2020</h3>
                 <div class="row">
-                    <div class="col-md-4">
-                        meta 2020
-                    </div>
-                    
-                    <div class="col-md-4">    
-                        realizado 2020
+                    <div class="col-md-4">                        
+                        <b>Meta agregada:</b> <br>Número de leitos de UTI pediátrica implantados
                     </div>
 
                     <div class="col-md-4">
-                        situação 2020
+                        <b>Realizado:</b> <br>Número de leitos de UTI pediátrica implantados                        
+                    </div>
+
+                    <div class="col-md-4">                        
+                        <b>Situação:</b> <br>Número de leitos de UTI pediátrica implantados                        
                     </div>
                 </div>
+                <br>                
 
+                <h3>2020</h3>
                 <div class="row">
-                    <div class="col-md-4">
-                        meta 2021
-                    </div>
-                    
-                    <div class="col-md-4">    
-                        realizado 2021
+                    <div class="col-md-4">                        
+                        <b>Meta agregada:</b> <br>Número de leitos de UTI pediátrica implantados
                     </div>
 
                     <div class="col-md-4">
-                        situação 2021
+                        <b>Realizado:</b> <br>Número de leitos de UTI pediátrica implantados                        
+                    </div>
+
+                    <div class="col-md-4">                        
+                        <b>Situação:</b> <br>Número de leitos de UTI pediátrica implantados                        
                     </div>
                 </div>
+                <br>                
+                
             </div>
+                
 
-                <!-- INDICADOR   INSERIDO    NA      REVISÃO     BIENAL  2020        10.000 amostras analisadas          11.000 novas amostras analisadas -->
-
-            <div class="col-md-12">
+            <div class="col-md-12 espaco1">
                 <b>Realizado acumulado:</b> <br> reforma realizada e mobiliários e equipamentos adquiridos
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 espaco1">
                 <b>Execução agregada:</b> <br> 99.9999999%
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 espaco1">
                 <b>Status:</b> <br> FEITO 
             </div>
 
-            <div class="col-md-12">
-                <b>Responsável:</b> SES, SCOM, SEGG<br>
+            <div class="col-md-12 espaco1">
+                <b>Responsável:</b> <br>SES, SCOM, SEGG
             </div>
 
         </div>    
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
       </div>
     </div>
   </div>
 </div>
-
-
 
 </section>
 </template>
@@ -220,6 +305,12 @@
 
                 //variaveis
                 perspectiva_id: 1,
+
+                //temp
+                numbers: [ 1, 2, 3, 4, 5 ],
+
+                box_main: true,
+                box_indicador: false,
 
             }
         },
@@ -248,7 +339,30 @@
 
             },
 
+            show_indicador(){
+
+                this.box_main = false;
+                this.box_indicador = true;
+
+            },
+
+            hide_box_indicador(){
+
+                this.box_main = true;
+                this.box_indicador = false;
+
+            },
+
         },
 
     }
 </script>
+
+
+<style>
+
+    .espaco1{
+        margin-bottom: 10px;
+    }
+    
+</style>
