@@ -2332,6 +2332,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url'],
@@ -2341,10 +2359,10 @@ __webpack_require__.r(__webpack_exports__);
       perspectiva: [],
       //variaveis
       perspectiva_id: 1,
-      //temp
-      numbers: [1, 2, 3, 4, 5],
       box_main: true,
-      box_indicador: false
+      box_indicador: false,
+      visualizar_indicador: false,
+      editar_indicador: false
     };
   },
   mounted: function mounted() {
@@ -2364,13 +2382,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors.push(e);
       });
     },
-    show_indicador: function show_indicador() {
-      this.box_main = false;
-      this.box_indicador = true;
+    show_visulizar_indicador: function show_visulizar_indicador() {
+      this.visualizar_indicador = true;
+      this.editar_indicador = false;
     },
-    hide_box_indicador: function hide_box_indicador() {
-      this.box_main = true;
-      this.box_indicador = false;
+    show_editar_indicador: function show_editar_indicador() {
+      this.visualizar_indicador = false;
+      this.editar_indicador = true;
     }
   }
 });
@@ -38558,7 +38576,15 @@ var render = function() {
                                     function(e) {
                                       return _c(
                                         "div",
-                                        { staticClass: "indicadores" },
+                                        {
+                                          staticClass: "indicadores",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.show_visulizar_indicador()
+                                            }
+                                          }
+                                        },
                                         [
                                           _c(
                                             "div",
@@ -38634,32 +38660,67 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Indicador")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-info btn-sm",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.show_editar_indicador()
+                      }
+                    }
+                  },
+                  [_vm._v(" editar ")]
+                ),
+                _vm._v(" "),
+                _vm._m(4)
+              ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "modal-body" },
-                _vm._l(1, function(n) {
-                  return _c("div", { staticClass: "row" }, [
-                    _vm._m(5, true),
-                    _vm._v(" "),
-                    _vm._m(6, true),
-                    _vm._v(" "),
-                    _vm._m(7, true),
-                    _vm._v(" "),
-                    _vm._m(8, true),
-                    _vm._v(" "),
-                    _vm._m(9, true),
-                    _vm._v(" "),
-                    _vm._m(10, true),
-                    _vm._v(" "),
-                    _vm._m(11, true)
-                  ])
-                }),
-                0
-              ),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "section",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.visualizar_indicador,
+                        expression: "visualizar_indicador"
+                      }
+                    ]
+                  },
+                  [_vm._m(5)]
+                ),
+                _vm._v(" "),
+                _c(
+                  "section",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editar_indicador,
+                        expression: "editar_indicador"
+                      }
+                    ]
+                  },
+                  [_vm._m(6)]
+                )
+              ]),
               _vm._v(" "),
-              _vm._m(12)
+              _vm._m(7)
             ])
           ]
         )
@@ -38751,202 +38812,187 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Indicador")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Nome:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "Número de leitos de UTI pediátrica implantados                \n            "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Meta agregada:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos\n            "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("h3", [_vm._v("2019")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Meta agregada:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados\n                    "
-          )
-        ]),
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Nome:")]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Realizado:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados                        \n                    "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Situação:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados                        \n                    "
-          )
-        ])
+        _c("br"),
+        _vm._v(
+          "Número de leitos de UTI pediátrica implantados                \n            "
+        )
       ]),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("h3", [_vm._v("2020")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Meta agregada:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados\n                    "
-          )
-        ]),
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Meta agregada:")]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Realizado:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados                        \n                    "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Situação:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados                        \n                    "
-          )
-        ])
+        _c("br"),
+        _vm._v(
+          "CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos\n            "
+        )
       ]),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("h3", [_vm._v("2020")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Meta agregada:")]),
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("h3", [_vm._v("2019")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Meta agregada:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados\n                    "
+            )
+          ]),
           _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados\n                    "
-          )
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Realizado:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados                        \n                    "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Situação:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados                        \n                    "
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Realizado:")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("h3", [_vm._v("2020")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Meta agregada:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados\n                    "
+            )
+          ]),
           _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados                        \n                    "
-          )
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Realizado:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados                        \n                    "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Situação:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados                        \n                    "
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("b", [_vm._v("Situação:")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("h3", [_vm._v("2020")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Meta agregada:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados\n                    "
+            )
+          ]),
           _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            "Número de leitos de UTI pediátrica implantados                        \n                    "
-          )
-        ])
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Realizado:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados                        \n                    "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("b", [_vm._v("Situação:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(
+              "Número de leitos de UTI pediátrica implantados                        \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br")
       ]),
       _vm._v(" "),
-      _c("br")
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Realizado acumulado:")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(
+          " reforma realizada e mobiliários e equipamentos adquiridos\n            "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Execução agregada:")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" 99.9999999%\n            ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Status:")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" FEITO \n            ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Responsável:")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v("SES, SCOM, SEGG\n            ")
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Realizado acumulado:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        " reforma realizada e mobiliários e equipamentos adquiridos\n            "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Execução agregada:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" 99.9999999%\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Status:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" FEITO \n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Responsável:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v("SES, SCOM, SEGG\n            ")
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 espaco1" }, [
+        _c("b", [_vm._v("Nome:")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control form-control-sm",
+          attrs: { type: "text", name: "obj_id", placeholder: "obj_id" }
+        })
+      ])
     ])
   },
   function() {
@@ -38961,6 +39007,12 @@ var staticRenderFns = [
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Fechar")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-success", attrs: { type: "button" } },
+        [_vm._v("Salvar")]
       )
     ])
   }

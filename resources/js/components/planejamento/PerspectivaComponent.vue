@@ -72,7 +72,7 @@
                                     {{e.nome}}
 
                                     <!-- indicadores -->  
-                                    <div class="indicadores" v-for="e of perspectiva[key].objeto[key2].estrategia[key3].indicador">
+                                    <div class="indicadores" v-for="e of perspectiva[key].objeto[key2].estrategia[key3].indicador" v-on:click.prevent="show_visulizar_indicador()">
                                         <div style="margin: 10px 0 10px 30px;">
                                             <a href="#" data-toggle="modal" data-target="#exampleModal">
                                                 {{e.nome}}
@@ -102,13 +102,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Indicador</h5>
+        <button type="button" class="btn btn-outline-info btn-sm"  v-on:click.prevent="show_editar_indicador()"> editar </button>
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         
-        <div class="row" v-for="n in 1">            
+        <section v-show="visualizar_indicador">
+        <div class="row">
 
             <div class="col-md-12 espaco1">
                 <b>Nome:</b> <br>Número de leitos de UTI pediátrica implantados                
@@ -187,15 +190,30 @@
                 <b>Responsável:</b> <br>SES, SCOM, SEGG
             </div>
 
-        </div>    
+        </div>
+        </section> 
+
+        <section v-show="editar_indicador">
+        <div class="row">
+            <div class="col-md-12 espaco1">
+                <b>Nome:</b> 
+                <input type="text" name="obj_id" class="form-control form-control-sm" placeholder="obj_id" >
+
+
+            </div> 
+        </div>
+        </section>    
+
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
+        <button type="button" class="btn btn-success">Salvar</button>        
       </div>
     </div>
   </div>
 </div>
+
 
 </section>
 </template>
@@ -215,12 +233,10 @@
 
                 //variaveis
                 perspectiva_id: 1,
-
-                //temp
-                numbers: [ 1, 2, 3, 4, 5 ],
-
                 box_main: true,
                 box_indicador: false,
+                visualizar_indicador: false,
+                editar_indicador: false,
 
             }
         },
@@ -253,17 +269,17 @@
 
             },
 
-            show_indicador(){
+            show_visulizar_indicador(){
 
-                this.box_main = false;
-                this.box_indicador = true;
+                this.visualizar_indicador = true;
+                this.editar_indicador = false;
 
             },
 
-            hide_box_indicador(){
+            show_editar_indicador(){
 
-                this.box_main = true;
-                this.box_indicador = false;
+                this.visualizar_indicador = false;
+                this.editar_indicador = true;
 
             },
 

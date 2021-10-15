@@ -22,7 +22,7 @@ Route::middleware(['cors'])->group(function(){
 
         Route::post('consulta', function (Request $request){
 
-            $perspectiva = DB::table('perspectiva')->limit(20)->get();
+            $perspectiva = DB::table('perspectiva')->limit(2)->get();
             // dd($perspectiva);
             
             $array_per = array();
