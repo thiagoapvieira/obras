@@ -1,96 +1,6 @@
 <template>
 <section class="p-t-20">
 
-
-<section v-if="box_indicador">
-<div class="container-fluid">
-<div class="content-wrapper">
-<div class="content-header">
-
-    <div class="row">
-        <div class="col-md-11">
-            <h3>[PE:1] RESULTADOS PARA A SOCIEDADE</h3>
-            <br>
-            <h5>[OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde </h5>
-            <br>
-        </div>
-        <div class="col-md-1">
-            <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="hide_box_indicador()"> 
-                <i class="fas fa-plus"></i> fechar
-            </button>
-        </div>    
-    </div>
-
-<div class="row" v-for="n in 10">
-<div class="col-md-12">
-<div class="card">
-<div class="card-body">
-
-    <div class="col-md-12 espaco1">
-        <h4 style="color:maroon;">Número de leitos de UTI pediátrica implantados</h4>
-    </div>            
-
-    <div class="col-md-12 espaco1">
-        <b>Meta agregada:</b> <br>CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos
-    </div>
-
-    <div class="col-md-12 espaco1" v-for="n in 6" style="margin-bottom:10px;">
-        
-        <h5>2019</h5>
-        <div class="row">
-            <div class="col-md-4">                        
-                <b>Meta agregada:</b> <br>Número de leitos de UTI pediátrica implantados
-            </div>
-
-            <div class="col-md-4">
-                <b>Realizado:</b> <br>Número de leitos de UTI pediátrica implantados                        
-            </div>
-
-            <div class="col-md-4">                        
-                <b>Situação:</b> <br>Número de leitos de UTI pediátrica implantados                        
-            </div>            
-        </div>
-
-        
-    </div>        
-    
-    <div class="col-md-12 espaco1">
-    <div class="row">
-        <div class="col-md-3">
-            <b>Realizado acumulado:</b> <br> reforma realizada e mobiliários e equipamentos adquiridos
-        </div>
-
-        <div class="col-md-3">
-            <b>Execução agregada:</b> <br> 99.9999999%
-        </div>
-
-        <div class="col-md-3">
-            <b>Status:</b> <br> FEITO 
-        </div>
-
-        <div class="col-md-3">
-            <b>Responsável:</b> <br>SES, SCOM, SEGG
-        </div>
-    </div>
-    </div>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-</section>
-
-<!--  -->
-
-
-
-
-
-<section v-if="box_main">
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -99,7 +9,7 @@
             <div class="row">            
                 <div class="col-lg-11">
                     <h2 class="title-5 m-b-35">
-                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="get_perspectiva()"> 
+                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="consulta()"> 
                             <i class="fas fa-plus"></i>
                         </button>
 
@@ -111,7 +21,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     
-                    <div class="card">
+                    <div class="card" v-for="(p, key) of perspectiva">
                         <div class="card-header">
                             <strong class="card-title"> 
 
@@ -120,15 +30,17 @@
                                         <i class="fas fa-align-justify"></i>
                                     </button>
                                 </div>
-                                [PE:1] RESULTADOS PARA A SOCIEDADE 
+                                
+                                {{p.nome}}
 
                                 <small>
                                     <span class="badge badge-success float-right mt-1">Success</span>
                                 </small>
                             </strong>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" v-for="(n, key2) of perspectiva[key].objeto">
                             
+                                <!-- objetivos -->
                                 <div style="margin-bottom: 15px;">
                                     <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
                                         <button class="btn btn-outline-secondary">
@@ -141,10 +53,11 @@
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
-                                    <b> [OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde </b>
+                                    <b> {{n.nome}} </b>
                                 </div>
                                 
-                                <div style="margin-left: 15px; margin-bottom: 10px;" v-for="n in 6">
+                                <!-- Estrategia -->
+                                <div style="margin-left: 15px; margin-bottom: 10px;" v-for="(e,key3) of perspectiva[key].objeto[key2].estrategia">
                                     <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">                                       
                                         <button class="btn btn-outline-secondary">
                                             <i class="fa fa-pencil-square-o"></i>
@@ -156,17 +69,15 @@
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
-                                    <a href="#" data-toggle="modal" data-target="#exampleModal">[ES:1.1.1] Estruturar e fortalecer unidades ambulatoriais e hospitalares da rede própria</a>
+                                    {{e.nome}}
 
-                                    <!-- indicadores -->                                                                        
-                                    <div style="margin: 10px 0 10px 30px;">
-                                        [1:1:4:EST] Fortalecer a Rede de Atenção à Saúde do Trabalhador
-                                    </div>
-                                    <div style="margin: 10px 0 10px 30px;">
-                                         [1:1:5:EST] Fortalecer a Política de Educação Permanente em Saúde tendo como foco a valorização e qualificação dos trabalhadores do SUS e de seus processos de trabalho
-                                    </div>
-                                    <div style="margin: 10px 0 10px 30px;">
-                                         [1:2:2:EST] Implantar o PlanificaSus (Organização da Atenção Ambulatorial Especializada em Rede com a Atenção Primária à Saúde) na Região de Saúde de Lagarto e de Itabaiana
+                                    <!-- indicadores -->  
+                                    <div class="indicadores" v-for="e of perspectiva[key].objeto[key2].estrategia[key3].indicador">
+                                        <div style="margin: 10px 0 10px 30px;">
+                                            <a href="#" data-toggle="modal" data-target="#exampleModal">
+                                                {{e.nome}}
+                                            </a>
+                                        </div>                                        
                                     </div>
 
                                 </div>
@@ -183,7 +94,6 @@
         </div>            
     </div>            
 </div>
-</section>
 
 
 <!-- Modal -->
@@ -301,7 +211,7 @@
             return{    
 
                 //array
-                perspectivas: [],
+                perspectiva: [],
 
                 //variaveis
                 perspectiva_id: 1,
@@ -317,21 +227,25 @@
 
         mounted() {
 
-            this.get_perspectiva();
+            this.consulta();
 
         },
 
         methods: {
 
-            get_perspectiva(){
+            consulta(){
                 
                 var body = {
                   perspectiva_id: this.perspectiva_id,
                 };
 
-                axios.post(this.url+'api/planejamento/get_perspectiva', body)
+                axios.post(this.url+'api/planejamento/consulta', body)
                 .then(response => {
-                    this.perspectivas = response.data;                    
+                    
+                    this.perspectiva = response.data;
+
+                    console.log(response.data);
+
                 })
                   .catch(e => {
                     this.errors.push(e);

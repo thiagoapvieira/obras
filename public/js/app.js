@@ -2332,103 +2332,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url'],
   data: function data() {
     return {
       //array
-      perspectivas: [],
+      perspectiva: [],
       //variaveis
       perspectiva_id: 1,
       //temp
@@ -2438,17 +2348,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.get_perspectiva();
+    this.consulta();
   },
   methods: {
-    get_perspectiva: function get_perspectiva() {
+    consulta: function consulta() {
       var _this = this;
 
       var body = {
         perspectiva_id: this.perspectiva_id
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/get_perspectiva', body).then(function (response) {
-        _this.perspectivas = response.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/consulta', body).then(function (response) {
+        _this.perspectiva = response.data;
+        console.log(response.data);
       })["catch"](function (e) {
         _this.errors.push(e);
       });
@@ -38555,202 +38466,151 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "p-t-20" }, [
-    _vm.box_indicador
-      ? _c("section", [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("div", { staticClass: "content-wrapper" }, [
-              _c(
-                "div",
-                { staticClass: "content-header" },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-info btn-sm",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.hide_box_indicador()
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-plus" }),
-                          _vm._v(" fechar\n            ")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(10, function(n) {
-                    return _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("div", { staticClass: "card" }, [
-                          _c(
-                            "div",
-                            { staticClass: "card-body" },
-                            [
-                              _vm._m(1, true),
-                              _vm._v(" "),
-                              _vm._m(2, true),
-                              _vm._v(" "),
-                              _vm._l(6, function(n) {
-                                return _c(
-                                  "div",
-                                  {
-                                    staticClass: "col-md-12 espaco1",
-                                    staticStyle: { "margin-bottom": "10px" }
-                                  },
-                                  [
-                                    _c("h5", [_vm._v("2019")]),
-                                    _vm._v(" "),
-                                    _vm._m(3, true)
-                                  ]
-                                )
-                              }),
-                              _vm._v(" "),
-                              _vm._m(4, true)
-                            ],
-                            2
-                          )
-                        ])
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+    _c("div", { staticClass: "content-wrapper" }, [
+      _c("div", { staticClass: "content-header" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-11" }, [
+              _c("h2", { staticClass: "title-5 m-b-35" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-info btn-sm",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "modal",
+                      "data-target": "#perspectiva"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.consulta()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-plus" })]
+                ),
+                _vm._v(
+                  "\n\n                        Perspectiva \n                    "
+                )
+              ])
             ])
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.box_main
-      ? _c("section", [
-          _c("div", { staticClass: "content-wrapper" }, [
-            _c("div", { staticClass: "content-header" }, [
-              _c("div", { staticClass: "container-fluid" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-lg-11" }, [
-                    _c("h2", { staticClass: "title-5 m-b-35" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-info btn-sm",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "modal",
-                            "data-target": "#perspectiva"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.get_perspectiva()
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-plus" })]
-                      ),
-                      _vm._v(
-                        "\n\n                        Perspectiva \n                    "
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row mb-2" }, [
-                  _c("div", { staticClass: "col-sm-12" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _vm._m(5),
-                      _vm._v(" "),
-                      _c(
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-2" }, [
+            _c(
+              "div",
+              { staticClass: "col-sm-12" },
+              _vm._l(_vm.perspectiva, function(p, key) {
+                return _c(
+                  "div",
+                  { staticClass: "card" },
+                  [
+                    _c("div", { staticClass: "card-header" }, [
+                      _c("strong", { staticClass: "card-title" }, [
+                        _vm._m(0, true),
+                        _vm._v(
+                          "\n                                \n                                " +
+                            _vm._s(p.nome) +
+                            "\n\n                                "
+                        ),
+                        _vm._m(1, true)
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.perspectiva[key].objeto, function(n, key2) {
+                      return _c(
                         "div",
                         { staticClass: "card-body" },
                         [
-                          _vm._m(6),
+                          _c(
+                            "div",
+                            { staticStyle: { "margin-bottom": "15px" } },
+                            [
+                              _vm._m(2, true),
+                              _vm._v(" "),
+                              _c("b", [_vm._v(" " + _vm._s(n.nome) + " ")])
+                            ]
+                          ),
                           _vm._v(" "),
-                          _vm._l(6, function(n) {
-                            return _c(
-                              "div",
-                              {
-                                staticStyle: {
-                                  "margin-left": "15px",
-                                  "margin-bottom": "10px"
-                                }
-                              },
-                              [
-                                _vm._m(7, true),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: "#",
-                                      "data-toggle": "modal",
-                                      "data-target": "#exampleModal"
+                          _vm._l(
+                            _vm.perspectiva[key].objeto[key2].estrategia,
+                            function(e, key3) {
+                              return _c(
+                                "div",
+                                {
+                                  staticStyle: {
+                                    "margin-left": "15px",
+                                    "margin-bottom": "10px"
+                                  }
+                                },
+                                [
+                                  _vm._m(3, true),
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(e.nome) +
+                                      "\n\n                                    "
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(
+                                    _vm.perspectiva[key].objeto[key2]
+                                      .estrategia[key3].indicador,
+                                    function(e) {
+                                      return _c(
+                                        "div",
+                                        { staticClass: "indicadores" },
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticStyle: {
+                                                margin: "10px 0 10px 30px"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    href: "#",
+                                                    "data-toggle": "modal",
+                                                    "data-target":
+                                                      "#exampleModal"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                " +
+                                                      _vm._s(e.nome) +
+                                                      "\n                                            "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
                                     }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "[ES:1.1.1] Estruturar e fortalecer unidades ambulatoriais e hospitalares da rede própria"
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticStyle: { margin: "10px 0 10px 30px" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                        [1:1:4:EST] Fortalecer a Rede de Atenção à Saúde do Trabalhador\n                                    "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticStyle: { margin: "10px 0 10px 30px" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                         [1:1:5:EST] Fortalecer a Política de Educação Permanente em Saúde tendo como foco a valorização e qualificação dos trabalhadores do SUS e de seus processos de trabalho\n                                    "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticStyle: { margin: "10px 0 10px 30px" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                         [1:2:2:EST] Implantar o PlanificaSus (Organização da Atenção Ambulatorial Especializada em Rede com a Atenção Primária à Saúde) na Região de Saúde de Lagarto e de Itabaiana\n                                    "
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          })
+                                  )
+                                ],
+                                2
+                              )
+                            }
+                          )
                         ],
                         2
                       )
-                    ])
-                  ])
-                ])
-              ])
-            ])
+                    })
+                  ],
+                  2
+                )
+              }),
+              0
+            )
           ])
         ])
-      : _vm._e(),
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -38774,32 +38634,32 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(8),
+              _vm._m(4),
               _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "modal-body" },
                 _vm._l(1, function(n) {
                   return _c("div", { staticClass: "row" }, [
+                    _vm._m(5, true),
+                    _vm._v(" "),
+                    _vm._m(6, true),
+                    _vm._v(" "),
+                    _vm._m(7, true),
+                    _vm._v(" "),
+                    _vm._m(8, true),
+                    _vm._v(" "),
                     _vm._m(9, true),
                     _vm._v(" "),
                     _vm._m(10, true),
                     _vm._v(" "),
-                    _vm._m(11, true),
-                    _vm._v(" "),
-                    _vm._m(12, true),
-                    _vm._v(" "),
-                    _vm._m(13, true),
-                    _vm._v(" "),
-                    _vm._m(14, true),
-                    _vm._v(" "),
-                    _vm._m(15, true)
+                    _vm._m(11, true)
                   ])
                 }),
                 0
               ),
               _vm._v(" "),
-              _vm._m(16)
+              _vm._m(12)
             ])
           ]
         )
@@ -38812,142 +38672,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-11" }, [
-      _c("h3", [_vm._v("[PE:1] RESULTADOS PARA A SOCIEDADE")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("h5", [
-        _vm._v(
-          "[OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde "
-        )
-      ]),
-      _vm._v(" "),
-      _c("br")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("h4", { staticStyle: { color: "maroon" } }, [
-        _vm._v("Número de leitos de UTI pediátrica implantados")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Meta agregada:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos\n    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("b", [_vm._v("Meta agregada:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v("Número de leitos de UTI pediátrica implantados\n            ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("b", [_vm._v("Realizado:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(
-          "Número de leitos de UTI pediátrica implantados                        \n            "
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("b", [_vm._v("Situação:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(
-          "Número de leitos de UTI pediátrica implantados                        \n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-3" }, [
-          _c("b", [_vm._v("Realizado acumulado:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(
-            " reforma realizada e mobiliários e equipamentos adquiridos\n        "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c("b", [_vm._v("Execução agregada:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" 99.9999999%\n        ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c("b", [_vm._v("Status:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" FEITO \n        ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c("b", [_vm._v("Responsável:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v("SES, SCOM, SEGG\n        ")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("strong", { staticClass: "card-title" }, [
+    return _c(
+      "div",
+      {
+        staticClass: "btn-group btn-group-sm mr-2",
+        attrs: { role: "group", "aria-label": "Second group" }
+      },
+      [
         _c(
-          "div",
-          {
-            staticClass: "btn-group btn-group-sm mr-2",
-            attrs: { role: "group", "aria-label": "Second group" }
-          },
-          [
-            _c(
-              "button",
-              {
-                attrs: { "data-toggle": "modal", "data-target": "#staticModal" }
-              },
-              [_c("i", { staticClass: "fas fa-align-justify" })]
-            )
-          ]
-        ),
-        _vm._v(
-          "\n                                [PE:1] RESULTADOS PARA A SOCIEDADE \n\n                                "
-        ),
-        _c("small", [
-          _c("span", { staticClass: "badge badge-success float-right mt-1" }, [
-            _vm._v("Success")
-          ])
-        ])
+          "button",
+          { attrs: { "data-toggle": "modal", "data-target": "#staticModal" } },
+          [_c("i", { staticClass: "fas fa-align-justify" })]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", [
+      _c("span", { staticClass: "badge badge-success float-right mt-1" }, [
+        _vm._v("Success")
       ])
     ])
   },
@@ -38955,34 +38701,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticStyle: { "margin-bottom": "15px" } }, [
-      _c(
-        "div",
-        {
-          staticClass: "btn-group btn-group-sm mr-2",
-          attrs: { role: "group", "aria-label": "Second group" }
-        },
-        [
-          _c("button", { staticClass: "btn btn-outline-secondary" }, [
-            _c("i", { staticClass: "fa fa-pencil-square-o" })
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-outline-danger" }, [
-            _c("i", { staticClass: "fas fa-trash" })
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-outline-info" }, [
-            _c("i", { staticClass: "fas fa-plus" })
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("b", [
-        _vm._v(
-          " [OE:1.1] Ampliar o acesso e qualificar as ações e serviços de saúde da atenção ambulatorial, hospitalar e de vigilância, de forma integrada com a Atenção Primária à Saúde "
-        )
-      ])
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "btn-group btn-group-sm mr-2",
+        attrs: { role: "group", "aria-label": "Second group" }
+      },
+      [
+        _c("button", { staticClass: "btn btn-outline-secondary" }, [
+          _c("i", { staticClass: "fa fa-pencil-square-o" })
+        ]),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-outline-danger" }, [
+          _c("i", { staticClass: "fas fa-trash" })
+        ]),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-outline-info" }, [
+          _c("i", { staticClass: "fas fa-plus" })
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
