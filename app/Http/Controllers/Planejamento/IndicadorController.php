@@ -5,12 +5,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PerspectivaController extends Controller
+class IndicadorController extends Controller
 {
-    public function index( $plano_id )
+    public function save( Request $request )
     {
-
-      return view('planejamento.perspectiva.perspectiva', compact("plano_id"));
       
     }
 

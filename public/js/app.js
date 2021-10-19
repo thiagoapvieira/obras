@@ -2350,19 +2350,119 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['url'],
+  props: ['url', 'plano_id'],
   data: function data() {
     return {
       //array
       perspectiva: [],
       //variaveis
       perspectiva_id: 1,
+      objetivo_id: null,
+      objetivo_per_id: null,
+      objetivo_nome: null,
+      estrategia_id: null,
+      estrategia_obj_id: null,
+      estrategia_nome: null,
+      indicador_id: null,
+      indicador_est_id: null,
+      indicador_nome: null,
+      indicador_meta_agregada: null,
+      indicador_execucao_agregada: null,
+      indicador_status: null,
+      indicador_responsavel: null,
+      indicador_meta: null,
       box_main: true,
       box_indicador: false,
       visualizar_indicador: false,
-      editar_indicador: false
+      editar_indicador: false,
+      obj_nome: null,
+      form: {
+        parent_id: []
+      }
     };
   },
   mounted: function mounted() {
@@ -2373,7 +2473,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var body = {
-        perspectiva_id: this.perspectiva_id
+        plano_id: this.plano_id //perspectiva_id: this.perspectiva_id,
+
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/consulta', body).then(function (response) {
         _this.perspectiva = response.data;
@@ -2382,14 +2483,100 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors.push(e);
       });
     },
-    show_visulizar_indicador: function show_visulizar_indicador() {
-      this.visualizar_indicador = true;
-      this.editar_indicador = false;
+    // show_visulizar_indicador(){
+    //     this.visualizar_indicador = true;
+    //     this.editar_indicador = false;
+    // },
+    // show_editar_indicador(){
+    //     this.visualizar_indicador = false;
+    //     this.editar_indicador = true;
+    // },
+    //------ objetivo -----------------------//
+    set_objetivo: function set_objetivo(id, per_id, nome) {
+      this.objetivo_id = id;
+      this.objetivo_per_id = per_id;
+      this.objetivo_nome = nome; // console.log(this.objetivo_id)
+      // console.log(this.objetivo_per_id)
+      // console.log(this.objetivo_nome)
     },
-    show_editar_indicador: function show_editar_indicador() {
-      this.visualizar_indicador = false;
-      this.editar_indicador = true;
+    save_objetivo: function save_objetivo() {
+      var _this2 = this;
+
+      var body = {
+        id: this.objetivo_id,
+        per_id: this.objetivo_per_id,
+        nome: this.objetivo_nome
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_objetivo', body).then(function (response) {
+        console.log(response.data);
+
+        _this2.consulta();
+      })["catch"](function (e) {
+        _this2.errors.push(e);
+      });
+    },
+    //------ estrategia -----------------------//
+    set_estrategia: function set_estrategia(id, obj_id, nome) {
+      this.estrategia_id = id;
+      this.estrategia_obj_id = obj_id;
+      this.estrategia_nome = nome;
+      console.log(this.estrategia_id);
+      console.log(this.estrategia_per_id);
+      console.log(this.estrategia_nome);
+    },
+    save_estrategia: function save_estrategia() {
+      var _this3 = this;
+
+      var body = {
+        id: this.estrategia_id,
+        obj_id: this.estrategia_obj_id,
+        nome: this.estrategia_nome
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_estrategia', body).then(function (response) {
+        console.log(response.data);
+
+        _this3.consulta();
+      })["catch"](function (e) {
+        _this3.errors.push(e);
+      });
+    },
+    //------ indicador -----------------------//
+    set_indicador: function set_indicador(id) {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
+        //console.log(response.data[0].id);
+        _this4.inidicador = response.data;
+        _this4.indicador_nome = response.data[0].nome;
+        _this4.indicador_meta_agregada = response.data[0].meta_agregada;
+        _this4.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
+        _this4.indicador_execucao_agregada = response.data[0].execucao_agregada;
+        _this4.indicador_meta = response.data[0].meta;
+        _this4.indicador_status = response.data[0].status;
+        _this4.indicador_responsavel = response.data[0].responsavel;
+      })["catch"](function (e) {
+        _this4.errors.push(e);
+      });
+      console.log(this.indicador_id);
     }
+    /*
+    save_estrategia(){
+         var body = {
+          id: this.indicador_id,
+          est_id: this.indicador_est_id,
+          nome: this.indicador_nome,
+        };
+         axios.post(this.url+'api/planejamento/save_indicador', body)
+        .then(response => {
+             console.log(response.data);
+             this.consulta();
+         })
+          .catch(e => {
+            this.errors.push(e);
+        });
+     },
+    */
+
   }
 });
 
@@ -38526,13 +38713,68 @@ var render = function() {
                   [
                     _c("div", { staticClass: "card-header" }, [
                       _c("strong", { staticClass: "card-title" }, [
-                        _vm._m(0, true),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "btn-group btn-group-sm mr-2",
+                            attrs: {
+                              role: "group",
+                              "aria-label": "Second group"
+                            }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-outline-secondary",
+                                attrs: {
+                                  href: "#",
+                                  "data-toggle": "modal",
+                                  "data-target": "#modal_per"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.set_perspectiva()
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-pencil-square-o"
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(0, true),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-outline-info",
+                                attrs: {
+                                  href: "#",
+                                  "data-toggle": "modal",
+                                  "data-target": "#modal_obj"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.set_objetivo(0, p.id, "")
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-plus" })]
+                            )
+                          ]
+                        ),
                         _vm._v(
                           "\n                                \n                                " +
+                            _vm._s(p.id) +
+                            " " +
                             _vm._s(p.nome) +
                             "\n\n                                "
-                        ),
-                        _vm._m(1, true)
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -38545,7 +38787,65 @@ var render = function() {
                             "div",
                             { staticStyle: { "margin-bottom": "15px" } },
                             [
-                              _vm._m(2, true),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "btn-group btn-group-sm mr-2",
+                                  attrs: {
+                                    role: "group",
+                                    "aria-label": "Second group"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-outline-secondary",
+                                      attrs: {
+                                        href: "#",
+                                        "data-toggle": "modal",
+                                        "data-target": "#modal_obj"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.set_objetivo(
+                                            n.id,
+                                            n.per_id,
+                                            n.nome
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-pencil-square-o"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(1, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-outline-info",
+                                      attrs: {
+                                        href: "#",
+                                        "data-toggle": "modal",
+                                        "data-target": "#modal_obj"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.set_objetivo(0, n.id, "")
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fas fa-plus" })]
+                                  )
+                                ]
+                              ),
                               _vm._v(" "),
                               _c("b", [_vm._v(" " + _vm._s(n.nome) + " ")])
                             ]
@@ -38563,7 +38863,76 @@ var render = function() {
                                   }
                                 },
                                 [
-                                  _vm._m(3, true),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "btn-group btn-group-sm mr-2",
+                                      attrs: {
+                                        role: "group",
+                                        "aria-label": "Second group"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "btn btn-outline-secondary",
+                                          attrs: {
+                                            href: "#",
+                                            "data-toggle": "modal",
+                                            "data-target": "#modal_est"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.set_estrategia(
+                                                e.id,
+                                                e.obj_id,
+                                                e.nome
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "fas fa-pencil-square-o"
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._m(2, true),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "btn btn-outline-info",
+                                          attrs: {
+                                            href: "#",
+                                            "data-toggle": "modal",
+                                            "data-target": "#modal_obj"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.set_indicador(
+                                                0,
+                                                e.id,
+                                                ""
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-plus"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(
                                     "\n                                    " +
                                       _vm._s(e.nome) +
@@ -38573,7 +38942,7 @@ var render = function() {
                                   _vm._l(
                                     _vm.perspectiva[key].objeto[key2]
                                       .estrategia[key3].indicador,
-                                    function(e) {
+                                    function(ind) {
                                       return _c(
                                         "div",
                                         {
@@ -38581,7 +38950,7 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
-                                              return _vm.show_visulizar_indicador()
+                                              return _vm.set_indicador(ind.id)
                                             }
                                           }
                                         },
@@ -38600,14 +38969,13 @@ var render = function() {
                                                   attrs: {
                                                     href: "#",
                                                     "data-toggle": "modal",
-                                                    "data-target":
-                                                      "#exampleModal"
+                                                    "data-target": "#modal_ind"
                                                   }
                                                 },
                                                 [
                                                   _vm._v(
                                                     "\n                                                " +
-                                                      _vm._s(e.nome) +
+                                                      _vm._s(ind.nome) +
                                                       "\n                                            "
                                                   )
                                                 ]
@@ -38643,7 +39011,185 @@ var render = function() {
       {
         staticClass: "modal fade bd-example-modal-lg",
         attrs: {
-          id: "exampleModal",
+          id: "modal_obj",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "modal-dialog modal-dialog-centered modal-dialog modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                        _vm._v("Título")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.objetivo_nome,
+                            expression: "objetivo_nome"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.objetivo_nome },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.objetivo_nome = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Fechar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.save_objetivo()
+                      }
+                    }
+                  },
+                  [_vm._v("Salvar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          id: "modal_est",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "modal-dialog modal-dialog-centered modal-dialog modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                        _vm._v("Título")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.estrategia_nome,
+                            expression: "estrategia_nome"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.estrategia_nome },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.estrategia_nome = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Fechar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.save_estrategia()
+                      }
+                    }
+                  },
+                  [_vm._v("Salvar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          id: "modal_ind",
           tabindex: "-1",
           role: "dialog",
           "aria-labelledby": "exampleModalLabel",
@@ -38685,42 +39231,230 @@ var render = function() {
                   [_vm._v(" editar ")]
                 ),
                 _vm._v(" "),
-                _vm._m(4)
+                _vm._m(5)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
-                _c(
-                  "section",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.visualizar_indicador,
-                        expression: "visualizar_indicador"
-                      }
-                    ]
-                  },
-                  [_vm._m(5)]
-                ),
-                _vm._v(" "),
-                _c(
-                  "section",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.editar_indicador,
-                        expression: "editar_indicador"
-                      }
-                    ]
-                  },
-                  [_vm._m(6)]
-                )
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "indicador_nome" } }, [
+                        _vm._v("Nome")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.indicador_nome,
+                            expression: "indicador_nome"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.indicador_nome },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.indicador_nome = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        { attrs: { for: "indicador_meta_agregada" } },
+                        [_vm._v("Meta agregada")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.indicador_meta_agregada,
+                            expression: "indicador_meta_agregada"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.indicador_meta_agregada },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.indicador_meta_agregada = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-12 espaco1" },
+                    _vm._l(_vm.indicador_meta, function(n) {
+                      return _c("section", [
+                        _c("h3", [_vm._v("2019")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "indicador_meta_agregada" } },
+                                [_vm._v("Meta")]
+                              ),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(n.id) +
+                                  "\n                            "
+                              ),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.parent_id[n.id],
+                                    expression: "form.parent_id[n.id]"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: { type: "text" },
+                                domProps: { value: _vm.form.parent_id[n.id] },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.form.parent_id,
+                                      n.id,
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(6, true),
+                          _vm._v(" "),
+                          _vm._m(7, true)
+                        ]),
+                        _vm._v(" "),
+                        _c("br")
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        { attrs: { for: "indicador_execucao_agregada" } },
+                        [_vm._v("Execução agregada")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.indicador_execucao_agregada,
+                            expression: "indicador_execucao_agregada"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.indicador_execucao_agregada },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.indicador_execucao_agregada =
+                              $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "indicador_status" } }, [
+                        _vm._v("Status")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.indicador_status,
+                            expression: "indicador_status"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.indicador_status },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.indicador_status = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "indicador_responsavel" } }, [
+                        _vm._v("Responsável")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.indicador_responsavel,
+                            expression: "indicador_responsavel"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.indicador_responsavel },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.indicador_responsavel = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
               ]),
               _vm._v(" "),
-              _vm._m(7)
+              _vm._m(9)
             ])
           ]
         )
@@ -38733,29 +39467,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "btn-group btn-group-sm mr-2",
-        attrs: { role: "group", "aria-label": "Second group" }
-      },
-      [
-        _c(
-          "button",
-          { attrs: { "data-toggle": "modal", "data-target": "#staticModal" } },
-          [_c("i", { staticClass: "fas fa-align-justify" })]
-        )
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", [
-      _c("span", { staticClass: "badge badge-success float-right mt-1" }, [
-        _vm._v("Success")
-      ])
+    return _c("button", { staticClass: "btn btn-outline-danger" }, [
+      _c("i", { staticClass: "fas fa-trash" })
     ])
   },
   function() {
@@ -38763,50 +39476,75 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
+      "a",
       {
-        staticClass: "btn-group btn-group-sm mr-2",
-        attrs: { role: "group", "aria-label": "Second group" }
+        staticClass: "btn btn-outline-danger",
+        attrs: {
+          href: "#",
+          "data-toggle": "modal",
+          "data-target": "#modal_obj"
+        }
       },
-      [
-        _c("button", { staticClass: "btn btn-outline-secondary" }, [
-          _c("i", { staticClass: "fa fa-pencil-square-o" })
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn btn-outline-danger" }, [
-          _c("i", { staticClass: "fas fa-trash" })
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn btn-outline-info" }, [
-          _c("i", { staticClass: "fas fa-plus" })
-        ])
-      ]
+      [_c("i", { staticClass: "fas fa-trash" })]
     )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "btn-group btn-group-sm mr-2",
-        attrs: { role: "group", "aria-label": "Second group" }
-      },
-      [
-        _c("button", { staticClass: "btn btn-outline-secondary" }, [
-          _c("i", { staticClass: "fa fa-pencil-square-o" })
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn btn-outline-danger" }, [
-          _c("i", { staticClass: "fas fa-trash" })
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn btn-outline-info" }, [
-          _c("i", { staticClass: "fas fa-plus" })
-        ])
-      ]
-    )
+    return _c("button", { staticClass: "btn btn-outline-danger" }, [
+      _c("i", { staticClass: "fas fa-trash" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Novo/Editar Objetivo")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Novo/Editar Estrategia")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   },
   function() {
     var _vm = this
@@ -38829,170 +39567,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Nome:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(
-          "Número de leitos de UTI pediátrica implantados                \n            "
-        )
-      ]),
+    return _c("div", { staticClass: "col-md-4" }, [
+      _c("b", [_vm._v("Realizado:")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Meta agregada:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(
-          "CAISM, CASE e SVO: reforma realizada e mobiliários e equipamentos adquiridos\n            "
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("h3", [_vm._v("2019")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Meta agregada:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados\n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Realizado:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados                        \n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Situação:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados                        \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("h3", [_vm._v("2020")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Meta agregada:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados\n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Realizado:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados                        \n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Situação:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados                        \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("h3", [_vm._v("2020")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Meta agregada:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados\n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Realizado:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados                        \n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("b", [_vm._v("Situação:")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(
-              "Número de leitos de UTI pediátrica implantados                        \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Realizado acumulado:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(
-          " reforma realizada e mobiliários e equipamentos adquiridos\n            "
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Execução agregada:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" 99.9999999%\n            ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Status:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" FEITO \n            ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Responsável:")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v("SES, SCOM, SEGG\n            ")
-      ])
+      _c("br"),
+      _vm._v(
+        "Número de leitos de UTI pediátrica implantados\n                    "
+      )
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12 espaco1" }, [
-        _c("b", [_vm._v("Nome:")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control form-control-sm",
-          attrs: { type: "text", name: "obj_id", placeholder: "obj_id" }
-        })
-      ])
+    return _c("div", { staticClass: "col-md-4" }, [
+      _c("b", [_vm._v("Situação:")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(
+        "Número de leitos de UTI pediátrica implantados                        \n                    "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 espaco1" }, [
+      _c("b", [_vm._v("Realizado acumulado:")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(
+        " reforma realizada e mobiliários e equipamentos adquiridos\n            "
+      )
     ])
   },
   function() {
@@ -39003,7 +39610,7 @@ var staticRenderFns = [
       _c(
         "button",
         {
-          staticClass: "btn btn-secondary",
+          staticClass: "btn btn-secondary btn-sm",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Fechar")]
@@ -39011,7 +39618,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-success", attrs: { type: "button" } },
+        { staticClass: "btn btn-success btn-sm", attrs: { type: "button" } },
         [_vm._v("Salvar")]
       )
     ])
