@@ -2432,6 +2432,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2557,7 +2567,8 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         _this4.errors.push(e);
       });
-      console.log(this.indicador_id);
+      console.log(this.form.parent_id);
+      console.log(this.form.parent_id['meta_2019_1']);
     }
     /*
     save_estrategia(){
@@ -39301,60 +39312,89 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "col-md-12 espaco1" },
-                    _vm._l(_vm.indicador_meta, function(n) {
-                      return _c("section", [
-                        _c("h3", [_vm._v("2019")]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-4" }, [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "label",
-                                { attrs: { for: "indicador_meta_agregada" } },
-                                [_vm._v("Meta")]
-                              ),
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(n.id) +
-                                  "\n                            "
-                              ),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.parent_id[n.id],
-                                    expression: "form.parent_id[n.id]"
-                                  }
-                                ],
-                                staticClass: "form-control form-control-sm",
-                                attrs: { type: "text" },
-                                domProps: { value: _vm.form.parent_id[n.id] },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
+                    [
+                      _vm._l(_vm.indicador_meta, function(n) {
+                        return _c("section", [
+                          _c("h3", [_vm._v("2019")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-4" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "indicador_meta_agregada" } },
+                                  [_vm._v("Meta")]
+                                ),
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(n.id) +
+                                    "\n                            "
+                                ),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.form.parent_id[
+                                          n.tipo + "_" + n.ano + "_" + n.id
+                                        ],
+                                      expression:
+                                        "form.parent_id[n.tipo+'_'+n.ano+'_'+n.id]"
                                     }
-                                    _vm.$set(
-                                      _vm.form.parent_id,
-                                      n.id,
-                                      $event.target.value
-                                    )
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { type: "text", name: "meta_" + n.id },
+                                  domProps: {
+                                    value:
+                                      _vm.form.parent_id[
+                                        n.tipo + "_" + n.ano + "_" + n.id
+                                      ]
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.form.parent_id,
+                                        n.tipo + "_" + n.ano + "_" + n.id,
+                                        $event.target.value
+                                      )
+                                    }
                                   }
-                                }
-                              })
-                            ])
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(6, true),
+                            _vm._v(" "),
+                            _vm._m(7, true)
                           ]),
                           _vm._v(" "),
-                          _vm._m(6, true),
-                          _vm._v(" "),
-                          _vm._m(7, true)
-                        ]),
-                        _vm._v(" "),
-                        _c("br")
-                      ])
-                    }),
-                    0
+                          _c("br")
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("h1", [_vm._v("-------------")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.indicador_meta, function(n) {
+                        return _c("div", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(
+                                _vm.form.parent_id[
+                                  n.tipo + "_" + n.ano + "_" + n.id
+                                ]
+                              ) +
+                              "\n                "
+                          )
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("h1", [_vm._v("-------------")])
+                    ],
+                    2
                   ),
                   _vm._v(" "),
                   _vm._m(8),

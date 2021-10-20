@@ -227,7 +227,7 @@
                         <div class="form-group">
                             <label for="indicador_meta_agregada">Meta</label>
                             {{n.id}}
-                            <input type="text" v-model="form.parent_id[n.id]" class="form-control form-control-sm">
+                            <input type="text" :name="'meta_' + n.id"  v-model="form.parent_id[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                         </div>
                     </div>
 
@@ -240,7 +240,17 @@
                     </div>
                 </div>
                 <br>
-                </section>                
+
+
+                
+
+                </section>    
+
+                <h1>-------------</h1>
+                <div v-for="n of indicador_meta">
+                    {{ form.parent_id[n.tipo+'_'+n.ano+'_'+n.id] }}
+                </div>            
+                <h1>-------------</h1>
 
                                 
                 
@@ -341,7 +351,9 @@
 
                 form: {
                   parent_id: []
-                }
+                },
+
+               
 
             }
         },
@@ -482,7 +494,10 @@
                 });
 
 
-                console.log(this.indicador_id)
+                console.log(this.form.parent_id);
+                
+                console.log(this.form.parent_id['meta_2019_1']);
+
                 
             },
 
