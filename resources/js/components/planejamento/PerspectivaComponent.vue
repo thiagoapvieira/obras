@@ -84,8 +84,8 @@
                                         <button class="btn btn-outline-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                        <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
-                                           v-on:click.prevent="set_indicador(0, e.id, '')">
+                                        <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_ind"
+                                           v-on:click.prevent="set_indicador(0)">
                                            <i class="fas fa-plus"></i>
                                         </a>
                                     </div>
@@ -227,21 +227,15 @@
                     </div>
                     
                 </div>
-                <br>
+                <br>               
+            </div>                
 
-                <!--
-                <h1>-------------</h1>
-                <div v-for="n of indicador_meta">
-                    {{ thiago[n.tipo+'_'+n.ano+'_'+n.id] }}
-                </div>            
-                <h1>-------------</h1>
-                -->
+            <div class="col-md-12 espaco1">                
+                <div class="form-group">
+                    <label for="indicador_realizado_acumulado">Realizado acumulado</label>
+                    <input type="text" v-model="indicador_realizado_acumulado" class="form-control form-control-sm">
+                </div>                
             </div>
-                
-
-            <div class="col-md-12 espaco1">
-                <b>Realizado acumulado:</b> <br> reforma realizada e mobiliários e equipamentos adquiridos
-            </div>            
 
             <div class="col-md-12 espaco1">                
                 <div class="form-group">
@@ -321,6 +315,7 @@
                 indicador_nome: null,
                 indicador_meta_agregada: null,
                 indicador_execucao_agregada: null,
+                indicador_realizado_acumulado: null,
                 indicador_status: null,
                 indicador_responsavel: null,
                 indicador_meta: null,
@@ -453,41 +448,49 @@
 
             //------ indicador -------------------------------------------------------------//
             set_indicador(id){
-                axios.get(this.url+'api/planejamento/indicador/find/'+id)
-                .then(response => { 
+
+                if (id == 0) {
+                    this.indicador_id = "";
+                    this.indicador_est_id = "";
+                    this.indicador_nome = "";
+                    this.indicador_meta_agregada = "";
+                    this.indicador_realizado_acumulado = "" 
+                    this.indicador_execucao_agregada = "";
+                    this.indicador_status = "";
+                    this.indicador_responsavel = "";
+                    this.indicador_meta = {};
+                    this.meta_input_dinamico = {};
+                }
 
 
+                if (id > 0) {
+                    axios.get(this.url+'api/planejamento/indicador/find/'+id)
+                    .then(response => {
 
-                    this.indicador_id = response.data[0].id;
-                    this.indicador_est_id = response.data[0].est_id;
-                    this.indicador_nome = response.data[0].nome;
-                    this.indicador_meta_agregada = response.data[0].meta_agregada;
-                    this.indicador_realizado_acumulado = response.data[0].realizado_acumulado; 
-                    this.indicador_execucao_agregada = response.data[0].execucao_agregada;
-                    this.indicador_status = response.data[0].status;
-                    this.indicador_responsavel = response.data[0].responsavel;
-                    this.indicador_meta = response.data[0].meta;
+                        this.indicador_id = response.data[0].id;
+                        this.indicador_est_id = response.data[0].est_id;
+                        this.indicador_nome = response.data[0].nome;
+                        this.indicador_meta_agregada = response.data[0].meta_agregada;
+                        this.indicador_realizado_acumulado = response.data[0].realizado_acumulado; 
+                        this.indicador_execucao_agregada = response.data[0].execucao_agregada;
+                        this.indicador_status = response.data[0].status;
+                        this.indicador_responsavel = response.data[0].responsavel;
+                        this.indicador_meta = response.data[0].meta;
 
-                    for (var i = 0; i <= this.indicador_meta.length-1;  i++){                    
-                        //console.log( this.indicador_meta[i] ); 
+                        for (var i = 0; i <= this.indicador_meta.length-1;  i++){
 
-                        // n.tipo+'_'+n.ano+'_'+n.id
+                            var variavel = this.indicador_meta[i].tipo+'_'+this.indicador_meta[i].ano+'_'+this.indicador_meta[i].id;
+                        
+                            //essa foi boa! convertendo string em variavel
+                            this.meta_input_dinamico[variavel] = this.indicador_meta[i].valor;
+                        }                   
 
-                        var variavel = this.indicador_meta[i].tipo+'_'+this.indicador_meta[i].ano+'_'+this.indicador_meta[i].id;
-                    
-                        //essa foi boa! convertendo string em variavel
-                        this.meta_input_dinamico[variavel] = this.indicador_meta[i].valor;
-
-                    }
-
-                    console.log(this.meta_input_dinamico);
-
-
-
-                })
-                  .catch(e => {
-                    this.errors.push(e);
-                });
+                    })
+                      .catch(e => {
+                        this.errors.push(e);
+                    });
+                }
+                      
             },
 
 
@@ -497,6 +500,7 @@
                   est_id: this.indicador_est_id, 
                   nome: this.indicador_nome,
                   meta_agregada: this.indicador_meta_agregada,
+                  realizado_acumulado: this.indicador_realizado_acumulado,
                   execucao_agregada: this.indicador_execucao_agregada,
                   status: this.indicador_status,
                   responsavel: this.indicador_responsavel,                  

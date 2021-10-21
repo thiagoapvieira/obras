@@ -2418,12 +2418,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2444,6 +2438,7 @@ __webpack_require__.r(__webpack_exports__);
       indicador_nome: null,
       indicador_meta_agregada: null,
       indicador_execucao_agregada: null,
+      indicador_realizado_acumulado: null,
       indicador_status: null,
       indicador_responsavel: null,
       indicador_meta: null,
@@ -2538,29 +2533,40 @@ __webpack_require__.r(__webpack_exports__);
     set_indicador: function set_indicador(id) {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
-        _this4.indicador_id = response.data[0].id;
-        _this4.indicador_est_id = response.data[0].est_id;
-        _this4.indicador_nome = response.data[0].nome;
-        _this4.indicador_meta_agregada = response.data[0].meta_agregada;
-        _this4.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
-        _this4.indicador_execucao_agregada = response.data[0].execucao_agregada;
-        _this4.indicador_status = response.data[0].status;
-        _this4.indicador_responsavel = response.data[0].responsavel;
-        _this4.indicador_meta = response.data[0].meta;
+      if (id == 0) {
+        this.indicador_id = "";
+        this.indicador_est_id = "";
+        this.indicador_nome = "";
+        this.indicador_meta_agregada = "";
+        this.indicador_realizado_acumulado = "";
+        this.indicador_execucao_agregada = "";
+        this.indicador_status = "";
+        this.indicador_responsavel = "";
+        this.indicador_meta = {};
+        this.meta_input_dinamico = {};
+      }
 
-        for (var i = 0; i <= _this4.indicador_meta.length - 1; i++) {
-          //console.log( this.indicador_meta[i] ); 
-          // n.tipo+'_'+n.ano+'_'+n.id
-          var variavel = _this4.indicador_meta[i].tipo + '_' + _this4.indicador_meta[i].ano + '_' + _this4.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
+      if (id > 0) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
+          _this4.indicador_id = response.data[0].id;
+          _this4.indicador_est_id = response.data[0].est_id;
+          _this4.indicador_nome = response.data[0].nome;
+          _this4.indicador_meta_agregada = response.data[0].meta_agregada;
+          _this4.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
+          _this4.indicador_execucao_agregada = response.data[0].execucao_agregada;
+          _this4.indicador_status = response.data[0].status;
+          _this4.indicador_responsavel = response.data[0].responsavel;
+          _this4.indicador_meta = response.data[0].meta;
 
-          _this4.meta_input_dinamico[variavel] = _this4.indicador_meta[i].valor;
-        }
+          for (var i = 0; i <= _this4.indicador_meta.length - 1; i++) {
+            var variavel = _this4.indicador_meta[i].tipo + '_' + _this4.indicador_meta[i].ano + '_' + _this4.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
 
-        console.log(_this4.meta_input_dinamico);
-      })["catch"](function (e) {
-        _this4.errors.push(e);
-      });
+            _this4.meta_input_dinamico[variavel] = _this4.indicador_meta[i].valor;
+          }
+        })["catch"](function (e) {
+          _this4.errors.push(e);
+        });
+      }
     },
     save_indicador: function save_indicador() {
       var _this5 = this;
@@ -2570,6 +2576,7 @@ __webpack_require__.r(__webpack_exports__);
         est_id: this.indicador_est_id,
         nome: this.indicador_nome,
         meta_agregada: this.indicador_meta_agregada,
+        realizado_acumulado: this.indicador_realizado_acumulado,
         execucao_agregada: this.indicador_execucao_agregada,
         status: this.indicador_status,
         responsavel: this.indicador_responsavel,
@@ -38918,16 +38925,12 @@ var render = function() {
                                           attrs: {
                                             href: "#",
                                             "data-toggle": "modal",
-                                            "data-target": "#modal_obj"
+                                            "data-target": "#modal_ind"
                                           },
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
-                                              return _vm.set_indicador(
-                                                0,
-                                                e.id,
-                                                ""
-                                              )
+                                              return _vm.set_indicador(0)
                                             }
                                           }
                                         },
@@ -39369,7 +39372,38 @@ var render = function() {
                     _c("br")
                   ]),
                   _vm._v(" "),
-                  _vm._m(6),
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        { attrs: { for: "indicador_realizado_acumulado" } },
+                        [_vm._v("Realizado acumulado")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.indicador_realizado_acumulado,
+                            expression: "indicador_realizado_acumulado"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.indicador_realizado_acumulado },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.indicador_realizado_acumulado =
+                              $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 espaco1" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -39598,19 +39632,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 espaco1" }, [
-      _c("b", [_vm._v("Realizado acumulado:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        " reforma realizada e mobiliários e equipamentos adquiridos\n            "
-      )
-    ])
   }
 ]
 render._withStripped = true

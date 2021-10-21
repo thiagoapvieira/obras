@@ -46,22 +46,66 @@ class IndicadorController extends Controller
 
     public function save(Request $request)
     {
-        //dd($request->all());
+        //edite
+        if( $request->id > 0 ){
 
-        DB::table('indicador') ->where('id', $request->id)->update([
-            'nome' => $request->nome,
-        ]);
-
-        foreach ($request->meta as $key => $value) {            
-            $indicador_meta_id = explode("_", $key);
-
-            //dd($indicador_meta_id[2]);
-            // dd($value);
-
-            echo $a = DB::table('indicador_meta') ->where('id', $indicador_meta_id[2])->update([
-               'valor' => $value,
+            DB::table('indicador') ->where('id', $request->id)->update([
+                'nome' => $request->nome,
+                'meta_agregada' => $request->meta_agregada,
+                'realizado_acumulado' => $request->realizado_acumulado,
+                'execucao_agregada' => $request->execucao_agregada,
+                'status' => $request->status,
+                'responsavel' => $request->responsavel,
             ]);
+
+            foreach ($request->meta as $key => $value) {            
+                $indicador_meta_id = explode("_", $key);
+
+                //dd($indicador_meta_id[2]);
+                // dd($value);
+
+                $a = DB::table('indicador_meta') ->where('id', $indicador_meta_id[2])->update([
+                   'valor' => $value,
+                ]);
+            }
+
         }
+
+        
+        //insert
+        if( $request->id == 0 ){
+
+            $n = DB::table('indicador') ->insertGetId([
+                'est_id' => $request->est_id,
+                'nome' => $request->nome,
+                'meta_agregada' => $request->meta_agregada,
+                'realizado_acumulado' => $request->realizado_acumulado,
+                'execucao_agregada' => $request->execucao_agregada,
+                'status' => $request->status,
+                'responsavel' => $request->responsavel,
+            ]);
+
+            foreach ($request->meta as $key => $value) {            
+                $indicador_meta_id = explode("_", $key);
+
+                //dd($indicador_meta_id[2]);
+                // dd($value);
+
+                $a = DB::table('indicador_meta') ->inset([
+                   'indicador_id' => $n,
+                   'tipo' => $$indicador_meta_id[0],
+                   'ano' => $$indicador_meta_id[1],
+                   'id' => $$indicador_meta_id[2],
+                   'valor' => $value,
+                ]);
+            }
+
+            echo 'insert';
+
+        }
+
+
+
 
         return 'OK';
 
