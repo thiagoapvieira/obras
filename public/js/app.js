@@ -2424,24 +2424,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2470,9 +2452,11 @@ __webpack_require__.r(__webpack_exports__);
       visualizar_indicador: false,
       editar_indicador: false,
       obj_nome: null,
-      form: {
-        parent_id: []
-      }
+      // form: {
+      //   parent_id: []
+      // },
+      //objeto
+      meta_input_dinamico: {}
     };
   },
   mounted: function mounted() {
@@ -2525,7 +2509,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.errors.push(e);
       });
     },
-    //------ estrategia -----------------------//
+    //------ estrategia ---------------------------------------------------------------//
     set_estrategia: function set_estrategia(id, obj_id, nome) {
       this.estrategia_id = id;
       this.estrategia_obj_id = obj_id;
@@ -2550,44 +2534,55 @@ __webpack_require__.r(__webpack_exports__);
         _this3.errors.push(e);
       });
     },
-    //------ indicador -----------------------//
+    //------ indicador -------------------------------------------------------------//
     set_indicador: function set_indicador(id) {
       var _this4 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
-        //console.log(response.data[0].id);
-        _this4.inidicador = response.data;
+        _this4.indicador_id = response.data[0].id;
+        _this4.indicador_est_id = response.data[0].est_id;
         _this4.indicador_nome = response.data[0].nome;
         _this4.indicador_meta_agregada = response.data[0].meta_agregada;
         _this4.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
         _this4.indicador_execucao_agregada = response.data[0].execucao_agregada;
-        _this4.indicador_meta = response.data[0].meta;
         _this4.indicador_status = response.data[0].status;
         _this4.indicador_responsavel = response.data[0].responsavel;
+        _this4.indicador_meta = response.data[0].meta;
+
+        for (var i = 0; i <= _this4.indicador_meta.length - 1; i++) {
+          //console.log( this.indicador_meta[i] ); 
+          // n.tipo+'_'+n.ano+'_'+n.id
+          var variavel = _this4.indicador_meta[i].tipo + '_' + _this4.indicador_meta[i].ano + '_' + _this4.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
+
+          _this4.meta_input_dinamico[variavel] = _this4.indicador_meta[i].valor;
+        }
+
+        console.log(_this4.meta_input_dinamico);
       })["catch"](function (e) {
         _this4.errors.push(e);
       });
-      console.log(this.form.parent_id);
-      console.log(this.form.parent_id['meta_2019_1']);
-    }
-    /*
-    save_estrategia(){
-         var body = {
-          id: this.indicador_id,
-          est_id: this.indicador_est_id,
-          nome: this.indicador_nome,
-        };
-         axios.post(this.url+'api/planejamento/save_indicador', body)
-        .then(response => {
-             console.log(response.data);
-             this.consulta();
-         })
-          .catch(e => {
-            this.errors.push(e);
-        });
-     },
-    */
+    },
+    save_indicador: function save_indicador() {
+      var _this5 = this;
 
+      var body = {
+        id: this.indicador_id,
+        est_id: this.indicador_est_id,
+        nome: this.indicador_nome,
+        meta_agregada: this.indicador_meta_agregada,
+        execucao_agregada: this.indicador_execucao_agregada,
+        status: this.indicador_status,
+        responsavel: this.indicador_responsavel,
+        meta: this.meta_input_dinamico
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/save', body).then(function (response) {
+        console.log(response.data);
+
+        _this5.consulta();
+      })["catch"](function (e) {
+        _this5.errors.push(e);
+      });
+    }
   }
 });
 
@@ -38707,7 +38702,7 @@ var render = function() {
                   [_c("i", { staticClass: "fas fa-plus" })]
                 ),
                 _vm._v(
-                  "\n\n                        Perspectiva \n                    "
+                  "\n                        Perspectiva \n                    "
                 )
               ])
             ])
@@ -39309,95 +39304,72 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-md-12 espaco1" },
-                    [
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c(
+                      "div",
+                      { staticClass: "row" },
                       _vm._l(_vm.indicador_meta, function(n) {
-                        return _c("section", [
-                          _c("h3", [_vm._v("2019")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-4" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c(
-                                  "label",
-                                  { attrs: { for: "indicador_meta_agregada" } },
-                                  [_vm._v("Meta")]
-                                ),
+                        return _c("div", { staticClass: "col-md-4" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "indicador_meta_agregada" } },
+                              [
                                 _vm._v(
-                                  "\n                            " +
-                                    _vm._s(n.id) +
-                                    "\n                            "
-                                ),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.form.parent_id[
-                                          n.tipo + "_" + n.ano + "_" + n.id
-                                        ],
-                                      expression:
-                                        "form.parent_id[n.tipo+'_'+n.ano+'_'+n.id]"
-                                    }
-                                  ],
-                                  staticClass: "form-control form-control-sm",
-                                  attrs: { type: "text", name: "meta_" + n.id },
-                                  domProps: {
-                                    value:
-                                      _vm.form.parent_id[
-                                        n.tipo + "_" + n.ano + "_" + n.id
-                                      ]
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.form.parent_id,
-                                        n.tipo + "_" + n.ano + "_" + n.id,
-                                        $event.target.value
-                                      )
-                                    }
+                                  "Meta ( " +
+                                    _vm._s(n.tipo + "_" + n.ano + "_" + n.id) +
+                                    " ) "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value:
+                                    _vm.meta_input_dinamico[
+                                      n.tipo + "_" + n.ano + "_" + n.id
+                                    ],
+                                  expression:
+                                    "meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]"
+                                }
+                              ],
+                              staticClass: "form-control form-control-sm",
+                              attrs: {
+                                type: "text",
+                                name: n.tipo + "_" + n.ano + "_" + n.id
+                              },
+                              domProps: {
+                                value:
+                                  _vm.meta_input_dinamico[
+                                    n.tipo + "_" + n.ano + "_" + n.id
+                                  ]
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(6, true),
-                            _vm._v(" "),
-                            _vm._m(7, true)
-                          ]),
-                          _vm._v(" "),
-                          _c("br")
+                                  _vm.$set(
+                                    _vm.meta_input_dinamico,
+                                    n.tipo + "_" + n.ano + "_" + n.id,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
                         ])
                       }),
-                      _vm._v(" "),
-                      _c("h1", [_vm._v("-------------")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.indicador_meta, function(n) {
-                        return _c("div", [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(
-                                _vm.form.parent_id[
-                                  n.tipo + "_" + n.ano + "_" + n.id
-                                ]
-                              ) +
-                              "\n                "
-                          )
-                        ])
-                      }),
-                      _vm._v(" "),
-                      _c("h1", [_vm._v("-------------")])
-                    ],
-                    2
-                  ),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("br")
+                  ]),
                   _vm._v(" "),
-                  _vm._m(8),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 espaco1" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -39494,7 +39466,31 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(9)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary btn-sm",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Fechar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success btn-sm",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.save_indicador()
+                      }
+                    }
+                  },
+                  [_vm._v("Salvar")]
+                )
+              ])
             ])
           ]
         )
@@ -39607,59 +39603,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c("b", [_vm._v("Realizado:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "Número de leitos de UTI pediátrica implantados\n                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c("b", [_vm._v("Situação:")]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "Número de leitos de UTI pediátrica implantados                        \n                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12 espaco1" }, [
       _c("b", [_vm._v("Realizado acumulado:")]),
       _vm._v(" "),
       _c("br"),
       _vm._v(
         " reforma realizada e mobiliários e equipamentos adquiridos\n            "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary btn-sm",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Fechar")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-success btn-sm", attrs: { type: "button" } },
-        [_vm._v("Salvar")]
       )
     ])
   }

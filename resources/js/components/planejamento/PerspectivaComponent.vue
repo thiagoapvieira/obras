@@ -12,7 +12,6 @@
                         <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="consulta()"> 
                             <i class="fas fa-plus"></i>
                         </button>
-
                         Perspectiva 
                     </h2>
                 </div>
@@ -187,8 +186,6 @@
 </div>
 
 
-
-
 <!-- Modal Indicador -->
 <div class="modal fade bd-example-modal-lg" id="modal_ind" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
@@ -219,41 +216,26 @@
             </div>
             
             <div class="col-md-12 espaco1">
-                
-                <section v-for="n of indicador_meta">
-                <h3>2019</h3>
                 <div class="row">
-                    <div class="col-md-4">
+                    
+                    <div class="col-md-4" v-for="n of indicador_meta">                        
                         <div class="form-group">
-                            <label for="indicador_meta_agregada">Meta</label>
-                            {{n.id}}
-                            <input type="text" :name="'meta_' + n.id"  v-model="form.parent_id[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
+                            <label for="indicador_meta_agregada">Meta ( {{n.tipo+'_'+n.ano+'_'+n.id}} ) </label>
+                            <!-- <input type="text" :name="'meta_' + n.id"  v-model="form.parent_id[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm"> -->
+                            <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <b>Realizado:</b> <br>Número de leitos de UTI pediátrica implantados
-                    </div>
-
-                    <div class="col-md-4">                        
-                        <b>Situação:</b> <br>Número de leitos de UTI pediátrica implantados                        
-                    </div>
+                    
                 </div>
                 <br>
 
-
-                
-
-                </section>    
-
+                <!--
                 <h1>-------------</h1>
                 <div v-for="n of indicador_meta">
-                    {{ form.parent_id[n.tipo+'_'+n.ano+'_'+n.id] }}
+                    {{ thiago[n.tipo+'_'+n.ano+'_'+n.id] }}
                 </div>            
                 <h1>-------------</h1>
-
-                                
-                
+                -->
             </div>
                 
 
@@ -285,22 +267,22 @@
         </div>
         
 
-       <!--  <section v-show="editar_indicador">
-        <div class="row">
+        <!--  
+        <section v-show="editar_indicador">
+            <div class="row">
             <div class="col-md-12 espaco1">
-                <b>Nome:</b> 
-                <input type="text" name="obj_id" class="form-control form-control-sm" placeholder="obj_id" >
-
-
+            <b>Nome:</b> 
+            <input type="text" name="obj_id" class="form-control form-control-sm" placeholder="obj_id" >
             </div> 
-        </div>
-        </section>  -->   
+            </div>
+        </section>  
+        -->   
 
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>        
-        <button type="button" class="btn btn-success btn-sm">Salvar</button>        
+        <button type="button" class="btn btn-success btn-sm" v-on:click.prevent="save_indicador()">Salvar</button>        
       </div>
     </div>
   </div>
@@ -349,12 +331,12 @@
                 editar_indicador: false,
                 obj_nome: null,
 
-                form: {
-                  parent_id: []
-                },
+                // form: {
+                //   parent_id: []
+                // },
 
-               
-
+                //objeto
+                meta_input_dinamico: {},
             }
         },
 
@@ -377,7 +359,6 @@
                 .then(response => {
                     
                     this.perspectiva = response.data;
-
                     console.log(response.data);
 
                 })
@@ -436,7 +417,7 @@
             },
 
 
-            //------ estrategia -----------------------//
+            //------ estrategia ---------------------------------------------------------------//
             set_estrategia(id, obj_id, nome){
                 this.estrategia_id = id;
                 this.estrategia_obj_id = obj_id;
@@ -470,64 +451,72 @@
             },
 
 
-            //------ indicador -----------------------//
-            set_indicador(id){                
-
+            //------ indicador -------------------------------------------------------------//
+            set_indicador(id){
                 axios.get(this.url+'api/planejamento/indicador/find/'+id)
-                .then(response => {                   
+                .then(response => { 
 
-                    //console.log(response.data[0].id);
 
-                    this.inidicador = response.data;
 
+                    this.indicador_id = response.data[0].id;
+                    this.indicador_est_id = response.data[0].est_id;
                     this.indicador_nome = response.data[0].nome;
                     this.indicador_meta_agregada = response.data[0].meta_agregada;
-                    this.indicador_realizado_acumulado = response.data[0].realizado_acumulado;                    
+                    this.indicador_realizado_acumulado = response.data[0].realizado_acumulado; 
                     this.indicador_execucao_agregada = response.data[0].execucao_agregada;
-                    this.indicador_meta = response.data[0].meta;
                     this.indicador_status = response.data[0].status;
                     this.indicador_responsavel = response.data[0].responsavel;
+                    this.indicador_meta = response.data[0].meta;
+
+                    for (var i = 0; i <= this.indicador_meta.length-1;  i++){                    
+                        //console.log( this.indicador_meta[i] ); 
+
+                        // n.tipo+'_'+n.ano+'_'+n.id
+
+                        var variavel = this.indicador_meta[i].tipo+'_'+this.indicador_meta[i].ano+'_'+this.indicador_meta[i].id;
+                    
+                        //essa foi boa! convertendo string em variavel
+                        this.meta_input_dinamico[variavel] = this.indicador_meta[i].valor;
+
+                    }
+
+                    console.log(this.meta_input_dinamico);
+
+
 
                 })
                   .catch(e => {
                     this.errors.push(e);
                 });
-
-
-                console.log(this.form.parent_id);
-                
-                console.log(this.form.parent_id['meta_2019_1']);
-
-                
             },
 
-            /*
-            save_estrategia(){
 
-                var body = {
-                  id: this.indicador_id,
-                  est_id: this.indicador_est_id,
+            save_indicador(){
+                var body = {                  
+                  id : this.indicador_id,
+                  est_id: this.indicador_est_id, 
                   nome: this.indicador_nome,
+                  meta_agregada: this.indicador_meta_agregada,
+                  execucao_agregada: this.indicador_execucao_agregada,
+                  status: this.indicador_status,
+                  responsavel: this.indicador_responsavel,                  
+                  meta: this.meta_input_dinamico,
                 };
 
-                axios.post(this.url+'api/planejamento/save_indicador', body)
+                axios.post(this.url+'api/planejamento/indicador/save', body)
                 .then(response => {
 
                     console.log(response.data);
 
                     this.consulta();
-
                 })
                   .catch(e => {
                     this.errors.push(e);
                 });
-
-            },
-            */
+            }
 
 
-
-
+            
 
         },
 
