@@ -17,7 +17,7 @@ Route::prefix('planejamento')->group(function(){
 
         Route::post('consulta', function (Request $request){
 
-            $perspectiva = DB::table('perspectiva')->where('plano_id', $request->plano_id)->get();
+            $perspectiva = DB::table('perspectiva')->where('ativo',1)->where('plano_id', $request->plano_id)->get();
 
             $array_per = array();
             foreach ($perspectiva as $value) {
@@ -27,7 +27,7 @@ Route::prefix('planejamento')->group(function(){
                 $obj->nome = $value->nome;
                 $obj->ativo = $value->ativo;
 
-                    $objetivo = DB::table('objetivo')->where('per_id',$value->id)->get();
+                    $objetivo = DB::table('objetivo')->where('ativo',1)->where('per_id',$value->id)->get();
                     $array_obj = array();
                     foreach ($objetivo as $value) {
                         $obj2 = new \stdClass();
@@ -36,7 +36,7 @@ Route::prefix('planejamento')->group(function(){
                         $obj2->nome = $value->nome;
                         $obj2->ativo = $value->ativo;                        
 
-                            $estrategia = DB::table('estrategia')->where('obj_id',$value->id)->get();
+                            $estrategia = DB::table('estrategia')->where('ativo',1)->where('obj_id',$value->id)->get();
                             $array_est = array();
                             foreach ($estrategia as $value) {
                                 $obj3 = new \stdClass();
@@ -44,7 +44,7 @@ Route::prefix('planejamento')->group(function(){
                                 $obj3->nome = $value->nome;
                                 array_push($array_est, $obj3);
 
-                                $indicador = DB::table('indicador')->where('est_id',$value->id)->get();
+                                $indicador = DB::table('indicador')->where('ativo',1)->where('est_id',$value->id)->get();
                                 $array_ind = array();
                                 foreach ($indicador as $value) {
                                     $obj4 = new \stdClass();
@@ -79,16 +79,21 @@ Route::prefix('planejamento')->group(function(){
 
         });
 
+        //perspectiva
+        Route::get('perspectiva/delete/{id}', 'App\Http\Controllers\Planejamento\PerspectivaController@delete');
+        Route::post('perspectiva/save', 'App\Http\Controllers\Planejamento\PerspectivaController@save');
 
-
+        //objetivo
         Route::post('save_objetivo', 'App\Http\Controllers\Planejamento\ObjetivoController@save');
+        Route::get('objetivo/delete/{id}', 'App\Http\Controllers\Planejamento\ObjetivoController@delete');
 
+        //estrategia
         Route::post('save_estrategia', 'App\Http\Controllers\Planejamento\EstrategiaController@save');
+        Route::get('estrategia/delete/{id}', 'App\Http\Controllers\Planejamento\EstrategiaController@delete');
 
+        //indicador
         Route::get('indicador/find/{id}', 'App\Http\Controllers\Planejamento\IndicadorController@find');
-
         Route::post('indicador/save', 'App\Http\Controllers\Planejamento\IndicadorController@save');
-
         Route::post('indicador/inserir_novo_ano_meta_indicador', 'App\Http\Controllers\Planejamento\IndicadorController@inserir_novo_ano_meta_indicador');
         Route::post('indicador/delete_ano_meta_indicador', 'App\Http\Controllers\Planejamento\IndicadorController@delete_ano_meta_indicador');
 

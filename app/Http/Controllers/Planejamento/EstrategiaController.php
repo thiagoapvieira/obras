@@ -30,8 +30,10 @@ class EstrategiaController extends Controller
 
         return 'inserido';
       }
+    }
 
-      
+    public function delete( $id ){
+      DB::table('estrategia')->where('id',$id)->update(['ativo'=>0]);
     }
 
 }

@@ -2454,6 +2454,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2462,7 +2484,8 @@ __webpack_require__.r(__webpack_exports__);
       //array
       perspectiva: [],
       //variaveis
-      perspectiva_id: 1,
+      perspectiva_id: null,
+      perspectiva_nome: null,
       objetivo_id: null,
       objetivo_per_id: null,
       objetivo_nome: null,
@@ -2510,24 +2533,44 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors.push(e);
       });
     },
-    // show_visulizar_indicador(){
-    //     this.visualizar_indicador = true;
-    //     this.editar_indicador = false;
-    // },
-    // show_editar_indicador(){
-    //     this.visualizar_indicador = false;
-    //     this.editar_indicador = true;
-    // },
-    //------ objetivo -----------------------//
+    //--------perspectiva--------------------------------------------//
+    set_perspectiva: function set_perspectiva(id, nome) {
+      this.perspectiva_id = id;
+      this.perspectiva_nome = nome;
+    },
+    save_perspectiva: function save_perspectiva() {
+      var _this2 = this;
+
+      var body = {
+        id: this.perspectiva_id,
+        plano_id: this.plano_id,
+        nome: this.perspectiva_nome
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/perspectiva/save', body).then(function (response) {
+        _this2.consulta();
+      })["catch"](function (e) {
+        _this2.errors.push(e);
+      });
+    },
+    delete_perspectiva: function delete_perspectiva(id) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/perspectiva/delete/' + id).then(function (response) {
+        console.log(response.data);
+
+        _this3.consulta();
+      })["catch"](function (e) {
+        _this3.errors.push(e);
+      });
+    },
+    //------ objetivo ----------------------------------------------//
     set_objetivo: function set_objetivo(id, per_id, nome) {
       this.objetivo_id = id;
       this.objetivo_per_id = per_id;
-      this.objetivo_nome = nome; // console.log(this.objetivo_id)
-      // console.log(this.objetivo_per_id)
-      // console.log(this.objetivo_nome)
+      this.objetivo_nome = nome;
     },
     save_objetivo: function save_objetivo() {
-      var _this2 = this;
+      var _this4 = this;
 
       var body = {
         id: this.objetivo_id,
@@ -2535,14 +2578,23 @@ __webpack_require__.r(__webpack_exports__);
         nome: this.objetivo_nome
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_objetivo', body).then(function (response) {
-        console.log(response.data);
-
-        _this2.consulta();
+        _this4.consulta();
       })["catch"](function (e) {
-        _this2.errors.push(e);
+        _this4.errors.push(e);
       });
     },
-    //------ estrategia ---------------------------------------------------------------//
+    delete_objetivo: function delete_objetivo(id) {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/objetivo/delete/' + id).then(function (response) {
+        console.log(response.data);
+
+        _this5.consulta();
+      })["catch"](function (e) {
+        _this5.errors.push(e);
+      });
+    },
+    //------ estrategia -------------------------------------------//
     set_estrategia: function set_estrategia(id, obj_id, nome) {
       this.estrategia_id = id;
       this.estrategia_obj_id = obj_id;
@@ -2552,7 +2604,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.estrategia_nome);
     },
     save_estrategia: function save_estrategia() {
-      var _this3 = this;
+      var _this6 = this;
 
       var body = {
         id: this.estrategia_id,
@@ -2562,14 +2614,25 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_estrategia', body).then(function (response) {
         console.log(response.data);
 
-        _this3.consulta();
+        _this6.consulta();
       })["catch"](function (e) {
-        _this3.errors.push(e);
+        _this6.errors.push(e);
+      });
+    },
+    delete_estrategia: function delete_estrategia(id) {
+      var _this7 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/estrategia/delete/' + id).then(function (response) {
+        console.log(response.data);
+
+        _this7.consulta();
+      })["catch"](function (e) {
+        _this7.errors.push(e);
       });
     },
     //------ indicador -------------------------------------------------------------//
     set_indicador: function set_indicador(id, est_id) {
-      var _this4 = this;
+      var _this8 = this;
 
       if (id == 0) {
         this.indicador_id = "";
@@ -2586,28 +2649,28 @@ __webpack_require__.r(__webpack_exports__);
 
       if (id > 0) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
-          _this4.indicador_id = response.data[0].id;
-          _this4.indicador_est_id = response.data[0].est_id;
-          _this4.indicador_nome = response.data[0].nome;
-          _this4.indicador_meta_agregada = response.data[0].meta_agregada;
-          _this4.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
-          _this4.indicador_execucao_agregada = response.data[0].execucao_agregada;
-          _this4.indicador_status = response.data[0].status;
-          _this4.indicador_responsavel = response.data[0].responsavel;
-          _this4.indicador_meta = response.data[0].meta;
+          _this8.indicador_id = response.data[0].id;
+          _this8.indicador_est_id = response.data[0].est_id;
+          _this8.indicador_nome = response.data[0].nome;
+          _this8.indicador_meta_agregada = response.data[0].meta_agregada;
+          _this8.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
+          _this8.indicador_execucao_agregada = response.data[0].execucao_agregada;
+          _this8.indicador_status = response.data[0].status;
+          _this8.indicador_responsavel = response.data[0].responsavel;
+          _this8.indicador_meta = response.data[0].meta;
 
-          for (var i = 0; i <= _this4.indicador_meta.length - 1; i++) {
-            var variavel = _this4.indicador_meta[i].tipo + '_' + _this4.indicador_meta[i].ano + '_' + _this4.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
+          for (var i = 0; i <= _this8.indicador_meta.length - 1; i++) {
+            var variavel = _this8.indicador_meta[i].tipo + '_' + _this8.indicador_meta[i].ano + '_' + _this8.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
 
-            _this4.meta_input_dinamico[variavel] = _this4.indicador_meta[i].valor;
+            _this8.meta_input_dinamico[variavel] = _this8.indicador_meta[i].valor;
           }
         })["catch"](function (e) {
-          _this4.errors.push(e);
+          _this8.errors.push(e);
         });
       }
     },
     save_indicador: function save_indicador() {
-      var _this5 = this;
+      var _this9 = this;
 
       var body = {
         id: this.indicador_id,
@@ -2623,35 +2686,35 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/save', body).then(function (response) {
         console.log(response.data);
 
-        _this5.consulta();
+        _this9.consulta();
       })["catch"](function (e) {
-        _this5.errors.push(e);
+        _this9.errors.push(e);
       });
     },
     inserir_novo_ano_meta_indicador: function inserir_novo_ano_meta_indicador() {
-      var _this6 = this;
+      var _this10 = this;
 
       var body = {
         indicador_id: this.indicador_id,
         ano: this.ano_de_indicador_meta
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body).then(function (response) {
-        _this6.set_indicador(_this6.indicador_id);
+        _this10.set_indicador(_this10.indicador_id);
       })["catch"](function (e) {
-        _this6.errors.push(e);
+        _this10.errors.push(e);
       });
     },
     delete_ano_meta_indicador: function delete_ano_meta_indicador() {
-      var _this7 = this;
+      var _this11 = this;
 
       var body = {
         indicador_id: this.indicador_id,
         ano: this.ano_de_indicador_meta
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/delete_ano_meta_indicador', body).then(function (response) {
-        _this7.set_indicador(_this7.indicador_id);
+        _this11.set_indicador(_this11.indicador_id);
       })["catch"](function (e) {
-        _this7.errors.push(e);
+        _this11.errors.push(e);
       });
     },
 
@@ -38770,12 +38833,12 @@ var render = function() {
                     attrs: {
                       type: "button",
                       "data-toggle": "modal",
-                      "data-target": "#perspectiva"
+                      "data-target": "#modal_per"
                     },
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.consulta()
+                        return _vm.set_perspectiva(0, null)
                       }
                     }
                   },
@@ -38819,7 +38882,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.set_perspectiva()
+                                    return _vm.set_perspectiva(p.id, p.nome)
                                   }
                                 }
                               },
@@ -38830,7 +38893,19 @@ var render = function() {
                               ]
                             ),
                             _vm._v(" "),
-                            _vm._m(0, true),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-danger",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.delete_perspectiva(p.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-trash" })]
+                            ),
                             _vm._v(" "),
                             _c(
                               "a",
@@ -38854,10 +38929,8 @@ var render = function() {
                         ),
                         _vm._v(
                           "\n                        \n                        " +
-                            _vm._s(p.id) +
-                            " " +
                             _vm._s(p.nome) +
-                            "\n\n                        "
+                            "                        \n\n                    "
                         )
                       ])
                     ]),
@@ -38908,7 +38981,19 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _vm._m(1, true),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-outline-danger",
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.delete_objetivo(n.id)
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fas fa-trash" })]
+                                  ),
                                   _vm._v(" "),
                                   _c(
                                     "a",
@@ -38917,12 +39002,12 @@ var render = function() {
                                       attrs: {
                                         href: "#",
                                         "data-toggle": "modal",
-                                        "data-target": "#modal_obj"
+                                        "data-target": "#modal_est"
                                       },
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.set_objetivo(0, n.id, "")
+                                          return _vm.set_estrategia(0, n.id, "")
                                         }
                                       }
                                     },
@@ -38987,7 +39072,23 @@ var render = function() {
                                         ]
                                       ),
                                       _vm._v(" "),
-                                      _vm._m(2, true),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-outline-danger",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.delete_estrategia(e.id)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-trash"
+                                          })
+                                        ]
+                                      ),
                                       _vm._v(" "),
                                       _c(
                                         "a",
@@ -39098,6 +39199,95 @@ var render = function() {
       {
         staticClass: "modal fade bd-example-modal-lg",
         attrs: {
+          id: "modal_per",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "modal-dialog modal-dialog-centered modal-dialog modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                        _vm._v("Título")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.perspectiva_nome,
+                            expression: "perspectiva_nome"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.perspectiva_nome },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.perspectiva_nome = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Fechar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.save_perspectiva()
+                      }
+                    }
+                  },
+                  [_vm._v("Salvar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
           id: "modal_obj",
           tabindex: "-1",
           role: "dialog",
@@ -39115,7 +39305,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39204,7 +39394,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39293,7 +39483,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(5),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39395,7 +39585,7 @@ var render = function() {
                               },
                               [
                                 _c("div", { staticClass: "form-group" }, [
-                                  _vm._m(6),
+                                  _vm._m(4),
                                   _vm._v(" "),
                                   _c("input", {
                                     directives: [
@@ -39709,33 +39899,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-outline-danger" }, [
-      _c("i", { staticClass: "fas fa-trash" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-outline-danger",
-        attrs: {
-          href: "#",
-          "data-toggle": "modal",
-          "data-target": "#modal_obj"
-        }
-      },
-      [_c("i", { staticClass: "fas fa-trash" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-outline-danger" }, [
-      _c("i", { staticClass: "fas fa-trash" })
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Novo/Editar Perspectiva")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   },
   function() {

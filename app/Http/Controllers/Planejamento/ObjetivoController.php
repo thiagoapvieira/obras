@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class ObjetivoController extends Controller
 {
-    public function save2( Request $request )
+    public function save( Request $request )
     {
 
       //dd( $request->all() );
@@ -33,6 +33,11 @@ class ObjetivoController extends Controller
       }
 
       
+    }
+
+
+    public function delete( $id ){
+      DB::table('objetivo')->where('id',$id)->update(['ativo'=>0]);
     }
 
 }

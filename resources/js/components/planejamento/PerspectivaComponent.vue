@@ -9,7 +9,7 @@
     <div class="row">            
         <div class="col-lg-11">
             <h2 class="title-5 m-b-35">
-                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="consulta()"> 
+                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal_per" v-on:click.prevent="set_perspectiva(0, null)"> 
                     <i class="fas fa-plus"></i>
                 </button>
                 Perspectiva 
@@ -26,15 +26,18 @@
 
                         <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
 
+                            <!-- edite perspectiva -->
                             <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_per"
-                            v-on:click.prevent="set_perspectiva()"> 
+                            v-on:click.prevent="set_perspectiva(p.id, p.nome)"> 
                                 <i class="fa fa-pencil-square-o"></i>
                             </a>
                             
-                            <button class="btn btn-outline-danger">
+                            <!-- delete perspectiva -->
+                            <button class="btn btn-outline-danger" v-on:click.prevent="delete_perspectiva(p.id)">
                                 <i class="fas fa-trash"></i>
                             </button>
 
+                            <!-- inserir objetivo -->
                             <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
                             v-on:click.prevent="set_objetivo(0, p.id, '')"> 
                                 <i class="fas fa-plus"></i>
@@ -42,13 +45,7 @@
 
                         </div>
                         
-                        {{p.id}} {{p.nome}}
-
-                        <!--
-                        <small>
-                            <span class="badge badge-success float-right mt-1">Success</span>
-                        </small>
-                        -->
+                        {{p.nome}}                        
 
                     </strong>
                 </div>
@@ -57,17 +54,21 @@
                         <!-- objetivos -->
                         <div style="margin-bottom: 15px;">
                             <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
+
+                                <!-- edite objetivo -->
                                 <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_obj"
                                    v-on:click.prevent="set_objetivo(n.id, n.per_id, n.nome)"> 
                                    <i class="fas fa-pencil-square-o"></i>
                                 </a>
 
-                                <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal_obj">
+                                <!-- delete objetivo -->
+                                <button class="btn btn-outline-danger" v-on:click.prevent="delete_objetivo(n.id)">
                                 <i class="fas fa-trash"></i>
-                                </a>
+                                </button>
 
-                                <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
-                                   v-on:click.prevent="set_objetivo(0, n.id, '')">
+                                <!-- insert estrategia -->
+                                <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_est"
+                                   v-on:click.prevent="set_estrategia(0, n.id, '')">
                                    <i class="fas fa-plus"></i>
                                 </a>
                             </div>
@@ -76,14 +77,20 @@
                         
                         <!-- Estrategia -->
                         <div style="margin-left: 15px; margin-bottom: 10px;" v-for="(e,key3) of perspectiva[key].objeto[key2].estrategia">
-                            <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">                                       
+                            <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
+
+                                <!-- edite estrategia -->
                                 <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_est"
                                    v-on:click.prevent="set_estrategia(e.id, e.obj_id, e.nome)"> 
                                    <i class="fas fa-pencil-square-o"></i>
                                 </a>
-                                <button class="btn btn-outline-danger">
+
+                                <!-- delete estrategia -->
+                                <button class="btn btn-outline-danger" v-on:click.prevent="delete_estrategia(e.id)">
                                     <i class="fas fa-trash"></i>
                                 </button>
+
+                                <!-- insert indicador -->
                                 <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_ind"
                                    v-on:click.prevent="set_indicador(0,e.id)">
                                    <i class="fas fa-plus"></i>
@@ -112,6 +119,34 @@
 </div>
 </div>
 
+<!-- Modal Perspectiva -->
+<div class="modal fade bd-example-modal-lg" id="modal_per" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Perspectiva</h5>        
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">        
+        <div class="row">
+        <div class="col-md-12 espaco1">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Título</label>
+                <input type="text" v-model="perspectiva_nome" class="form-control form-control-sm">
+            </div>                
+        </div> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
+        <button type="button" class="btn btn-success" v-on:click.prevent="save_perspectiva()">Salvar</button>        
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Modal Objetivo -->
@@ -295,19 +330,6 @@
             </div>            
 
         </div>
-        
-
-        <!--  
-        <section v-show="editar_indicador">
-            <div class="row">
-            <div class="col-md-12 espaco1">
-            <b>Nome:</b> 
-            <input type="text" name="obj_id" class="form-control form-control-sm" placeholder="obj_id" >
-            </div> 
-            </div>
-        </section>  
-        -->   
-
 
       </div>
       <div class="modal-footer">
@@ -336,7 +358,8 @@
                 perspectiva: [],
 
                 //variaveis
-                perspectiva_id: 1,
+                perspectiva_id: null,
+                perspectiva_nome: null,
 
                 objetivo_id: null,
                 objetivo_per_id: null,
@@ -382,8 +405,7 @@
 
         methods: {
 
-            consulta(){
-                
+            consulta(){                
                 var body = {
                   plano_id: this.plano_id,
                   //perspectiva_id: this.perspectiva_id,
@@ -391,42 +413,50 @@
 
                 axios.post(this.url+'api/planejamento/consulta', body)
                 .then(response => {
-                    
                     this.perspectiva = response.data;
                     console.log(response.data);
-
                 })
                   .catch(e => {
                     this.errors.push(e);
                 });
-
             },
 
-            // show_visulizar_indicador(){
 
-            //     this.visualizar_indicador = true;
-            //     this.editar_indicador = false;
+            //--------perspectiva--------------------------------------------//
+            set_perspectiva(id, nome){
+                this.perspectiva_id = id;                
+                this.perspectiva_nome = nome;
+            },            
 
-            // },
+            save_perspectiva(){
+                var body = {
+                  id: this.perspectiva_id,
+                  plano_id: this.plano_id,
+                  nome: this.perspectiva_nome,
+                };
 
-            // show_editar_indicador(){
+                axios.post(this.url+'api/planejamento/perspectiva/save', body)
+                .then(response => {
+                    this.consulta();
+                }).catch(e => {this.errors.push(e); });
+            },
 
-            //     this.visualizar_indicador = false;
-            //     this.editar_indicador = true;
+            delete_perspectiva(id){
+                axios.get(this.url+'api/planejamento/perspectiva/delete/'+id)
+                .then(response => {
+                    console.log(response.data);
+                    this.consulta();
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+            },
 
-            // },
-
-
-            //------ objetivo -----------------------//
+            //------ objetivo ----------------------------------------------//
             set_objetivo(id, per_id, nome){
                 this.objetivo_id = id;
                 this.objetivo_per_id = per_id;
                 this.objetivo_nome = nome;
-
-                // console.log(this.objetivo_id)
-                // console.log(this.objetivo_per_id)
-                // console.log(this.objetivo_nome)
-
             },
 
             save_objetivo(){
@@ -439,11 +469,15 @@
 
                 axios.post(this.url+'api/planejamento/save_objetivo', body)
                 .then(response => {
-
-                    console.log(response.data);
-
                     this.consulta();
+                }) .catch(e => {this.errors.push(e); });
+            },
 
+            delete_objetivo(id){
+                axios.get(this.url+'api/planejamento/objetivo/delete/'+id)
+                .then(response => {
+                    console.log(response.data);
+                    this.consulta();
                 })
                   .catch(e => {
                     this.errors.push(e);
@@ -451,7 +485,7 @@
             },
 
 
-            //------ estrategia ---------------------------------------------------------------//
+            //------ estrategia -------------------------------------------//
             set_estrategia(id, obj_id, nome){
                 this.estrategia_id = id;
                 this.estrategia_obj_id = obj_id;
@@ -463,7 +497,6 @@
             },
 
             save_estrategia(){
-
                 var body = {
                   id: this.estrategia_id,
                   obj_id: this.estrategia_obj_id,
@@ -474,14 +507,23 @@
                 .then(response => {
 
                     console.log(response.data);
-
                     this.consulta();
 
                 })
                   .catch(e => {
                     this.errors.push(e);
                 });
+            },
 
+            delete_estrategia(id){
+                axios.get(this.url+'api/planejamento/estrategia/delete/'+id)
+                .then(response => {
+                    console.log(response.data);
+                    this.consulta();
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
             },
 
 

@@ -154,5 +154,9 @@ class IndicadorController extends Controller
         
     }
 
+    public function delete( $id ){
+      DB::table('indicador')->where('id',$id)->update(['ativo'=>0]);
+    }
+
 
 }
