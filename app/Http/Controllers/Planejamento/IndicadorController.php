@@ -22,9 +22,12 @@ class IndicadorController extends Controller
             $obj->execucao_agregada = $value->execucao_agregada;
             $obj->status = $value->status;
             $obj->responsavel = $value->responsavel;
-            $obj->ativo = $value->ativo;
+            $obj->ativo = $value->ativo;                
 
-                $meta = DB::table('indicador_meta')->where('indicador_id',$value->id)->get();                    
+                // echo $value->id;
+                // echo '<br>';
+
+                $meta = DB::table('indicador_meta')->where('indicador_id',$value->id)->get();
                 $array_meta = array();
                 foreach ($meta as $value) {
                     $obj1 = new \stdClass();
@@ -35,7 +38,6 @@ class IndicadorController extends Controller
                     array_push($array_meta, $obj1);
                 }
                 $obj->meta = $array_meta;
-
             
             array_push($array_ind, $obj);
         }    
@@ -69,6 +71,8 @@ class IndicadorController extends Controller
                 ]);
             }
 
+            return 'edicao';
+
         }
 
         
@@ -93,22 +97,61 @@ class IndicadorController extends Controller
 
                 $a = DB::table('indicador_meta') ->inset([
                    'indicador_id' => $n,
-                   'tipo' => $$indicador_meta_id[0],
-                   'ano' => $$indicador_meta_id[1],
-                   'id' => $$indicador_meta_id[2],
+                   'tipo' => $indicador_meta_id[0],
+                   'ano' => $indicador_meta_id[1],
+                   'id' => $indicador_meta_id[2],
                    'valor' => $value,
                 ]);
             }
 
-            echo 'insert';
+            return 'insert';
 
+        }        
+
+    }
+
+
+
+    public function inserir_novo_ano_meta_indicador(Request $request){
+
+        // dd( $request->all() );
+
+        $found = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano',$request->ano)->where('tipo','meta')->count();
+        if($found == 0){
+            $a = DB::table('indicador_meta') ->insert([
+               'indicador_id' => $request->indicador_id,
+               'tipo' => 'meta',
+               'ano' => $request->ano,
+            ]);
+            
         }
+        
+        $found = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano',$request->ano)->where('tipo','realizado')->count();
+        if($found == 0){
+            $a = DB::table('indicador_meta') ->insert([
+               'indicador_id' => $request->indicador_id,
+               'tipo' => "realizado",
+               'ano' => $request->ano,
+            ]);   
+        }
+        
+        $found = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano',$request->ano)->where('tipo','situacao')->count();        
+        if($found == 0){
+            $a = DB::table('indicador_meta')->insert([
+               'indicador_id' => $request->indicador_id,
+               'tipo' => "situacao",
+               'ano' => $request->ano,
+            ]);   
+        }       
+
+    }
 
 
 
-
-        return 'OK';
-
+    public function delete_ano_meta_indicador(Request $request){
+        
+        $a = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano', $request->ano)->delete();
+        
     }
 
 

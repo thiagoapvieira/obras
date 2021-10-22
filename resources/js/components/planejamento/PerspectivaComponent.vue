@@ -2,118 +2,114 @@
 <section class="p-t-20">
 
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
+<div class="content-header">
+<div class="container-fluid">
 
-            <!-- perspectiva -->
-            <div class="row">            
-                <div class="col-lg-11">
-                    <h2 class="title-5 m-b-35">
-                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="consulta()"> 
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        Perspectiva 
-                    </h2>
-                </div>
-            </div>
+    <!-- perspectiva -->
+    <div class="row">            
+        <div class="col-lg-11">
+            <h2 class="title-5 m-b-35">
+                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#perspectiva" v-on:click.prevent="consulta()"> 
+                    <i class="fas fa-plus"></i>
+                </button>
+                Perspectiva 
+            </h2>
+        </div>
+    </div>
 
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    
-                    <div class="card" v-for="(p, key) of perspectiva">
-                        <div class="card-header">
-                            <strong class="card-title"> 
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            
+            <div class="card" v-for="(p, key) of perspectiva">
+                <div class="card-header">
+                    <strong class="card-title"> 
 
-                                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
+                        <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
 
-                                    <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_per"
-                                    v-on:click.prevent="set_perspectiva()"> 
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </a>
-                                    
-                                    <button class="btn btn-outline-danger">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-
-                                    <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
-                                    v-on:click.prevent="set_objetivo(0, p.id, '')"> 
-                                        <i class="fas fa-plus"></i>
-                                    </a>
-
-                                </div>
-                                
-                                {{p.id}} {{p.nome}}
-
-                                <!--
-                                <small>
-                                    <span class="badge badge-success float-right mt-1">Success</span>
-                                </small>
-                                -->
-
-                            </strong>
-                        </div>
-                        <div class="card-body" v-for="(n, key2) of perspectiva[key].objeto">
+                            <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_per"
+                            v-on:click.prevent="set_perspectiva()"> 
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
                             
-                                <!-- objetivos -->
-                                <div style="margin-bottom: 15px;">
-                                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
-                                        <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_obj"
-                                           v-on:click.prevent="set_objetivo(n.id, n.per_id, n.nome)"> 
-                                           <i class="fas fa-pencil-square-o"></i>
-                                        </a>
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
 
-                                        <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal_obj">
-                                        <i class="fas fa-trash"></i>
-                                        </a>
+                            <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
+                            v-on:click.prevent="set_objetivo(0, p.id, '')"> 
+                                <i class="fas fa-plus"></i>
+                            </a>
 
-                                        <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
-                                           v-on:click.prevent="set_objetivo(0, n.id, '')">
-                                           <i class="fas fa-plus"></i>
-                                        </a>
-                                    </div>
-                                    <b> {{n.nome}} </b>
-                                </div>
-                                
-                                <!-- Estrategia -->
-                                <div style="margin-left: 15px; margin-bottom: 10px;" v-for="(e,key3) of perspectiva[key].objeto[key2].estrategia">
-                                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">                                       
-                                        <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_est"
-                                           v-on:click.prevent="set_estrategia(e.id, e.obj_id, e.nome)"> 
-                                           <i class="fas fa-pencil-square-o"></i>
-                                        </a>
-                                        <button class="btn btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                        <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_ind"
-                                           v-on:click.prevent="set_indicador(0)">
-                                           <i class="fas fa-plus"></i>
-                                        </a>
-                                    </div>
-                                    {{e.nome}}
-
-                                    <!-- indicadores -->
-                                    <div class="indicadores" v-for="ind of perspectiva[key].objeto[key2].estrategia[key3].indicador" 
-                                    v-on:click.prevent="set_indicador(ind.id)">
-                                        <div style="margin: 10px 0 10px 30px;">
-                                            <a href="#" data-toggle="modal" data-target="#modal_ind">
-                                                {{ind.nome}}
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                
                         </div>
-                    </div>
+                        
+                        {{p.id}} {{p.nome}}
 
+                        <!--
+                        <small>
+                            <span class="badge badge-success float-right mt-1">Success</span>
+                        </small>
+                        -->
+
+                    </strong>
+                </div>
+                <div class="card-body" v-for="(n, key2) of perspectiva[key].objeto">
+                    
+                        <!-- objetivos -->
+                        <div style="margin-bottom: 15px;">
+                            <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
+                                <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_obj"
+                                   v-on:click.prevent="set_objetivo(n.id, n.per_id, n.nome)"> 
+                                   <i class="fas fa-pencil-square-o"></i>
+                                </a>
+
+                                <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal_obj">
+                                <i class="fas fa-trash"></i>
+                                </a>
+
+                                <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
+                                   v-on:click.prevent="set_objetivo(0, n.id, '')">
+                                   <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                            <b> {{n.nome}} </b>
+                        </div>
+                        
+                        <!-- Estrategia -->
+                        <div style="margin-left: 15px; margin-bottom: 10px;" v-for="(e,key3) of perspectiva[key].objeto[key2].estrategia">
+                            <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">                                       
+                                <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_est"
+                                   v-on:click.prevent="set_estrategia(e.id, e.obj_id, e.nome)"> 
+                                   <i class="fas fa-pencil-square-o"></i>
+                                </a>
+                                <button class="btn btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_ind"
+                                   v-on:click.prevent="set_indicador(0,e.id)">
+                                   <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                            #{{e.id}} - {{e.nome}}
+
+                            <!-- indicadores -->
+                            <div class="indicadores" v-for="ind of perspectiva[key].objeto[key2].estrategia[key3].indicador" 
+                            v-on:click.prevent="set_indicador(ind.id,e.id)">
+                                <div style="margin: 10px 0 10px 30px;">
+                                    <a href="#" data-toggle="modal" data-target="#modal_ind">
+                                        #{{ind.id}} -{{ind.nome}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
                 </div>
             </div>
 
+        </div>
+    </div>
 
-
-        </div>            
-    </div>            
+</div>
+</div>
 </div>
 
 
@@ -157,8 +153,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Estrategia</h5>        
-
+        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Estrategia</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -192,7 +187,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Indicador</h5>
-        <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_editar_indicador()"> editar </button>
+        <!-- <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_editar_indicador()"> editar </button> -->
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -213,22 +208,63 @@
                     <label for="indicador_meta_agregada">Meta agregada</label>
                     <input type="text" v-model="indicador_meta_agregada" class="form-control form-control-sm">
                 </div>
+            </div>            
+
+            <div  v-if="!caixa_escolha_ano_para_meta" class="col-md-12 espaco1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_caixa_ano_meta(1)"> 
+                        <i class="fas fa-plus"></i> ANO
+                    </button>
+                </div>
             </div>
+
+            <!-- ************************************************************************************************* -->
+            <section v-if="caixa_escolha_ano_para_meta">
+                <div class="col-md-12 espaco1">
+                    
+                    <div class="card">
+                      <div class="card-body" style="background-color: #eee;">                        
+                                        
+                            <div class="form-group">
+                                <label>
+                                <b>Digite o ano para inserir ( Meta, Realizado e Situação ) no indicador!</b>
+                                </label>                                
+                                <input type="text" v-model="ano_de_indicador_meta" class="form-control form-control-sm">                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-10">
+                                    <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="inserir_novo_ano_meta_indicador()">Inserir</a>
+                                    <button class="btn btn-danger btn-sm" v-on:click.prevent="delete_ano_meta_indicador()">Delete</button>
+                                </div>
+                                <div class="col-2">                                    
+                                    <button class="btn btn-secondary btn-sm btn-block" v-on:click.prevent="show_caixa_ano_meta(0)">Fechar</button>
+                                </div>
+                            </div>
+
+                      </div>
+                    </div>
+                    
+                </div>
+            </section>    
+
             
             <div class="col-md-12 espaco1">
                 <div class="row">
                     
-                    <div class="col-md-4" v-for="n of indicador_meta">                        
+                    <div class="col-md-4" v-for="n of indicador_meta">
                         <div class="form-group">
-                            <label for="indicador_meta_agregada">Meta ( {{n.tipo+'_'+n.ano+'_'+n.id}} ) </label>
-                            <!-- <input type="text" :name="'meta_' + n.id"  v-model="form.parent_id[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm"> -->
+                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}  - #{{n.id}}</label>
                             <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                         </div>
                     </div>
                     
                 </div>
                 <br>               
-            </div>                
+            </div>
+            <!-- ************************************************************************************************* -->
+
+
 
             <div class="col-md-12 espaco1">                
                 <div class="form-group">
@@ -325,6 +361,9 @@
                 visualizar_indicador: false,
                 editar_indicador: false,
                 obj_nome: null,
+                
+                ano_de_indicador_meta: null,
+                caixa_escolha_ano_para_meta: false,
 
                 // form: {
                 //   parent_id: []
@@ -447,11 +486,11 @@
 
 
             //------ indicador -------------------------------------------------------------//
-            set_indicador(id){
+            set_indicador(id,est_id){
 
                 if (id == 0) {
                     this.indicador_id = "";
-                    this.indicador_est_id = "";
+                    this.indicador_est_id = est_id;
                     this.indicador_nome = "";
                     this.indicador_meta_agregada = "";
                     this.indicador_realizado_acumulado = "" 
@@ -517,10 +556,56 @@
                   .catch(e => {
                     this.errors.push(e);
                 });
-            }
+            },
 
 
-            
+            inserir_novo_ano_meta_indicador(){
+
+                var body = {                  
+                  indicador_id : this.indicador_id,
+                  ano : this.ano_de_indicador_meta,                  
+                };
+
+                axios.post(this.url+'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body)
+                .then(response => {
+                    this.set_indicador(this.indicador_id);                    
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+
+            },
+
+            delete_ano_meta_indicador(){
+
+                var body = {                  
+                  indicador_id : this.indicador_id,
+                  ano : this.ano_de_indicador_meta,                  
+                };
+
+                axios.post(this.url+'api/planejamento/indicador/delete_ano_meta_indicador', body)
+                .then(response => {
+                    this.set_indicador(this.indicador_id);
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+
+            },
+
+
+
+            /*--SHOW----------------------------*/
+
+            show_caixa_ano_meta(n){
+                
+                if(n == 0){
+                    this.caixa_escolha_ano_para_meta = false;
+                }else{
+                    this.caixa_escolha_ano_para_meta = true;
+                }
+
+            },
 
         },
 

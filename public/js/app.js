@@ -2418,6 +2418,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2447,6 +2483,8 @@ __webpack_require__.r(__webpack_exports__);
       visualizar_indicador: false,
       editar_indicador: false,
       obj_nome: null,
+      ano_de_indicador_meta: null,
+      caixa_escolha_ano_para_meta: false,
       // form: {
       //   parent_id: []
       // },
@@ -2530,12 +2568,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     //------ indicador -------------------------------------------------------------//
-    set_indicador: function set_indicador(id) {
+    set_indicador: function set_indicador(id, est_id) {
       var _this4 = this;
 
       if (id == 0) {
         this.indicador_id = "";
-        this.indicador_est_id = "";
+        this.indicador_est_id = est_id;
         this.indicador_nome = "";
         this.indicador_meta_agregada = "";
         this.indicador_realizado_acumulado = "";
@@ -2589,6 +2627,41 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         _this5.errors.push(e);
       });
+    },
+    inserir_novo_ano_meta_indicador: function inserir_novo_ano_meta_indicador() {
+      var _this6 = this;
+
+      var body = {
+        indicador_id: this.indicador_id,
+        ano: this.ano_de_indicador_meta
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body).then(function (response) {
+        _this6.set_indicador(_this6.indicador_id);
+      })["catch"](function (e) {
+        _this6.errors.push(e);
+      });
+    },
+    delete_ano_meta_indicador: function delete_ano_meta_indicador() {
+      var _this7 = this;
+
+      var body = {
+        indicador_id: this.indicador_id,
+        ano: this.ano_de_indicador_meta
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/delete_ano_meta_indicador', body).then(function (response) {
+        _this7.set_indicador(_this7.indicador_id);
+      })["catch"](function (e) {
+        _this7.errors.push(e);
+      });
+    },
+
+    /*--SHOW----------------------------*/
+    show_caixa_ano_meta: function show_caixa_ano_meta(n) {
+      if (n == 0) {
+        this.caixa_escolha_ano_para_meta = false;
+      } else {
+        this.caixa_escolha_ano_para_meta = true;
+      }
     }
   }
 });
@@ -38708,9 +38781,7 @@ var render = function() {
                   },
                   [_c("i", { staticClass: "fas fa-plus" })]
                 ),
-                _vm._v(
-                  "\n                        Perspectiva \n                    "
-                )
+                _vm._v("\n                Perspectiva \n            ")
               ])
             ])
           ]),
@@ -38782,11 +38853,11 @@ var render = function() {
                           ]
                         ),
                         _vm._v(
-                          "\n                                \n                                " +
+                          "\n                        \n                        " +
                             _vm._s(p.id) +
                             " " +
                             _vm._s(p.nome) +
-                            "\n\n                                "
+                            "\n\n                        "
                         )
                       ])
                     ]),
@@ -38930,7 +39001,7 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
-                                              return _vm.set_indicador(0)
+                                              return _vm.set_indicador(0, e.id)
                                             }
                                           }
                                         },
@@ -38943,9 +39014,11 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(
-                                    "\n                                    " +
+                                    "\n                            #" +
+                                      _vm._s(e.id) +
+                                      " - " +
                                       _vm._s(e.nome) +
-                                      "\n\n                                    "
+                                      "\n\n                            "
                                   ),
                                   _vm._v(" "),
                                   _vm._l(
@@ -38959,7 +39032,10 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
-                                              return _vm.set_indicador(ind.id)
+                                              return _vm.set_indicador(
+                                                ind.id,
+                                                e.id
+                                              )
                                             }
                                           }
                                         },
@@ -38983,9 +39059,11 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                                                " +
+                                                    "\n                                        #" +
+                                                      _vm._s(ind.id) +
+                                                      " -" +
                                                       _vm._s(ind.nome) +
-                                                      "\n                                            "
+                                                      "\n                                    "
                                                   )
                                                 ]
                                               )
@@ -39215,33 +39293,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" }
-                  },
-                  [_vm._v("Indicador")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-info btn-sm",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.show_editar_indicador()
-                      }
-                    }
-                  },
-                  [_vm._v(" editar ")]
-                ),
-                _vm._v(" "),
-                _vm._m(5)
-              ]),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39307,6 +39359,126 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
+                  !_vm.caixa_escolha_ano_para_meta
+                    ? _c("div", { staticClass: "col-md-12 espaco1" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-info btn-sm",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.show_caixa_ano_meta(1)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-plus" }),
+                              _vm._v(" ANO\n                    ")
+                            ]
+                          )
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.caixa_escolha_ano_para_meta
+                    ? _c("section", [
+                        _c("div", { staticClass: "col-md-12 espaco1" }, [
+                          _c("div", { staticClass: "card" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "card-body",
+                                staticStyle: { "background-color": "#eee" }
+                              },
+                              [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _vm._m(6),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.ano_de_indicador_meta,
+                                        expression: "ano_de_indicador_meta"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    attrs: { type: "text" },
+                                    domProps: {
+                                      value: _vm.ano_de_indicador_meta
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.ano_de_indicador_meta =
+                                          $event.target.value
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-10" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "btn btn-info btn-sm",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.inserir_novo_ano_meta_indicador()
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Inserir")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-danger btn-sm",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.delete_ano_meta_indicador()
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-secondary btn-sm btn-block",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.show_caixa_ano_meta(0)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Fechar")]
+                                    )
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 espaco1" }, [
                     _c(
                       "div",
@@ -39319,9 +39491,9 @@ var render = function() {
                               { attrs: { for: "indicador_meta_agregada" } },
                               [
                                 _vm._v(
-                                  "Meta ( " +
-                                    _vm._s(n.tipo + "_" + n.ano + "_" + n.id) +
-                                    " ) "
+                                  _vm._s(n.tipo + " " + n.ano) +
+                                    "  - #" +
+                                    _vm._s(n.id)
                                 )
                               ]
                             ),
@@ -39620,18 +39792,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Indicador")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _c("b", [
+        _vm._v(
+          "Digite o ano para inserir ( Meta, Realizado e Situação ) no indicador!"
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true

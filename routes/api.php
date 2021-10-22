@@ -89,5 +89,8 @@ Route::prefix('planejamento')->group(function(){
 
         Route::post('indicador/save', 'App\Http\Controllers\Planejamento\IndicadorController@save');
 
+        Route::post('indicador/inserir_novo_ano_meta_indicador', 'App\Http\Controllers\Planejamento\IndicadorController@inserir_novo_ano_meta_indicador');
+        Route::post('indicador/delete_ano_meta_indicador', 'App\Http\Controllers\Planejamento\IndicadorController@delete_ano_meta_indicador');
+
 });
 });
