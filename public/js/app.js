@@ -2476,6 +2476,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -38824,7 +38869,7 @@ var render = function() {
       _c("div", { staticClass: "content-header" }, [
         _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-11" }, [
+            _c("div", { staticClass: "col-md-12" }, [
               _c("h2", { staticClass: "title-5 m-b-35" }, [
                 _c(
                   "button",
@@ -38848,6 +38893,8 @@ var render = function() {
               ])
             ])
           ]),
+          _vm._v(" "),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-2" }, [
             _c(
@@ -39216,7 +39263,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39305,7 +39352,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39394,7 +39441,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39483,7 +39530,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39585,7 +39632,7 @@ var render = function() {
                               },
                               [
                                 _c("div", { staticClass: "form-group" }, [
-                                  _vm._m(4),
+                                  _vm._m(5),
                                   _vm._v(" "),
                                   _c("input", {
                                     directives: [
@@ -39895,6 +39942,107 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "col-md-1 mb-3" }, [
+                _c("label", { attrs: { for: "codigo" } }, [_vm._v("Código")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "input-sm form-control-sm form-control",
+                  attrs: {
+                    type: "text",
+                    id: "codigo",
+                    name: "codigo",
+                    placeholder: "",
+                    value: ""
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 mb-3" }, [
+                _c("label", { attrs: { for: "descricao" } }, [
+                  _vm._v("Descricão")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "input-sm form-control-sm form-control",
+                  attrs: {
+                    type: "text",
+                    id: "descricao",
+                    name: "descricao",
+                    placeholder: "",
+                    value: ""
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 mb-3" }, [
+                _c("label", { attrs: { for: "fonte" } }, [_vm._v("Fonte")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "input-sm form-control-sm form-control",
+                  attrs: {
+                    type: "text",
+                    id: "fonte",
+                    name: "fonte",
+                    placeholder: "",
+                    value: ""
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2 mb-3" }, [
+                _c("label", { attrs: { for: "dt_conclusao_realizada" } }, [
+                  _vm._v("Fim")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "input-sm form-control-sm form-control",
+                  attrs: {
+                    id: "dt_conclusao_realizada",
+                    name: "dt_conclusao_realizada",
+                    type: "text",
+                    "aria-required": "true",
+                    "aria-invalid": "false",
+                    value: ""
+                  }
+                })
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-10" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-sm",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Filtrar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-warning btn-sm",
+                attrs: { href: "#", type: "submit" }
+              },
+              [_vm._v("Limpar")]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

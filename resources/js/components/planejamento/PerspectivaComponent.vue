@@ -7,12 +7,57 @@
 
     <!-- perspectiva -->
     <div class="row">            
-        <div class="col-lg-11">
+        <div class="col-md-12">
             <h2 class="title-5 m-b-35">
                 <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal_per" v-on:click.prevent="set_perspectiva(0, null)"> 
                     <i class="fas fa-plus"></i>
                 </button>
                 Perspectiva 
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">            
+        <div class="col-md-12">
+            
+                
+
+
+                <div class="row">                    
+                    <div class="col-lg-12">
+
+                      <div class="form-row">
+                        <div class="col-md-1 mb-3">
+                           <label for="codigo">Código</label>
+                          <input type="text" class="input-sm form-control-sm form-control" id="codigo" name="codigo" placeholder="" value=""> 
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <label for="descricao">Descricão</label>
+                          <input type="text" class="input-sm form-control-sm form-control" id="descricao" name="descricao" placeholder="" value=""> 
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <label for="fonte">Fonte</label>
+                          <input type="text" class="input-sm form-control-sm form-control" id="fonte" name="fonte" placeholder="" value=""> 
+                        </div>
+                    
+                        <div class="col-md-2 mb-3">
+                          <label for="dt_conclusao_realizada">Fim</label>
+                          <input id="dt_conclusao_realizada" name="dt_conclusao_realizada" type="text" class="input-sm form-control-sm form-control" 
+                          aria-required="true" aria-invalid="false" value="">
+                        </div>
+                      </div>
+                      
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-10">
+                        <button class="btn btn-primary btn-sm" type="submit">Filtrar</button>
+                        <a href="#" class="btn btn-warning btn-sm" type="submit">Limpar</a>
+                    </div>
+                </div>
+
+
             </h2>
         </div>
     </div>
