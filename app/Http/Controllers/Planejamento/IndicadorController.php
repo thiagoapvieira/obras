@@ -11,6 +11,8 @@ class IndicadorController extends Controller
     {
         $indicador = DB::table('indicador')->where('id',$id)->get();
 
+        // dd($indicador);
+
         $array_ind = array();
         foreach ($indicador as $value) {
             $obj = new \stdClass();
@@ -22,11 +24,12 @@ class IndicadorController extends Controller
             $obj->execucao_agregada = $value->execucao_agregada;
             $obj->status = $value->status;
             $obj->responsavel = $value->responsavel;
-            $obj->ativo = $value->ativo;                
-
-                // echo $value->id;
-                // echo '<br>';
-
+            $obj->ativo = $value->ativo; 
+            $obj->complexidade = $value->complexidade;
+            $obj->utilizacao_recurso_finan = $value->utilizacao_recurso_finan;
+            $obj->capacidade_transformacao = $value->capacidade_transformacao;
+            $obj->soma_peso = $value->soma_peso;
+                
                 $meta = DB::table('indicador_meta')->where('indicador_id',$value->id)->get();
                 $array_meta = array();
                 foreach ($meta as $value) {
@@ -48,6 +51,9 @@ class IndicadorController extends Controller
 
     public function save(Request $request)
     {
+
+        // dd($request->all());
+
         //edite
         if( $request->id > 0 ){
 
@@ -57,15 +63,15 @@ class IndicadorController extends Controller
                 'realizado_acumulado' => $request->realizado_acumulado,
                 'execucao_agregada' => $request->execucao_agregada,
                 'status' => $request->status,
-                'responsavel' => $request->responsavel,
+                'responsavel' => $request->responsavel,                
+                'complexidade' => $request->complexidade,
+                'utilizacao_recurso_finan' => $request->utilizacao_recurso_finan,
+                'capacidade_transformacao' => $request->capacidade_transformacao,
+                'soma_peso' => $request->soma_peso,
             ]);
 
             foreach ($request->meta as $key => $value) {            
-                $indicador_meta_id = explode("_", $key);
-
-                //dd($indicador_meta_id[2]);
-                // dd($value);
-
+                $indicador_meta_id = explode("_", $key);                
                 $a = DB::table('indicador_meta') ->where('id', $indicador_meta_id[2])->update([
                    'valor' => $value,
                 ]);
@@ -87,6 +93,10 @@ class IndicadorController extends Controller
                 'execucao_agregada' => $request->execucao_agregada,
                 'status' => $request->status,
                 'responsavel' => $request->responsavel,
+                'complexidade' => $request->complexidade,
+                'utilizacao_recurso_finan' => $request->utilizacao_recurso_finan,
+                'capacidade' => $request->capacidade,
+                'soma_peso' => $request->soma_peso,
             ]);
 
             foreach ($request->meta as $key => $value) {            
@@ -142,7 +152,34 @@ class IndicadorController extends Controller
                'tipo' => "situacao",
                'ano' => $request->ano,
             ]);   
+        }
+
+        $found = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano',$request->ano)->where('tipo','nota')->count();        
+        if($found == 0){
+            $a = DB::table('indicador_meta')->insert([
+               'indicador_id' => $request->indicador_id,
+               'tipo' => "nota",
+               'ano' => $request->ano,
+            ]);   
+        }
+
+        $found = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano',$request->ano)->where('tipo','ponderada')->count();        
+        if($found == 0){
+            $a = DB::table('indicador_meta')->insert([
+               'indicador_id' => $request->indicador_id,
+               'tipo' => "ponderada",
+               'ano' => $request->ano,
+            ]);   
         }       
+
+        $found = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano',$request->ano)->where('tipo','problema')->count();
+        if($found == 0){
+            $a = DB::table('indicador_meta')->insert([
+               'indicador_id' => $request->indicador_id,
+               'tipo' => "problema",
+               'ano' => $request->ano,
+            ]);   
+        }
 
     }
 

@@ -19,31 +19,18 @@
 
     <div class="row">            
         <div class="col-md-12">
-            
-                
-
 
                 <div class="row">                    
                     <div class="col-lg-12">
 
-                      <div class="form-row">
-                        <div class="col-md-1 mb-3">
-                           <label for="codigo">Código</label>
-                          <input type="text" class="input-sm form-control-sm form-control" id="codigo" name="codigo" placeholder="" value=""> 
-                        </div>
+                      <div class="form-row">                        
                         <div class="col-md-3 mb-3">
                           <label for="descricao">Descricão</label>
-                          <input type="text" class="input-sm form-control-sm form-control" id="descricao" name="descricao" placeholder="" value=""> 
+                          <input type="text" class="input-sm form-control-sm form-control" v-model="descricao"  placeholder="">
                         </div>
                         <div class="col-md-3 mb-3">
                           <label for="fonte">Fonte</label>
-                          <input type="text" class="input-sm form-control-sm form-control" id="fonte" name="fonte" placeholder="" value=""> 
-                        </div>
-                    
-                        <div class="col-md-2 mb-3">
-                          <label for="dt_conclusao_realizada">Fim</label>
-                          <input id="dt_conclusao_realizada" name="dt_conclusao_realizada" type="text" class="input-sm form-control-sm form-control" 
-                          aria-required="true" aria-invalid="false" value="">
+                          <input type="text" class="input-sm form-control-sm form-control" id="fonte" name="fonte" placeholder="">
                         </div>
                       </div>
                       
@@ -52,8 +39,8 @@
 
                 <div class="row">
                     <div class="col-lg-10">
-                        <button class="btn btn-primary btn-sm" type="submit">Filtrar</button>
-                        <a href="#" class="btn btn-warning btn-sm" type="submit">Limpar</a>
+                        <button class="btn btn-primary btn-sm" v-on:click.prevent="consulta()">Filtrar</button>
+                        <button class="btn btn-warning btn-sm">Limpar</button>
                     </div>
                 </div>
 
@@ -61,6 +48,8 @@
             </h2>
         </div>
     </div>
+    <br>
+    <br>
 
     <div class="row mb-2">
         <div class="col-sm-12">
@@ -281,14 +270,42 @@
                     <label for="indicador_nome">Nome</label>
                     <input type="text" v-model="indicador_nome" class="form-control form-control-sm">
                 </div>
+            </div>
+
+            
+            <div class="col-md-6 espaco1">
+                <div class="form-group">
+                    <label for="complexidade">Complexidade</label>
+                    <input type="text" v-model="indicador_complexidade" class="form-control form-control-sm">
+                </div>
             </div>            
+            <div class="col-md-6 espaco1">
+                <div class="form-group">
+                    <label for="utilizacao_recurso_finan">utilizacao_recurso_finan</label>
+                    <input type="text" v-model="indicador_utilizacao_recurso_finan" class="form-control form-control-sm">
+                </div>
+            </div>
+
+            <div class="col-md-6 espaco1">
+                <div class="form-group">
+                    <label for="capacidade_transformacao">capacidade_transformacao</label>
+                    <input type="text" v-model="indicador_capacidade_transformacao" class="form-control form-control-sm">
+                </div>
+            </div>
+            <div class="col-md-6 espaco1">
+                <div class="form-group">
+                    <label for="soma_peso">soma_peso</label>
+                    <input type="text" v-model="indicador_soma_peso" class="form-control form-control-sm">
+                </div>
+            </div>
+            
 
             <div class="col-md-12 espaco1">                
                 <div class="form-group">
                     <label for="indicador_meta_agregada">Meta agregada</label>
                     <input type="text" v-model="indicador_meta_agregada" class="form-control form-control-sm">
                 </div>
-            </div>            
+            </div>
 
             <div  v-if="!caixa_escolha_ano_para_meta" class="col-md-12 espaco1">
                 <div class="form-group">
@@ -334,7 +351,7 @@
                     
                     <div class="col-md-4" v-for="n of indicador_meta">
                         <div class="form-group">
-                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}  - #{{n.id}}</label>
+                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
                             <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                         </div>
                     </div>
@@ -423,19 +440,22 @@
                 indicador_status: null,
                 indicador_responsavel: null,
                 indicador_meta: null,
+                indicador_complexidade: null,
+                indicador_utilizacao_recurso_finan: null,
+                indicador_capacidade_transformacao: null,
+                indicador_soma_peso: null,
 
+                //variaveis filtro
+                descricao: null,
+
+                //outros
                 box_main: true,
                 box_indicador: false,
                 visualizar_indicador: false,
                 editar_indicador: false,
-                obj_nome: null,
-                
+                obj_nome: null,                
                 ano_de_indicador_meta: null,
-                caixa_escolha_ano_para_meta: false,
-
-                // form: {
-                //   parent_id: []
-                // },
+                caixa_escolha_ano_para_meta: false,                
 
                 //objeto
                 meta_input_dinamico: {},
@@ -453,10 +473,10 @@
             consulta(){                
                 var body = {
                   plano_id: this.plano_id,
-                  //perspectiva_id: this.perspectiva_id,
+                  descricao: this.descricao,
                 };
 
-                axios.post(this.url+'api/planejamento/consulta', body)
+                axios.post(this.url+'api/planejamento/perspectiva/consulta', body)
                 .then(response => {
                     this.perspectiva = response.data;
                     console.log(response.data);
@@ -584,6 +604,10 @@
                     this.indicador_execucao_agregada = "";
                     this.indicador_status = "";
                     this.indicador_responsavel = "";
+                    this.indicador_complexidade = "";
+                    this.indicador_utilizacao_recurso_finan = "";
+                    this.indicador_capacidade_transformacao = "";
+                    this.indicador_soma_peso = "";
                     this.indicador_meta = {};
                     this.meta_input_dinamico = {};
                 }
@@ -601,7 +625,12 @@
                         this.indicador_execucao_agregada = response.data[0].execucao_agregada;
                         this.indicador_status = response.data[0].status;
                         this.indicador_responsavel = response.data[0].responsavel;
+                        this.indicador_complexidade = response.data[0].complexidade;
+                        this.indicador_utilizacao_recurso_finan = response.data[0].utilizacao_recurso_finan;
+                        this.indicador_capacidade_transformacao = response.data[0].capacidade_transformacao;
+                        this.indicador_soma_peso = response.data[0].soma_peso;
                         this.indicador_meta = response.data[0].meta;
+
 
                         for (var i = 0; i <= this.indicador_meta.length-1;  i++){
 
@@ -629,7 +658,12 @@
                   realizado_acumulado: this.indicador_realizado_acumulado,
                   execucao_agregada: this.indicador_execucao_agregada,
                   status: this.indicador_status,
-                  responsavel: this.indicador_responsavel,                  
+                  responsavel: this.indicador_responsavel,
+                  complexidade: this.indicador_complexidade,
+                  utilizacao_recurso_finan: this.indicador_utilizacao_recurso_finan,
+                  capacidade_transformacao: this.indicador_capacidade_transformacao,
+                  soma_peso: this.indicador_soma_peso,
+
                   meta: this.meta_input_dinamico,
                 };
 
