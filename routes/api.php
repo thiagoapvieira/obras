@@ -8,7 +8,7 @@ use App\Http\Controllers\Planejamento\PerspectivaController;
 use App\Http\Controllers\Planejamento\ObjetivoController;
 use App\Http\Controllers\Planejamento\EstrategiaController;
 use App\Http\Controllers\Planejamento\IndicadorController;
-
+use App\Http\Controllers\Planejamento\OrgaoController;
 
 
 Route::middleware(['cors'])->group(function(){    
@@ -17,8 +17,7 @@ Route::prefix('planejamento')->group(function(){
         Route::get('get_plano', function (){
             $a = DB::table('plano')->get();            
             return response()->json($a);
-        });
-        
+        });        
 
         //perspectiva
         Route::post('perspectiva/consulta', [PerspectivaController::class, 'consulta']);
@@ -38,6 +37,12 @@ Route::prefix('planejamento')->group(function(){
         Route::post('indicador/save', [IndicadorController::class, 'save']);
         Route::post('indicador/inserir_novo_ano_meta_indicador', [IndicadorController::class, 'inserir_novo_ano_meta_indicador']);
         Route::post('indicador/delete_ano_meta_indicador', [IndicadorController::class, 'delete_ano_meta_indicador']);
+        Route::post('indicador/incluir_responsavel', [IndicadorController::class, 'incluir_responsavel']);
+        Route::get('indicador/{indicador_id}/responsavel/all', [IndicadorController::class, 'responsavel_all']);
+
+
+        //orgao
+        Route::post('orgao/find', [OrgaoController::class, 'find']);
 
 });
 });

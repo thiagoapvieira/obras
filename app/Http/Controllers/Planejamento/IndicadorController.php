@@ -191,8 +191,54 @@ class IndicadorController extends Controller
         
     }
 
+
     public function delete( $id ){
+     
       DB::table('indicador')->where('id',$id)->update(['ativo'=>0]);
+
+    }
+
+
+    public function incluir_responsavel(Request $request){
+
+        $n = DB::table('indicador_responsavel')
+        ->where('indicador_id',$request->indicador_id)
+        ->where('orgao_id',$request->orgao_id)
+        ->count();
+
+        if($n == 0){
+            $n = DB::table('indicador_responsavel')->insert([           
+            'indicador_id' => $request->indicador_id,                    
+            'orgao_id' => $request->orgao_id,                    
+            ]); 
+        }else{
+            $n = DB::table('indicador_responsavel')
+            ->where('indicador_id',$request->indicador_id)
+            ->where('orgao_id',$request->orgao_id)
+            ->delete();
+        }
+
+        $n = DB::table('indicador_responsavel')
+        ->where('indicador_id',$request->indicador_id)        
+        ->get();        
+
+        return response()->json($n);
+    }
+
+
+    public function responsavel_all($indicador_id){
+
+        $n = DB::table('indicador_responsavel_view')
+        ->where('indicador_id',$indicador_id)        
+        ->get();        
+
+        $texto = "";
+        foreach ($n as $value) {
+            $texto = $texto . $value->sigla . ", ";
+        }        
+
+        return $texto;
+
     }
 
 

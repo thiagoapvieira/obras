@@ -272,7 +272,7 @@
                 </div>
             </div>
 
-            
+            <!--
             <div class="col-md-6 espaco1">
                 <div class="form-group">
                     <label for="complexidade">Complexidade</label>
@@ -314,6 +314,7 @@
                     </button>
                 </div>
             </div>
+            -->
 
             <!-- ************************************************************************************************* -->
             <section v-if="caixa_escolha_ano_para_meta">
@@ -362,7 +363,7 @@
             <!-- ************************************************************************************************* -->
 
 
-
+            <!--
             <div class="col-md-12 espaco1">                
                 <div class="form-group">
                     <label for="indicador_realizado_acumulado">Realizado acumulado</label>
@@ -382,20 +383,47 @@
                     <label for="indicador_status">Status</label>
                     <input type="text" v-model="indicador_status" class="form-control form-control-sm">
                 </div>                
-            </div>            
+            </div>
+            -->
 
             <div class="col-md-12 espaco1">                
                 <div class="form-group">
                     <label for="indicador_responsavel">Responsável</label>
                     <input type="text" v-model="indicador_responsavel" class="form-control form-control-sm">
+                    <button class="btn btn-secondary btn-sm" v-on:click.prevent="
+                    ()">*</button>
                 </div>                
-            </div>            
+            </div>
+
+            <div v-show="show_tabela_orgao">
+            <div class="col-md-12 espaco1">
+                <div class="form-group">                                      
+
+                    <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-borderless table-data3"> 
+                        <tbody>
+                            <tr class="tr-shadow" v-for="orgao of orgaos">
+                                <td>{{orgao.id}}</td>
+                                <td>{{orgao.sigla}}</td>
+                                <td>{{orgao.nome}}</td>
+                                <td><button class="btn btn-secondary btn-sm" v-on:click.prevent="incluir_responsavel_indicador(orgao.id)">incluir</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
 
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>        
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>
         <button type="button" class="btn btn-success btn-sm" v-on:click.prevent="save_indicador()">Salvar</button>        
       </div>
     </div>
@@ -418,6 +446,7 @@
 
                 //array
                 perspectiva: [],
+                orgaos: [],
 
                 //variaveis
                 perspectiva_id: null,
@@ -455,20 +484,71 @@
                 editar_indicador: false,
                 obj_nome: null,                
                 ano_de_indicador_meta: null,
-                caixa_escolha_ano_para_meta: false,                
+                caixa_escolha_ano_para_meta: false,
+                show_tabela_orgao: false,                
 
                 //objeto
                 meta_input_dinamico: {},
             }
         },
 
-        mounted() {
+        mounted() {            
 
             this.consulta();
+
+            this.get_orgaos("");
 
         },
 
         methods: {
+
+            get_orgaos(pesq){
+                var body = {                  
+                  pesq: pesq,
+                };
+
+                axios.post(this.url+'api/planejamento/orgao/find', body)
+                .then(response => {
+                    this.orgaos = response.data;
+                    console.log(this.orgaos);
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+            },
+
+
+            get_responsaveis(){
+
+                //consulte responsaveis
+                axios.get(this.url+'api/planejamento/indicador/'+this.indicador_id+'/responsavel/all',)
+                .then(response => {                    
+                    this.indicador_responsavel = response.data;                        
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+
+            },
+
+
+            incluir_responsavel_indicador(orgao_id){
+
+                var body = {
+                  indicador_id: this.indicador_id,
+                  orgao_id: orgao_id,
+                };
+
+                axios.post(this.url+'api/planejamento/indicador/incluir_responsavel', body)
+                .then(response => {
+                    
+                    this.get_responsaveis();
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+
+            },
 
             consulta(){                
                 var body = {
@@ -479,11 +559,11 @@
                 axios.post(this.url+'api/planejamento/perspectiva/consulta', body)
                 .then(response => {
                     this.perspectiva = response.data;
-                    console.log(response.data);
                 })
                   .catch(e => {
                     this.errors.push(e);
                 });
+
             },
 
 
@@ -638,7 +718,10 @@
                         
                             //essa foi boa! convertendo string em variavel
                             this.meta_input_dinamico[variavel] = this.indicador_meta[i].valor;
-                        }                   
+                        } 
+
+
+                        this.get_responsaveis();                  
 
                     })
                       .catch(e => {
@@ -727,6 +810,17 @@
                 }
 
             },
+
+            show_tabela_orgaos(){
+
+                let n = this.show_tabela_orgao;
+
+                if(n){
+                    this.show_tabela_orgaos = false;
+                }else{
+                    this.show_tabela_orgaos = true;
+                }                
+            }
 
         },
 
