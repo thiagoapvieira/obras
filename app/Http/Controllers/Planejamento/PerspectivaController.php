@@ -14,12 +14,12 @@ class PerspectivaController extends Controller
 
 
     public function consulta (Request $request)
-    {        
+    {
         $sql  = " select P.id, P.plano_id, P.nome, P.ativo ";
         $sql .= " from perspectiva P ";
-        $sql .= " inner join objetivo O on O.per_id = P.id ";
-        $sql .= " inner join estrategia E on E.obj_id = O.id ";
-        $sql .= " inner join indicador I on I.est_id = E.id ";
+        $sql .= " left join objetivo O on O.per_id = P.id ";
+        $sql .= " left join estrategia E on E.obj_id = O.id ";
+        $sql .= " left join indicador I on I.est_id = E.id ";
         $sql .= " where 1 = 1 ";
         $sql .= " and P.ativo = 1 ";
         $sql .= " and P.plano_id = ". $request->plano_id;
@@ -29,12 +29,12 @@ class PerspectivaController extends Controller
             $sql .= " and P.nome like '%".$request->descricao."%' ";
           }
         }
-        
+
         $sql .= " group by P.id, P.plano_id, P.nome, P.ativo ";
 
         $perspectiva = DB::select($sql);
-        
 
+        // dd($perspectiva);
 
         $array_per = array();
         foreach ($perspectiva as $value) {
@@ -51,13 +51,13 @@ class PerspectivaController extends Controller
                     $obj2->id = $value->id;
                     $obj2->per_id = $value->per_id;
                     $obj2->nome = $value->nome;
-                    $obj2->ativo = $value->ativo;                        
+                    $obj2->ativo = $value->ativo;
 
                         $estrategia = DB::table('estrategia')->where('ativo',1)->where('obj_id',$value->id)->get();
                         $array_est = array();
                         foreach ($estrategia as $value) {
                             $obj3 = new \stdClass();
-                            $obj3->id = $value->id;                            
+                            $obj3->id = $value->id;
                             $obj3->nome = $value->nome;
                             array_push($array_est, $obj3);
 
@@ -67,7 +67,7 @@ class PerspectivaController extends Controller
                                 $obj4 = new \stdClass();
                                 $obj4->id = $value->id;
                                 $obj4->est_id = $value->est_id;
-                                $obj4->nome = $value->nome;  
+                                $obj4->nome = $value->nome;
                                 $obj4->meta_agregada = $value->meta_agregada;
                                 $obj4->realizado_acumulado = $value->realizado_acumulado;
                                 $obj4->execucao_agregada = $value->execucao_agregada;
@@ -101,21 +101,21 @@ class PerspectivaController extends Controller
 
           DB::table('perspectiva') ->where('id', $request->id)->update([
               'nome' => $request->nome,
-          ]);          
+          ]);
 
           return 'edicao';
       }
-      
+
       //insert
       if( $request->id == 0 ){
 
-          $n = DB::table('perspectiva') ->insertGetId([              
-              'plano_id' => $request->plano_id,              
-              'nome' => $request->nome,              
+          $n = DB::table('perspectiva') ->insertGetId([
+              'plano_id' => $request->plano_id,
+              'nome' => $request->nome,
           ]);
 
           return 'insert';
-      } 
+      }
     }
 
 

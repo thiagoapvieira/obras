@@ -11,13 +11,13 @@ use App\Http\Controllers\Planejamento\IndicadorController;
 use App\Http\Controllers\Planejamento\OrgaoController;
 
 
-Route::middleware(['cors'])->group(function(){    
+Route::middleware(['cors'])->group(function(){
 Route::prefix('planejamento')->group(function(){
 
         Route::get('get_plano', function (){
-            $a = DB::table('plano')->get();            
+            $a = DB::table('plano')->get();
             return response()->json($a);
-        });        
+        });
 
         //perspectiva
         Route::post('perspectiva/consulta', [PerspectivaController::class, 'consulta']);

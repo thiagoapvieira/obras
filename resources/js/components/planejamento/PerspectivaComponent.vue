@@ -6,24 +6,24 @@
 <div class="container-fluid">
 
     <!-- perspectiva -->
-    <div class="row">            
+    <div class="row">
         <div class="col-md-12">
             <h2 class="title-5 m-b-35">
-                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal_per" v-on:click.prevent="set_perspectiva(0, null)"> 
+                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal_per" v-on:click.prevent="set_perspectiva(0, null)">
                     <i class="fas fa-plus"></i>
                 </button>
-                Perspectiva 
+                Perspectiva
             </h2>
         </div>
     </div>
 
-    <div class="row">            
+    <div class="row">
         <div class="col-md-12">
 
-                <div class="row">                    
+                <div class="row">
                     <div class="col-lg-12">
 
-                      <div class="form-row">                        
+                      <div class="form-row">
                         <div class="col-md-3 mb-3">
                           <label for="descricao">Descricão</label>
                           <input type="text" class="input-sm form-control-sm form-control" v-model="descricao"  placeholder="">
@@ -33,7 +33,7 @@
                           <input type="text" class="input-sm form-control-sm form-control" id="fonte" name="fonte" placeholder="">
                         </div>
                       </div>
-                      
+
                     </div>
                 </div>
 
@@ -53,19 +53,19 @@
 
     <div class="row mb-2">
         <div class="col-sm-12">
-            
+
             <div class="card" v-for="(p, key) of perspectiva">
                 <div class="card-header">
-                    <strong class="card-title"> 
+                    <strong class="card-title">
 
                         <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
 
                             <!-- edite perspectiva -->
                             <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_per"
-                            v-on:click.prevent="set_perspectiva(p.id, p.nome)"> 
+                            v-on:click.prevent="set_perspectiva(p.id, p.nome)">
                                 <i class="fa fa-pencil-square-o"></i>
                             </a>
-                            
+
                             <!-- delete perspectiva -->
                             <button class="btn btn-outline-danger" v-on:click.prevent="delete_perspectiva(p.id)">
                                 <i class="fas fa-trash"></i>
@@ -73,25 +73,25 @@
 
                             <!-- inserir objetivo -->
                             <a href="#" class="btn btn-outline-info" data-toggle="modal" data-target="#modal_obj"
-                            v-on:click.prevent="set_objetivo(0, p.id, '')"> 
+                            v-on:click.prevent="set_objetivo(0, p.id, '')">
                                 <i class="fas fa-plus"></i>
                             </a>
 
                         </div>
-                        
-                        {{p.nome}}                        
+
+                        {{p.nome}}
 
                     </strong>
                 </div>
                 <div class="card-body" v-for="(n, key2) of perspectiva[key].objeto">
-                    
+
                         <!-- objetivos -->
                         <div style="margin-bottom: 15px;">
                             <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
 
                                 <!-- edite objetivo -->
                                 <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_obj"
-                                   v-on:click.prevent="set_objetivo(n.id, n.per_id, n.nome)"> 
+                                   v-on:click.prevent="set_objetivo(n.id, n.per_id, n.nome)">
                                    <i class="fas fa-pencil-square-o"></i>
                                 </a>
 
@@ -108,14 +108,14 @@
                             </div>
                             <b> {{n.nome}} </b>
                         </div>
-                        
+
                         <!-- Estrategia -->
                         <div style="margin-left: 15px; margin-bottom: 10px;" v-for="(e,key3) of perspectiva[key].objeto[key2].estrategia">
                             <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
 
                                 <!-- edite estrategia -->
                                 <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_est"
-                                   v-on:click.prevent="set_estrategia(e.id, e.obj_id, e.nome)"> 
+                                   v-on:click.prevent="set_estrategia(e.id, e.obj_id, e.nome)">
                                    <i class="fas fa-pencil-square-o"></i>
                                 </a>
 
@@ -133,7 +133,7 @@
                             #{{e.id}} - {{e.nome}}
 
                             <!-- indicadores -->
-                            <div class="indicadores" v-for="ind of perspectiva[key].objeto[key2].estrategia[key3].indicador" 
+                            <div class="indicadores" v-for="ind of perspectiva[key].objeto[key2].estrategia[key3].indicador"
                             v-on:click.prevent="set_indicador(ind.id,e.id)">
                                 <div style="margin: 10px 0 10px 30px;">
                                     <a href="#" data-toggle="modal" data-target="#modal_ind">
@@ -142,7 +142,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                 </div>
             </div>
 
@@ -158,25 +158,24 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Perspectiva</h5>        
-
+        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Perspectiva</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">        
+      <div class="modal-body">
         <div class="row">
         <div class="col-md-12 espaco1">
             <div class="form-group">
                 <label for="exampleInputEmail1">Título</label>
                 <input type="text" v-model="perspectiva_nome" class="form-control form-control-sm">
-            </div>                
-        </div> 
+            </div>
+        </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
-        <button type="button" class="btn btn-success" v-on:click.prevent="save_perspectiva()">Salvar</button>        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-success" v-on:click.prevent="save_perspectiva()">Salvar</button>
       </div>
     </div>
   </div>
@@ -188,29 +187,24 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Objetivo</h5>        
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLabel">Novo/Editar Objetivo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        
         <div class="row">
             <div class="col-md-12 espaco1">
-
                 <div class="form-group">
                     <label for="exampleInputEmail1">Título</label>
                     <input type="text" v-model="objetivo_nome" class="form-control form-control-sm">
                 </div>
-                
-            </div> 
-        </div>        
-
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
-        <button type="button" class="btn btn-success" v-on:click.prevent="save_objetivo()">Salvar</button>        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-success" v-on:click.prevent="save_objetivo()">Salvar</button>
       </div>
     </div>
   </div>
@@ -228,7 +222,7 @@
         </button>
       </div>
       <div class="modal-body">
-        
+
         <div class="row">
             <div class="col-md-12 espaco1">
 
@@ -236,14 +230,14 @@
                     <label for="exampleInputEmail1">Título</label>
                     <input type="text" v-model="estrategia_nome" class="form-control form-control-sm">
                 </div>
-                
-            </div> 
-        </div>        
+
+            </div>
+        </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
-        <button type="button" class="btn btn-success" v-on:click.prevent="save_estrategia()">Salvar</button>        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-success" v-on:click.prevent="save_estrategia()">Salvar</button>
       </div>
     </div>
   </div>
@@ -257,28 +251,25 @@
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Indicador</h5>
         <!-- <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_editar_indicador()"> editar </button> -->
-
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">        
-        
+      <div class="modal-body">
+
         <div class="row">
-            <div class="col-md-12 espaco1">                
+            <div class="col-md-12 espaco1">
                 <div class="form-group">
                     <label for="indicador_nome">Nome</label>
                     <input type="text" v-model="indicador_nome" class="form-control form-control-sm">
                 </div>
             </div>
-
-            <!--
             <div class="col-md-6 espaco1">
                 <div class="form-group">
                     <label for="complexidade">Complexidade</label>
                     <input type="text" v-model="indicador_complexidade" class="form-control form-control-sm">
                 </div>
-            </div>            
+            </div>
             <div class="col-md-6 espaco1">
                 <div class="form-group">
                     <label for="utilizacao_recurso_finan">utilizacao_recurso_finan</label>
@@ -298,9 +289,9 @@
                     <input type="text" v-model="indicador_soma_peso" class="form-control form-control-sm">
                 </div>
             </div>
-            
 
-            <div class="col-md-12 espaco1">                
+
+            <div class="col-md-12 espaco1">
                 <div class="form-group">
                     <label for="indicador_meta_agregada">Meta agregada</label>
                     <input type="text" v-model="indicador_meta_agregada" class="form-control form-control-sm">
@@ -309,25 +300,24 @@
 
             <div  v-if="!caixa_escolha_ano_para_meta" class="col-md-12 espaco1">
                 <div class="form-group">
-                    <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_caixa_ano_meta(1)"> 
+                    <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_caixa_ano_meta(1)">
                         <i class="fas fa-plus"></i> ANO
                     </button>
                 </div>
             </div>
-            -->
 
             <!-- ************************************************************************************************* -->
             <section v-if="caixa_escolha_ano_para_meta">
                 <div class="col-md-12 espaco1">
-                    
+
                     <div class="card">
-                      <div class="card-body" style="background-color: #eee;">                        
-                                        
+                      <div class="card-body" style="background-color: #eee;">
+
                             <div class="form-group">
                                 <label>
                                 <b>Digite o ano para inserir ( Meta, Realizado e Situação ) no indicador!</b>
-                                </label>                                
-                                <input type="text" v-model="ano_de_indicador_meta" class="form-control form-control-sm">                                
+                                </label>
+                                <input type="text" v-model="ano_de_indicador_meta" class="form-control form-control-sm">
                             </div>
 
                             <div class="row">
@@ -335,73 +325,66 @@
                                     <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="inserir_novo_ano_meta_indicador()">Inserir</a>
                                     <button class="btn btn-danger btn-sm" v-on:click.prevent="delete_ano_meta_indicador()">Delete</button>
                                 </div>
-                                <div class="col-2">                                    
+                                <div class="col-2">
                                     <button class="btn btn-secondary btn-sm btn-block" v-on:click.prevent="show_caixa_ano_meta(0)">Fechar</button>
                                 </div>
                             </div>
 
                       </div>
                     </div>
-                    
-                </div>
-            </section>    
 
-            
+                </div>
+            </section>
+
             <div class="col-md-12 espaco1">
                 <div class="row">
-                    
                     <div class="col-md-4" v-for="n of indicador_meta">
                         <div class="form-group">
                             <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
                             <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                         </div>
                     </div>
-                    
                 </div>
-                <br>               
+                <br>
             </div>
             <!-- ************************************************************************************************* -->
 
-
-            <!--
-            <div class="col-md-12 espaco1">                
+            <div class="col-md-12 espaco1">
                 <div class="form-group">
                     <label for="indicador_realizado_acumulado">Realizado acumulado</label>
                     <input type="text" v-model="indicador_realizado_acumulado" class="form-control form-control-sm">
-                </div>                
+                </div>
             </div>
 
-            <div class="col-md-12 espaco1">                
+            <div class="col-md-12 espaco1">
                 <div class="form-group">
                     <label for="indicador_execucao_agregada">Execução agregada</label>
                     <input type="text" v-model="indicador_execucao_agregada" class="form-control form-control-sm">
-                </div>                
+                </div>
             </div>
 
-            <div class="col-md-12 espaco1">                
+            <div class="col-md-12 espaco1">
                 <div class="form-group">
                     <label for="indicador_status">Status</label>
                     <input type="text" v-model="indicador_status" class="form-control form-control-sm">
-                </div>                
+                </div>
             </div>
-            -->
 
-            <div class="col-md-12 espaco1">                
+            <div class="col-md-12 espaco1">
                 <div class="form-group">
                     <label for="indicador_responsavel">Responsável</label>
                     <input type="text" v-model="indicador_responsavel" class="form-control form-control-sm">
-                    <button class="btn btn-secondary btn-sm" v-on:click.prevent="
-                    ()">*</button>
-                </div>                
+                    <button class="btn btn-secondary btn-sm" v-on:click.prevent="show_tabela_orgaos()">*</button>
+                </div>
             </div>
 
             <div v-show="show_tabela_orgao">
             <div class="col-md-12 espaco1">
-                <div class="form-group">                                      
+                <div class="form-group">
 
                     <div class="row">
                     <div class="col-md-12">
-                    <table class="table table-borderless table-data3"> 
+                    <table class="table table-borderless table-data3">
                         <tbody>
                             <tr class="tr-shadow" v-for="orgao of orgaos">
                                 <td>{{orgao.id}}</td>
@@ -424,7 +407,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-success btn-sm" v-on:click.prevent="save_indicador()">Salvar</button>        
+        <button type="button" class="btn btn-success btn-sm" v-on:click.prevent="save_indicador()">Salvar</button>
       </div>
     </div>
   </div>
@@ -442,7 +425,7 @@
         props: ['url', 'plano_id'],
 
         data(){
-            return{    
+            return{
 
                 //array
                 perspectiva: [],
@@ -482,17 +465,17 @@
                 box_indicador: false,
                 visualizar_indicador: false,
                 editar_indicador: false,
-                obj_nome: null,                
+                obj_nome: null,
                 ano_de_indicador_meta: null,
                 caixa_escolha_ano_para_meta: false,
-                show_tabela_orgao: false,                
+                show_tabela_orgao: false,
 
                 //objeto
                 meta_input_dinamico: {},
             }
         },
 
-        mounted() {            
+        mounted() {
 
             this.consulta();
 
@@ -503,7 +486,7 @@
         methods: {
 
             get_orgaos(pesq){
-                var body = {                  
+                var body = {
                   pesq: pesq,
                 };
 
@@ -522,8 +505,8 @@
 
                 //consulte responsaveis
                 axios.get(this.url+'api/planejamento/indicador/'+this.indicador_id+'/responsavel/all',)
-                .then(response => {                    
-                    this.indicador_responsavel = response.data;                        
+                .then(response => {
+                    this.indicador_responsavel = response.data;
                 })
                   .catch(e => {
                     this.errors.push(e);
@@ -541,7 +524,7 @@
 
                 axios.post(this.url+'api/planejamento/indicador/incluir_responsavel', body)
                 .then(response => {
-                    
+
                     this.get_responsaveis();
                 })
                   .catch(e => {
@@ -550,7 +533,7 @@
 
             },
 
-            consulta(){                
+            consulta(){
                 var body = {
                   plano_id: this.plano_id,
                   descricao: this.descricao,
@@ -569,9 +552,9 @@
 
             //--------perspectiva--------------------------------------------//
             set_perspectiva(id, nome){
-                this.perspectiva_id = id;                
+                this.perspectiva_id = id;
                 this.perspectiva_nome = nome;
-            },            
+            },
 
             save_perspectiva(){
                 var body = {
@@ -680,7 +663,7 @@
                     this.indicador_est_id = est_id;
                     this.indicador_nome = "";
                     this.indicador_meta_agregada = "";
-                    this.indicador_realizado_acumulado = "" 
+                    this.indicador_realizado_acumulado = ""
                     this.indicador_execucao_agregada = "";
                     this.indicador_status = "";
                     this.indicador_responsavel = "";
@@ -701,7 +684,7 @@
                         this.indicador_est_id = response.data[0].est_id;
                         this.indicador_nome = response.data[0].nome;
                         this.indicador_meta_agregada = response.data[0].meta_agregada;
-                        this.indicador_realizado_acumulado = response.data[0].realizado_acumulado; 
+                        this.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
                         this.indicador_execucao_agregada = response.data[0].execucao_agregada;
                         this.indicador_status = response.data[0].status;
                         this.indicador_responsavel = response.data[0].responsavel;
@@ -715,27 +698,27 @@
                         for (var i = 0; i <= this.indicador_meta.length-1;  i++){
 
                             var variavel = this.indicador_meta[i].tipo+'_'+this.indicador_meta[i].ano+'_'+this.indicador_meta[i].id;
-                        
+
                             //essa foi boa! convertendo string em variavel
                             this.meta_input_dinamico[variavel] = this.indicador_meta[i].valor;
-                        } 
+                        }
 
 
-                        this.get_responsaveis();                  
+                        this.get_responsaveis();
 
                     })
                       .catch(e => {
                         this.errors.push(e);
                     });
                 }
-                      
+
             },
 
 
             save_indicador(){
-                var body = {                  
+                var body = {
                   id : this.indicador_id,
-                  est_id: this.indicador_est_id, 
+                  est_id: this.indicador_est_id,
                   nome: this.indicador_nome,
                   meta_agregada: this.indicador_meta_agregada,
                   realizado_acumulado: this.indicador_realizado_acumulado,
@@ -765,14 +748,14 @@
 
             inserir_novo_ano_meta_indicador(){
 
-                var body = {                  
+                var body = {
                   indicador_id : this.indicador_id,
-                  ano : this.ano_de_indicador_meta,                  
+                  ano : this.ano_de_indicador_meta,
                 };
 
                 axios.post(this.url+'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body)
                 .then(response => {
-                    this.set_indicador(this.indicador_id);                    
+                    this.set_indicador(this.indicador_id);
                 })
                   .catch(e => {
                     this.errors.push(e);
@@ -782,9 +765,9 @@
 
             delete_ano_meta_indicador(){
 
-                var body = {                  
+                var body = {
                   indicador_id : this.indicador_id,
-                  ano : this.ano_de_indicador_meta,                  
+                  ano : this.ano_de_indicador_meta,
                 };
 
                 axios.post(this.url+'api/planejamento/indicador/delete_ano_meta_indicador', body)
@@ -802,7 +785,7 @@
             /*--SHOW----------------------------*/
 
             show_caixa_ano_meta(n){
-                
+
                 if(n == 0){
                     this.caixa_escolha_ano_para_meta = false;
                 }else{
@@ -819,7 +802,7 @@
                     this.show_tabela_orgaos = false;
                 }else{
                     this.show_tabela_orgaos = true;
-                }                
+                }
             }
 
         },
@@ -833,5 +816,5 @@
     .espaco1{
         margin-bottom: 10px;
     }
-    
+
 </style>
