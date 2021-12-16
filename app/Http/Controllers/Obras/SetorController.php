@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Obras;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,16 +28,16 @@ class SetorController extends Controller
     {
       $n = DB::table('setor')->insertGetId(
         ['nome' => $request->nome, ]
-      );       
+      );
 
       return redirect('obras/setor')->with('msg', 'Registro salvo com sucesso!');
     }
 
     public function edit($id)
-    {      
-      $setor = DB::table('setor')->where('id', $id)->first();      
+    {
+      $setor = DB::table('setor')->where('id', $id)->first();
 
-      return view('obras.setor.setor_frm',['setor'=>$setor]);      
+      return view('obras.setor.setor_frm',['setor'=>$setor]);
     }
 
     public function update(Request $request, $id)
@@ -47,13 +47,13 @@ class SetorController extends Controller
         ['nome' => $request->nome, ]
       );
 
-      return redirect('obras/setor/'.$id.'/editar')->with('msg', 'Registro salvo com sucesso!');      
+      return redirect('obras/setor/'.$id.'/editar')->with('msg', 'Registro salvo com sucesso!');
     }
 
 
     public function delete($id){
       DB::table('setor')->where('id', $id)->delete();
-      
+
       return redirect('obras/setor');
     }
 
