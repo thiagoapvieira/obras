@@ -1,0 +1,129 @@
+<?php
+namespace App\Http\Controllers\Planejamento;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class ConsultaController extends Controller
+{
+
+    public function consulta2 (Request $request)
+    {
+        $sql  = " select p.id, p.nome as per_nome ";
+        $sql .= " from perspectiva p ";
+        $sql .= " join objetivo o on o.per_id = p.id ";
+        $sql .= " join estrategia e on e.obj_id = o.id ";
+        $sql .= " join indicador i on i.est_id = e.id ";
+        $sql .= " where 1 = 1 ";
+        $sql .= " and p.plano_id = 3 ";
+        //$sql .= " and i.nome like '%uti%' ";
+        $perspectiva = DB::select($sql);
+        // dd($perspectiva);
+
+        foreach($perspectiva as $p){
+
+            //dd($p);
+            echo $p->per_nome;
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    public function consulta (Request $request)
+    {
+        //dd($request->all());
+
+        $sql  = " select P.id, P.plano_id, P.nome, P.ativo ";
+        $sql .= " from perspectiva P ";
+        $sql .= " left join objetivo O on O.per_id = P.id ";
+        $sql .= " left join estrategia E on E.obj_id = O.id ";
+        $sql .= " left join indicador I on I.est_id = E.id ";
+        $sql .= " where 1 = 1 ";
+        $sql .= " and P.ativo = 1 ";
+        $sql .= " and P.plano_id = ". $request->plano_id;
+
+        //indicador
+        if( isset($request->descricao) ){
+          if($request->descricao <> null){
+            $sql .= " and I.nome like '%".$request->descricao."%' ";
+          }
+        }
+
+        $sql .= " group by P.id, P.plano_id, P.nome, P.ativo ";
+
+        $perspectiva = DB::select($sql);
+        // dd($perspectiva);
+
+        $array_per = array();
+        foreach ($perspectiva as $value) {
+            $obj = new \stdClass();
+            $obj->id = $value->id;
+            $obj->plano_id = $value->plano_id;
+            $obj->nome = $value->nome;
+            $obj->ativo = $value->ativo;
+
+                $objetivo = DB::table('objetivo')->where('ativo',1)->where('per_id',$value->id)->get();
+                $array_obj = array();
+                foreach ($objetivo as $value) {
+                    $obj2 = new \stdClass();
+                    $obj2->id = $value->id;
+                    $obj2->per_id = $value->per_id;
+                    $obj2->nome = $value->nome;
+                    $obj2->ativo = $value->ativo;
+
+                        $estrategia = DB::table('estrategia')->where('ativo',1)->where('obj_id',$value->id)->get();
+                        $array_est = array();
+                        foreach ($estrategia as $value) {
+                            $obj3 = new \stdClass();
+                            $obj3->id = $value->id;
+                            $obj3->nome = $value->nome;
+                            array_push($array_est, $obj3);
+
+                            $query = DB::table('indicador')->where('ativo',1);
+                            $query->where('est_id',$value->id);
+                            $query->where('nome','like','%'.$request->descricao.'%');
+                            $indicador = $query->get();
+
+                            $array_ind = array();
+                            foreach ($indicador as $value) {
+                                $obj4 = new \stdClass();
+                                $obj4->id = $value->id;
+                                $obj4->est_id = $value->est_id;
+                                $obj4->nome = $value->nome;
+                                $obj4->meta_agregada = $value->meta_agregada;
+                                $obj4->realizado_acumulado = $value->realizado_acumulado;
+                                $obj4->execucao_agregada = $value->execucao_agregada;
+                                $obj4->status = $value->status;
+                                $obj4->responsavel = $value->responsavel;
+                                $obj4->ativo = $value->ativo;
+                                array_push($array_ind, $obj4);
+                            }
+                            $obj3->indicador = $array_ind;
+
+                        }
+                        $obj2->estrategia = $array_est;
+
+
+                    array_push($array_obj, $obj2);
+                }
+
+                $obj->objeto = $array_obj;
+
+            array_push($array_per, $obj);
+        }
+
+        return response()->json($array_per);
+    }
+
+}

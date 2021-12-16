@@ -139,6 +139,10 @@
                                     <a href="#" data-toggle="modal" data-target="#modal_ind">
                                         #{{ind.id}} -{{ind.nome}}
                                     </a>
+                                    <!-- delete indicador -->
+                                    <button class="btn btn-outline-danger btn-sm" v-on:click.prevent="delete_indicador(ind.id)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -339,10 +343,31 @@
             <div class="col-md-12 espaco1">
                 <div class="row">
                     <div class="col-md-4" v-for="n of indicador_meta">
-                        <div class="form-group">
+                        <div v-if="n.tipo !='problema' && n.tipo !='situacao'" class="form-group">
                             <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
                             <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                         </div>
+
+                        <div v-if="n.tipo =='problema'" class="form-group">
+                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
+                            <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
+                                <option disabled value="">Escolha um item</option>
+                                <option v-for="p in problema" v-bind:value="p.id">
+                                    {{ p.nome }}
+                                </option>
+                            </select>
+                        </div>
+
+                         <div v-if="n.tipo =='situacao'" class="form-group">
+                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
+                            <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
+                                <option disabled value="">Escolha um item</option>
+                                <option v-for="option in situacoes" v-bind:value="option.value">
+                                    {{ option.text }}
+                                </option>
+                            </select>
+                        </div>
+
                     </div>
                 </div>
                 <br>
@@ -371,15 +396,25 @@
             </div>
 
             <div class="col-md-12 espaco1">
-                <div class="form-group">
-                    <label for="indicador_responsavel">Responsável</label>
-                    <input type="text" v-model="indicador_responsavel" class="form-control form-control-sm">
-                    <button class="btn btn-secondary btn-sm" v-on:click.prevent="show_tabela_orgaos()">*</button>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="indicador_responsavel">Responsável</label>
+                        <input type="text" v-model="indicador_responsavel" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="indicador_responsavel" style="color:transparent;">Responsável</label>
+                        <button class="btn btn-warning btn-sm" v-on:click.prevent="show_orgaos()">incluir/excluir</button>
+                    </div>
                 </div>
             </div>
+            </div>
+
 
             <div v-show="show_tabela_orgao">
-            <div class="col-md-12 espaco1">
+            <div class="col-md-12">
                 <div class="form-group">
 
                     <div class="row">
@@ -428,8 +463,10 @@
             return{
 
                 //array
+                errors: [],
                 perspectiva: [],
                 orgaos: [],
+                problema: [],
 
                 //variaveis
                 perspectiva_id: null,
@@ -472,18 +509,35 @@
 
                 //objeto
                 meta_input_dinamico: {},
+                meta_select_dinamico: {},
+
+
+                situacoes: [
+                    { text: 'Ativo - exemplo01', value: 'A' },
+                    { text: 'Negativo - exemplo02', value: 'B' },
+                ],
+
+
             }
         },
 
         mounted() {
-
             this.consulta();
-
             this.get_orgaos("");
-
+            this.get_problema();
         },
 
         methods: {
+
+            get_problema(){
+                axios.get(this.url+'api/planejamento/problema/all',)
+                .then(response => {
+                    this.problema = response.data;
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+            },
 
             get_orgaos(pesq){
                 var body = {
@@ -539,7 +593,7 @@
                   descricao: this.descricao,
                 };
 
-                axios.post(this.url+'api/planejamento/perspectiva/consulta', body)
+                axios.post(this.url+'api/planejamento/consulta', body)
                 .then(response => {
                     this.perspectiva = response.data;
                 })
@@ -633,10 +687,8 @@
 
                 axios.post(this.url+'api/planejamento/save_estrategia', body)
                 .then(response => {
-
                     console.log(response.data);
                     this.consulta();
-
                 })
                   .catch(e => {
                     this.errors.push(e);
@@ -701,6 +753,9 @@
 
                             //essa foi boa! convertendo string em variavel
                             this.meta_input_dinamico[variavel] = this.indicador_meta[i].valor;
+
+                            this.meta_select_dinamico[variavel] = this.indicador_meta[i].valor;
+
                         }
 
 
@@ -781,6 +836,17 @@
             },
 
 
+            delete_indicador(id){
+                axios.get(this.url+'api/planejamento/indicador/'+id+'/delete')
+                .then(response => {
+                    this.consulta();
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+            },
+
+
 
             /*--SHOW----------------------------*/
 
@@ -794,14 +860,14 @@
 
             },
 
-            show_tabela_orgaos(){
+            show_orgaos(){
 
                 let n = this.show_tabela_orgao;
 
                 if(n){
-                    this.show_tabela_orgaos = false;
+                    this.show_tabela_orgao = false;
                 }else{
-                    this.show_tabela_orgaos = true;
+                    this.show_tabela_orgao = true;
                 }
             }
 

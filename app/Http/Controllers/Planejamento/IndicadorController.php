@@ -185,10 +185,9 @@ class IndicadorController extends Controller
 
 
 
-    public function delete_ano_meta_indicador(Request $request){
-
+    public function delete_ano_meta_indicador(Request $request)
+    {
         $a = DB::table('indicador_meta')->where('indicador_id',$request->indicador_id)->where('ano', $request->ano)->delete();
-
     }
 
 

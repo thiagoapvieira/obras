@@ -2549,14 +2549,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
   data: function data() {
     return {
       //array
+      errors: [],
       perspectiva: [],
       orgaos: [],
+      problema: [],
       //variaveis
       perspectiva_id: null,
       perspectiva_nome: null,
@@ -2591,61 +2628,79 @@ __webpack_require__.r(__webpack_exports__);
       caixa_escolha_ano_para_meta: false,
       show_tabela_orgao: false,
       //objeto
-      meta_input_dinamico: {}
+      meta_input_dinamico: {},
+      meta_select_dinamico: {},
+      situacoes: [{
+        text: 'Ativo - exemplo01',
+        value: 'A'
+      }, {
+        text: 'Negativo - exemplo02',
+        value: 'B'
+      }]
     };
   },
   mounted: function mounted() {
     this.consulta();
     this.get_orgaos("");
+    this.get_problema();
   },
   methods: {
-    get_orgaos: function get_orgaos(pesq) {
+    get_problema: function get_problema() {
       var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/problema/all').then(function (response) {
+        _this.problema = response.data;
+      })["catch"](function (e) {
+        _this.errors.push(e);
+      });
+    },
+    get_orgaos: function get_orgaos(pesq) {
+      var _this2 = this;
 
       var body = {
         pesq: pesq
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/orgao/find', body).then(function (response) {
-        _this.orgaos = response.data;
-        console.log(_this.orgaos);
-      })["catch"](function (e) {
-        _this.errors.push(e);
-      });
-    },
-    get_responsaveis: function get_responsaveis() {
-      var _this2 = this;
-
-      //consulte responsaveis
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + this.indicador_id + '/responsavel/all').then(function (response) {
-        _this2.indicador_responsavel = response.data;
+        _this2.orgaos = response.data;
+        console.log(_this2.orgaos);
       })["catch"](function (e) {
         _this2.errors.push(e);
       });
     },
-    incluir_responsavel_indicador: function incluir_responsavel_indicador(orgao_id) {
+    get_responsaveis: function get_responsaveis() {
       var _this3 = this;
+
+      //consulte responsaveis
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + this.indicador_id + '/responsavel/all').then(function (response) {
+        _this3.indicador_responsavel = response.data;
+      })["catch"](function (e) {
+        _this3.errors.push(e);
+      });
+    },
+    incluir_responsavel_indicador: function incluir_responsavel_indicador(orgao_id) {
+      var _this4 = this;
 
       var body = {
         indicador_id: this.indicador_id,
         orgao_id: orgao_id
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/incluir_responsavel', body).then(function (response) {
-        _this3.get_responsaveis();
+        _this4.get_responsaveis();
       })["catch"](function (e) {
-        _this3.errors.push(e);
+        _this4.errors.push(e);
       });
     },
     consulta: function consulta() {
-      var _this4 = this;
+      var _this5 = this;
 
       var body = {
         plano_id: this.plano_id,
         descricao: this.descricao
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/perspectiva/consulta', body).then(function (response) {
-        _this4.perspectiva = response.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/consulta', body).then(function (response) {
+        _this5.perspectiva = response.data;
       })["catch"](function (e) {
-        _this4.errors.push(e);
+        _this5.errors.push(e);
       });
     },
     //--------perspectiva--------------------------------------------//
@@ -2654,7 +2709,7 @@ __webpack_require__.r(__webpack_exports__);
       this.perspectiva_nome = nome;
     },
     save_perspectiva: function save_perspectiva() {
-      var _this5 = this;
+      var _this6 = this;
 
       var body = {
         id: this.perspectiva_id,
@@ -2662,20 +2717,20 @@ __webpack_require__.r(__webpack_exports__);
         nome: this.perspectiva_nome
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/perspectiva/save', body).then(function (response) {
-        _this5.consulta();
+        _this6.consulta();
       })["catch"](function (e) {
-        _this5.errors.push(e);
+        _this6.errors.push(e);
       });
     },
     delete_perspectiva: function delete_perspectiva(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/perspectiva/delete/' + id).then(function (response) {
         console.log(response.data);
 
-        _this6.consulta();
+        _this7.consulta();
       })["catch"](function (e) {
-        _this6.errors.push(e);
+        _this7.errors.push(e);
       });
     },
     //------ objetivo ----------------------------------------------//
@@ -2685,7 +2740,7 @@ __webpack_require__.r(__webpack_exports__);
       this.objetivo_nome = nome;
     },
     save_objetivo: function save_objetivo() {
-      var _this7 = this;
+      var _this8 = this;
 
       var body = {
         id: this.objetivo_id,
@@ -2693,20 +2748,20 @@ __webpack_require__.r(__webpack_exports__);
         nome: this.objetivo_nome
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_objetivo', body).then(function (response) {
-        _this7.consulta();
+        _this8.consulta();
       })["catch"](function (e) {
-        _this7.errors.push(e);
+        _this8.errors.push(e);
       });
     },
     delete_objetivo: function delete_objetivo(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/objetivo/delete/' + id).then(function (response) {
         console.log(response.data);
 
-        _this8.consulta();
+        _this9.consulta();
       })["catch"](function (e) {
-        _this8.errors.push(e);
+        _this9.errors.push(e);
       });
     },
     //------ estrategia -------------------------------------------//
@@ -2719,7 +2774,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.estrategia_nome);
     },
     save_estrategia: function save_estrategia() {
-      var _this9 = this;
+      var _this10 = this;
 
       var body = {
         id: this.estrategia_id,
@@ -2729,25 +2784,25 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_estrategia', body).then(function (response) {
         console.log(response.data);
 
-        _this9.consulta();
-      })["catch"](function (e) {
-        _this9.errors.push(e);
-      });
-    },
-    delete_estrategia: function delete_estrategia(id) {
-      var _this10 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/estrategia/delete/' + id).then(function (response) {
-        console.log(response.data);
-
         _this10.consulta();
       })["catch"](function (e) {
         _this10.errors.push(e);
       });
     },
+    delete_estrategia: function delete_estrategia(id) {
+      var _this11 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/estrategia/delete/' + id).then(function (response) {
+        console.log(response.data);
+
+        _this11.consulta();
+      })["catch"](function (e) {
+        _this11.errors.push(e);
+      });
+    },
     //------ indicador -------------------------------------------------------------//
     set_indicador: function set_indicador(id, est_id) {
-      var _this11 = this;
+      var _this12 = this;
 
       if (id == 0) {
         this.indicador_id = "";
@@ -2768,34 +2823,35 @@ __webpack_require__.r(__webpack_exports__);
 
       if (id > 0) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
-          _this11.indicador_id = response.data[0].id;
-          _this11.indicador_est_id = response.data[0].est_id;
-          _this11.indicador_nome = response.data[0].nome;
-          _this11.indicador_meta_agregada = response.data[0].meta_agregada;
-          _this11.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
-          _this11.indicador_execucao_agregada = response.data[0].execucao_agregada;
-          _this11.indicador_status = response.data[0].status;
-          _this11.indicador_responsavel = response.data[0].responsavel;
-          _this11.indicador_complexidade = response.data[0].complexidade;
-          _this11.indicador_utilizacao_recurso_finan = response.data[0].utilizacao_recurso_finan;
-          _this11.indicador_capacidade_transformacao = response.data[0].capacidade_transformacao;
-          _this11.indicador_soma_peso = response.data[0].soma_peso;
-          _this11.indicador_meta = response.data[0].meta;
+          _this12.indicador_id = response.data[0].id;
+          _this12.indicador_est_id = response.data[0].est_id;
+          _this12.indicador_nome = response.data[0].nome;
+          _this12.indicador_meta_agregada = response.data[0].meta_agregada;
+          _this12.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
+          _this12.indicador_execucao_agregada = response.data[0].execucao_agregada;
+          _this12.indicador_status = response.data[0].status;
+          _this12.indicador_responsavel = response.data[0].responsavel;
+          _this12.indicador_complexidade = response.data[0].complexidade;
+          _this12.indicador_utilizacao_recurso_finan = response.data[0].utilizacao_recurso_finan;
+          _this12.indicador_capacidade_transformacao = response.data[0].capacidade_transformacao;
+          _this12.indicador_soma_peso = response.data[0].soma_peso;
+          _this12.indicador_meta = response.data[0].meta;
 
-          for (var i = 0; i <= _this11.indicador_meta.length - 1; i++) {
-            var variavel = _this11.indicador_meta[i].tipo + '_' + _this11.indicador_meta[i].ano + '_' + _this11.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
+          for (var i = 0; i <= _this12.indicador_meta.length - 1; i++) {
+            var variavel = _this12.indicador_meta[i].tipo + '_' + _this12.indicador_meta[i].ano + '_' + _this12.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
 
-            _this11.meta_input_dinamico[variavel] = _this11.indicador_meta[i].valor;
+            _this12.meta_input_dinamico[variavel] = _this12.indicador_meta[i].valor;
+            _this12.meta_select_dinamico[variavel] = _this12.indicador_meta[i].valor;
           }
 
-          _this11.get_responsaveis();
+          _this12.get_responsaveis();
         })["catch"](function (e) {
-          _this11.errors.push(e);
+          _this12.errors.push(e);
         });
       }
     },
     save_indicador: function save_indicador() {
-      var _this12 = this;
+      var _this13 = this;
 
       var body = {
         id: this.indicador_id,
@@ -2815,35 +2871,44 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/save', body).then(function (response) {
         console.log(response.data);
 
-        _this12.consulta();
-      })["catch"](function (e) {
-        _this12.errors.push(e);
-      });
-    },
-    inserir_novo_ano_meta_indicador: function inserir_novo_ano_meta_indicador() {
-      var _this13 = this;
-
-      var body = {
-        indicador_id: this.indicador_id,
-        ano: this.ano_de_indicador_meta
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body).then(function (response) {
-        _this13.set_indicador(_this13.indicador_id);
+        _this13.consulta();
       })["catch"](function (e) {
         _this13.errors.push(e);
       });
     },
-    delete_ano_meta_indicador: function delete_ano_meta_indicador() {
+    inserir_novo_ano_meta_indicador: function inserir_novo_ano_meta_indicador() {
       var _this14 = this;
 
       var body = {
         indicador_id: this.indicador_id,
         ano: this.ano_de_indicador_meta
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/delete_ano_meta_indicador', body).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body).then(function (response) {
         _this14.set_indicador(_this14.indicador_id);
       })["catch"](function (e) {
         _this14.errors.push(e);
+      });
+    },
+    delete_ano_meta_indicador: function delete_ano_meta_indicador() {
+      var _this15 = this;
+
+      var body = {
+        indicador_id: this.indicador_id,
+        ano: this.ano_de_indicador_meta
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/delete_ano_meta_indicador', body).then(function (response) {
+        _this15.set_indicador(_this15.indicador_id);
+      })["catch"](function (e) {
+        _this15.errors.push(e);
+      });
+    },
+    delete_indicador: function delete_indicador(id) {
+      var _this16 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + id + '/delete').then(function (response) {
+        _this16.consulta();
+      })["catch"](function (e) {
+        _this16.errors.push(e);
       });
     },
 
@@ -2855,13 +2920,13 @@ __webpack_require__.r(__webpack_exports__);
         this.caixa_escolha_ano_para_meta = true;
       }
     },
-    show_tabela_orgaos: function show_tabela_orgaos() {
+    show_orgaos: function show_orgaos() {
       var n = this.show_tabela_orgao;
 
       if (n) {
-        this.show_tabela_orgaos = false;
+        this.show_tabela_orgao = false;
       } else {
-        this.show_tabela_orgaos = true;
+        this.show_tabela_orgao = true;
       }
     }
   }
@@ -39371,6 +39436,27 @@ var render = function() {
                                                       "\n                                    "
                                                   )
                                                 ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-outline-danger btn-sm",
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.delete_indicador(
+                                                        ind.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "fas fa-trash"
+                                                  })
+                                                ]
                                               )
                                             ]
                                           )
@@ -40009,51 +40095,205 @@ var render = function() {
                       { staticClass: "row" },
                       _vm._l(_vm.indicador_meta, function(n) {
                         return _c("div", { staticClass: "col-md-4" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "indicador_meta_agregada" } },
-                              [_vm._v(_vm._s(n.tipo + " " + n.ano))]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value:
-                                    _vm.meta_input_dinamico[
-                                      n.tipo + "_" + n.ano + "_" + n.id
-                                    ],
-                                  expression:
-                                    "meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]"
-                                }
-                              ],
-                              staticClass: "form-control form-control-sm",
-                              attrs: {
-                                type: "text",
-                                name: n.tipo + "_" + n.ano + "_" + n.id
-                              },
-                              domProps: {
-                                value:
-                                  _vm.meta_input_dinamico[
-                                    n.tipo + "_" + n.ano + "_" + n.id
-                                  ]
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                          n.tipo != "problema" && n.tipo != "situacao"
+                            ? _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "indicador_meta_agregada" } },
+                                  [_vm._v(_vm._s(n.tipo + " " + n.ano))]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.meta_input_dinamico[
+                                          n.tipo + "_" + n.ano + "_" + n.id
+                                        ],
+                                      expression:
+                                        "meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: {
+                                    type: "text",
+                                    name: n.tipo + "_" + n.ano + "_" + n.id
+                                  },
+                                  domProps: {
+                                    value:
+                                      _vm.meta_input_dinamico[
+                                        n.tipo + "_" + n.ano + "_" + n.id
+                                      ]
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.meta_input_dinamico,
+                                        n.tipo + "_" + n.ano + "_" + n.id,
+                                        $event.target.value
+                                      )
+                                    }
                                   }
-                                  _vm.$set(
-                                    _vm.meta_input_dinamico,
-                                    n.tipo + "_" + n.ano + "_" + n.id,
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ])
+                                })
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          n.tipo == "problema"
+                            ? _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "indicador_meta_agregada" } },
+                                  [_vm._v(_vm._s(n.tipo + " " + n.ano))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.meta_input_dinamico[
+                                            n.tipo + "_" + n.ano + "_" + n.id
+                                          ],
+                                        expression:
+                                          "meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    attrs: {
+                                      name: n.tipo + "_" + n.ano + "_" + n.id
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.meta_input_dinamico,
+                                          n.tipo + "_" + n.ano + "_" + n.id,
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "option",
+                                      { attrs: { disabled: "", value: "" } },
+                                      [_vm._v("Escolha um item")]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.problema, function(p) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: p.id } },
+                                        [
+                                          _vm._v(
+                                            "\n                                    " +
+                                              _vm._s(p.nome) +
+                                              "\n                                "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          n.tipo == "situacao"
+                            ? _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "indicador_meta_agregada" } },
+                                  [_vm._v(_vm._s(n.tipo + " " + n.ano))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.meta_input_dinamico[
+                                            n.tipo + "_" + n.ano + "_" + n.id
+                                          ],
+                                        expression:
+                                          "meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    attrs: {
+                                      name: n.tipo + "_" + n.ano + "_" + n.id
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.meta_input_dinamico,
+                                          n.tipo + "_" + n.ano + "_" + n.id,
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "option",
+                                      { attrs: { disabled: "", value: "" } },
+                                      [_vm._v("Escolha um item")]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.situacoes, function(option) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: option.value } },
+                                        [
+                                          _vm._v(
+                                            "\n                                    " +
+                                              _vm._s(option.text) +
+                                              "\n                                "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            : _vm._e()
                         ])
                       }),
                       0
@@ -40159,46 +40399,65 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12 espaco1" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "indicador_responsavel" } }, [
-                        _vm._v("Responsável")
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            { attrs: { for: "indicador_responsavel" } },
+                            [_vm._v("Responsável")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.indicador_responsavel,
+                                expression: "indicador_responsavel"
+                              }
+                            ],
+                            staticClass: "form-control form-control-sm",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.indicador_responsavel },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.indicador_responsavel = $event.target.value
+                              }
+                            }
+                          })
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.indicador_responsavel,
-                            expression: "indicador_responsavel"
-                          }
-                        ],
-                        staticClass: "form-control form-control-sm",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.indicador_responsavel },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.indicador_responsavel = $event.target.value
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary btn-sm",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.show_tabela_orgaos()
-                            }
-                          }
-                        },
-                        [_vm._v("*")]
-                      )
+                      _c("div", { staticClass: "col-md-1" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticStyle: { color: "transparent" },
+                              attrs: { for: "indicador_responsavel" }
+                            },
+                            [_vm._v("Responsável")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.show_orgaos()
+                                }
+                              }
+                            },
+                            [_vm._v("incluir/excluir")]
+                          )
+                        ])
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
@@ -40215,7 +40474,7 @@ var render = function() {
                       ]
                     },
                     [
-                      _c("div", { staticClass: "col-md-12 espaco1" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("div", { staticClass: "row" }, [
                             _c("div", { staticClass: "col-md-12" }, [
