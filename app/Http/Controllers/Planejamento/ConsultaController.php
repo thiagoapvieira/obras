@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class ConsultaController extends Controller
 {
 
-    public function consulta2 (Request $request)
+    /* public function consulta2 (Request $request)
     {
         $sql  = " select p.id, p.nome as per_nome ";
         $sql .= " from perspectiva p ";
@@ -28,21 +28,13 @@ class ConsultaController extends Controller
 
         }
 
-
-    }
-
-
-
-
-
-
-
-
-
+    } */
 
     public function consulta (Request $request)
     {
         //dd($request->all());
+
+        $campo = 'est';
 
         $sql  = " select P.id, P.plano_id, P.nome, P.ativo ";
         $sql .= " from perspectiva P ";
@@ -53,11 +45,18 @@ class ConsultaController extends Controller
         $sql .= " and P.ativo = 1 ";
         $sql .= " and P.plano_id = ". $request->plano_id;
 
-        //indicador
+        //filtro da perspectiva
         if( isset($request->descricao) ){
-          if($request->descricao <> null){
-            $sql .= " and I.nome like '%".$request->descricao."%' ";
-          }
+            if($request->descricao <> null){
+                if($campo == 'est'){
+                    $sql .= " and E.nome like '%".$request->descricao."%' ";
+                }
+            }
+            if($request->descricao <> null){
+                if($campo == 'ind'){
+                    $sql .= " and I.nome like '%".$request->descricao."%' ";
+                }
+            }
         }
 
         $sql .= " group by P.id, P.plano_id, P.nome, P.ativo ";
@@ -73,7 +72,35 @@ class ConsultaController extends Controller
             $obj->nome = $value->nome;
             $obj->ativo = $value->ativo;
 
-                $objetivo = DB::table('objetivo')->where('ativo',1)->where('per_id',$value->id)->get();
+                $sql  = " select O.id, O.per_id, O.nome, O.ativo ";
+                $sql .= " from objetivo O ";
+                $sql .= " inner join estrategia E on E.obj_id = O.id ";
+                $sql .= " inner join indicador I on I.est_id = E.id ";
+                $sql .= " where 1 = 1 ";
+                $sql .= " and O.ativo = 1 ";
+                $sql .= " and O.per_id = ". $value->id;
+
+                //filtro - indicador do objetivo
+                if( isset($request->descricao) ){
+                    if($request->descricao <> null){
+                        if($campo == 'est'){
+                            $sql .= " and E.nome like '%".$request->descricao."%' ";
+                        }
+                    }
+                    if($request->descricao <> null){
+                        if($campo == 'ind'){
+                            $sql .= " and I.nome like '%".$request->descricao."%' ";
+                        }
+                    }
+                }
+
+                $sql .= " group by O.id, O.per_id, O.nome, O.ativo";
+
+                // dd($sql);
+
+                $objetivo = DB::select($sql);
+                // dd($objetivo);
+
                 $array_obj = array();
                 foreach ($objetivo as $value) {
                     $obj2 = new \stdClass();
@@ -82,7 +109,29 @@ class ConsultaController extends Controller
                     $obj2->nome = $value->nome;
                     $obj2->ativo = $value->ativo;
 
-                        $estrategia = DB::table('estrategia')->where('ativo',1)->where('obj_id',$value->id)->get();
+                        $sql  = " select E.id, E.nome ";
+                        $sql .= " from estrategia E ";
+                        // $sql .= " left join objetivo O on O.per_id = P.id ";
+                        // $sql .= " left join estrategia E on E.obj_id = O.id ";
+                        $sql .= " inner join indicador I on I.est_id = E.id ";
+                        $sql .= " where 1 = 1 ";
+                        $sql .= " and E.ativo = 1 ";
+                        $sql .= " and E.obj_id = ". $value->id;
+
+                        //filtro - indicador da estrategia
+                        if( isset($request->descricao) ){
+                          if($request->descricao <> null and $campo == 'est'){
+                            $sql .= " and E.nome like '%".$request->descricao."%' ";
+                          }
+                          if($request->descricao <> null and $campo == 'ind'){
+                            $sql .= " and I.nome like '%".$request->descricao."%' ";
+                          }
+                        }
+
+                        $sql .= " group by E.id, E.nome ";
+
+                        $estrategia = DB::select($sql);
+
                         $array_est = array();
                         foreach ($estrategia as $value) {
                             $obj3 = new \stdClass();
@@ -92,7 +141,14 @@ class ConsultaController extends Controller
 
                             $query = DB::table('indicador')->where('ativo',1);
                             $query->where('est_id',$value->id);
-                            $query->where('nome','like','%'.$request->descricao.'%');
+
+                            //filtro - indicador
+                            if( isset($request->descricao) ){
+                                if($request->descricao <> null and $campo == 'ind'){
+                                  $query->where('nome','like','%'.$request->descricao.'%');
+                                }
+                            }
+
                             $indicador = $query->get();
 
                             $array_ind = array();

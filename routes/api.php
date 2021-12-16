@@ -21,7 +21,7 @@ Route::prefix('planejamento')->group(function(){
         });
 
         //consuta
-        Route::post('consulta', [ConsultaController::class, 'consulta2']);
+        Route::post('consulta', [ConsultaController::class, 'consulta']);
 
         //perspectiva
         Route::get('perspectiva/delete/{id}', [PerspectivaController::class, 'delete']);
