@@ -30,9 +30,8 @@
               </div>
               <br>
 
-
               <div class="row">
-                  
+
                   <div class="col col-md-6">
                   <div class="table-responsive">
                       <table class="table">
@@ -41,7 +40,7 @@
                                   <th width="5%">#</th>
                                   <th>SIGLA</th>
                                   <th>Secretaria/Orgão</th>
-                                  <th></th>                                  
+                                  <th></th>
                               </tr>
                           </thead>
                           <tbody id="orgao">
@@ -51,7 +50,7 @@
                                   <td>{{$value->sigla}}</td>
                                   <td>{{$value->nome}}</td>
                                   <td>
-                                    <button onclick="ObraOrgaoRelacionar({{$value->id}})" class="btn btn-success btn-sm" data-toggle="tooltip" 
+                                    <button onclick="ObraOrgaoRelacionar({{$value->id}})" class="btn btn-success btn-sm" data-toggle="tooltip"
                                             data-placement="top" title="marcar">
                                       <i class="fa fa-arrow-right"></i>
                                     </button>
@@ -69,11 +68,11 @@
                           <thead>
                               <tr>
                                   <th width="5%">#</th>
-                                  <th>SIGLA</th>                                  
-                                  <th width="10%"></th>                                  
+                                  <th>SIGLA</th>
+                                  <th width="10%"></th>
                               </tr>
                           </thead>
-                          <tbody id="orgao-relacionados">                              
+                          <tbody id="orgao-relacionados">
                           </tbody>
                       </table>
                   </div>
@@ -82,7 +81,7 @@
               </div>
 
 
-        	</div>        		
+        	</div>
         	</div>
 
         </div>
@@ -97,25 +96,24 @@
 <script type="text/javascript">
   var url1 = "<?= env('APP_URL'); ?>";
 
-  window.onload = function(){    
+  window.onload = function(){
     getObraOrgaoRelacionados();
   }
 
-
   function pesquisar(){
-    var name = document.getElementById("pesq").value;    
+    var name = document.getElementById("pesq").value;
 
     $.ajax({
-        url: url1+"/api/obraOrgao/filter/orgao",
+        url: url1+"api/obras/obraOrgao/filter/orgao",
         method: "post",
         data: {'name': name},
         async: true,
         success: function(objeto){
-          var htmlSelect = "";          
+          var htmlSelect = "";
           for (var i = 0; i < objeto.length; i++) {
               htmlSelect+="<tr>";
               htmlSelect+="<td>"+objeto[i].id+"</td>";
-              htmlSelect+="<td>"+objeto[i].sigla+"</td>";              
+              htmlSelect+="<td>"+objeto[i].sigla+"</td>";
               htmlSelect+="<td>"+objeto[i].nome+"</td>";
               htmlSelect+="<td><button onclick='ObraOrgaoRelacionar("+objeto[i].id+")' class='btn btn-success btn-sm' data-toggle='tooltip' data-placement='top' title='marcar'> <i class='fa fa-arrow-right'></i> </button></td>";
               htmlSelect+="</tr>";
@@ -125,17 +123,13 @@
     });
   }
 
-
-
-
-
   function getObraOrgaoRelacionados(){
       var obra_id = '<?= $obra->id ?>';
 
       $.ajax({
-          url: url1+"api/obra/"+obra_id+"/orgao_relacionados",
-          method: "post",          
-          async: true,        
+          url: url1+"api/obras/obra/"+obra_id+"/orgao_relacionados",
+          method: "post",
+          async: true,
           success: function(objeto){
             var htmlSelect = "";
             for (var i = 0; i < objeto.length; i++) {
@@ -157,12 +151,11 @@
       });
   }
 
-
   function ObraOrgaoRelacionar(orgao_id){
       var obra_id = '<?= $obra->id ?>';
 
-      $.ajax({          
-          url: url1+"api/obra/"+obra_id+"/orgao/"+orgao_id+"/relacionar",
+      $.ajax({
+          url: url1+"api/obras/obra/"+obra_id+"/orgao/"+orgao_id+"/relacionar",
           method: "post",
           async: true,
           success: function(objeto){
@@ -173,10 +166,9 @@
       getObraOrgaoRelacionados();
   }
 
-
   function ObraOrgaoExcluir(id){
-      $.ajax({          
-          url: url1+"api/obraOrgao/"+id+"/excluir",
+      $.ajax({
+          url: url1+"api/obras/obraOrgao/"+id+"/excluir",
           method: "post",
           async: true,
           success: function(objeto){
@@ -187,12 +179,11 @@
       getObraOrgaoRelacionados();
   }
 
-
   function ObraOrgaoPrincipal(id){
       var obra_id = '<?= $obra->id ?>';
 
-      $.ajax({          
-          url: url1+"api/obraOrgao/"+id+"/principal",          
+      $.ajax({
+          url: url1+"api/obras/obraOrgao/"+id+"/principal",
           method: "post",
           data:{'obra_id':obra_id},
           async: false,
@@ -204,10 +195,6 @@
 
   }
 
-
 </script>
-
-
-
 
 @endsection

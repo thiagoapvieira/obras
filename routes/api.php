@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +11,23 @@ use App\Http\Controllers\Planejamento\IndicadorController;
 use App\Http\Controllers\Planejamento\OrgaoController;
 use App\Http\Controllers\Planejamento\ProblemaController;
 
+use App\Http\Controllers\Obras\ApiObraController;
+
 Route::middleware(['cors'])->group(function(){
-Route::prefix('planejamento')->group(function(){
+
+    //GERAL ------------------------------------------------------------------------------
+    Route::post('regiao/{regiao_id}/cidade', function($regiao_id){
+        if($regiao_id == 0){
+            $regiao = DB::table('cidade')->get();
+		}else{
+            $regiao = DB::table('cidade')->where('regiao_id',$regiao_id)->get();
+		}
+		return $regiao;
+	});
+
+
+    //PLANEJAMENTO ------------------------------------------------------------------------------
+    Route::prefix('planejamento')->group(function(){
 
         Route::get('get_plano', function (){
             $a = DB::table('plano')->get();
@@ -50,5 +64,33 @@ Route::prefix('planejamento')->group(function(){
         //problema
         Route::get('problema/all', [ProblemaController::class, 'all']);
 
-});
+    });
+
+    //OBRAS ------------------------------------------------------------------------------
+    Route::prefix('obras')->group(function(){
+
+        //orgao
+        Route::post('obra/{id}/orgao_relacionados', [ApiObraController::class, 'getObraOrgaoRelacionados']);
+        Route::post('obra/{obra_id}/orgao/{orgao_id}/relacionar', [ApiObraController::class, 'getObraOrgaoRelacionar']);
+        Route::post('obraOrgao/{id}/excluir', [ApiObraController::class, 'ObraOrgaoexcluir']);
+        Route::post('obraOrgao/filter/orgao', [ApiObraController::class, 'filterOrgao']);
+        Route::post('obraOrgao/{id}/principal', [ApiObraController::class, 'ObraOrgaoPrincipal']);
+
+        //cidade
+        Route::post('obra/{id}/cidade_relacionados', [ApiObraController::class, 'getObraCidadeRelacionados']);
+        Route::post('obra/{obra_id}/cidade/{cidade_id}/relacionar', [ApiObraController::class, 'getObraCidadeRelacionar']);
+        Route::post('obraCidade/{id}/excluir', [ApiObraController::class, 'ObraCidadeExcluir']);
+        Route::post('obraCidade/filter/cidade', [ApiObraController::class, 'filterCidade']);
+
+        Route::post('regiao/{regiao_id}/cidade', function($regiao_id){
+            if($regiao_id == 0){
+                $regiao = DB::table('cidade')->get();
+            }else{
+                $regiao = DB::table('cidade')->where('regiao_id',$regiao_id)->get();
+            }
+            return $regiao;
+        });
+
+    });
+
 });

@@ -7,34 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class ConsultaController extends Controller
 {
-
-    /* public function consulta2 (Request $request)
-    {
-        $sql  = " select p.id, p.nome as per_nome ";
-        $sql .= " from perspectiva p ";
-        $sql .= " join objetivo o on o.per_id = p.id ";
-        $sql .= " join estrategia e on e.obj_id = o.id ";
-        $sql .= " join indicador i on i.est_id = e.id ";
-        $sql .= " where 1 = 1 ";
-        $sql .= " and p.plano_id = 3 ";
-        //$sql .= " and i.nome like '%uti%' ";
-        $perspectiva = DB::select($sql);
-        // dd($perspectiva);
-
-        foreach($perspectiva as $p){
-
-            //dd($p);
-            echo $p->per_nome;
-
-        }
-
-    } */
-
     public function consulta (Request $request)
     {
         //dd($request->all());
 
-        $campo = 'est';
+        $campo = 'ind';
 
         $sql  = " select P.id, P.plano_id, P.nome, P.ativo ";
         $sql .= " from perspectiva P ";
@@ -74,8 +51,8 @@ class ConsultaController extends Controller
 
                 $sql  = " select O.id, O.per_id, O.nome, O.ativo ";
                 $sql .= " from objetivo O ";
-                $sql .= " inner join estrategia E on E.obj_id = O.id ";
-                $sql .= " inner join indicador I on I.est_id = E.id ";
+                $sql .= " left join estrategia E on E.obj_id = O.id ";
+                $sql .= " left join indicador I on I.est_id = E.id ";
                 $sql .= " where 1 = 1 ";
                 $sql .= " and O.ativo = 1 ";
                 $sql .= " and O.per_id = ". $value->id;
@@ -113,7 +90,7 @@ class ConsultaController extends Controller
                         $sql .= " from estrategia E ";
                         // $sql .= " left join objetivo O on O.per_id = P.id ";
                         // $sql .= " left join estrategia E on E.obj_id = O.id ";
-                        $sql .= " inner join indicador I on I.est_id = E.id ";
+                        $sql .= " left join indicador I on I.est_id = E.id ";
                         $sql .= " where 1 = 1 ";
                         $sql .= " and E.ativo = 1 ";
                         $sql .= " and E.obj_id = ". $value->id;

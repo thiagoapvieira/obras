@@ -30,17 +30,16 @@
               </div>
               <br>
 
-
               <div class="row">
-                  
+
                   <div class="col col-md-6">
                   <div class="table-responsive">
                       <table class="table">
                           <thead>
                               <tr>
                                   <th width="5%">#</th>
-                                  <th>SIGLA</th>                                  
-                                  <th></th>                                  
+                                  <th>SIGLA</th>
+                                  <th></th>
                               </tr>
                           </thead>
                           <tbody id="cidade">
@@ -49,7 +48,7 @@
                                   <td>TODOS</td>
                                   <td>-</td>
                                   <td>
-                                    <button onclick="ObraCidadeRelacionar(0)" class="btn btn-success btn-sm" data-toggle="tooltip" 
+                                    <button onclick="ObraCidadeRelacionar(0)" class="btn btn-success btn-sm" data-toggle="tooltip"
                                             data-placement="top" title="marcar">
                                       <i class="fa fa-arrow-right"></i>
                                     </button>
@@ -61,7 +60,7 @@
                                   <td>{{$value->nome}}</td>
                                   <td>{{$value->regiao}}</td>
                                   <td>
-                                    <button onclick="ObraCidadeRelacionar({{$value->id}})" class="btn btn-success btn-sm" data-toggle="tooltip" 
+                                    <button onclick="ObraCidadeRelacionar({{$value->id}})" class="btn btn-success btn-sm" data-toggle="tooltip"
                                             data-placement="top" title="marcar">
                                       <i class="fa fa-arrow-right"></i>
                                     </button>
@@ -79,11 +78,11 @@
                           <thead>
                               <tr>
                                   <th width="5%">#</th>
-                                  <th>SIGLA</th>                                  
-                                  <th width="10%"></th>                                  
+                                  <th>SIGLA</th>
+                                  <th width="10%"></th>
                               </tr>
                           </thead>
-                          <tbody id="cidade-relacionados">                              
+                          <tbody id="cidade-relacionados">
                           </tbody>
                       </table>
                   </div>
@@ -92,7 +91,7 @@
               </div>
 
 
-        	</div>        		
+        	</div>
         	</div>
 
         </div>
@@ -107,27 +106,25 @@
 <script type="text/javascript">
   var url1 = "<?= env('APP_URL'); ?>";
 
-  window.onload = function(){    
+  window.onload = function(){
     getObraCidadeRelacionados();
   }
 
-
-
   function pesquisar(){
-    var name = document.getElementById("pesq").value;    
+    var name = document.getElementById("pesq").value;
 
     $.ajax({
-        url: url1+"/api/obraCidade/filter/cidade",
+        url: url1+"api/obras/obraCidade/filter/cidade",
         method: "post",
         data: {'name': name},
         async: true,
         success: function(objeto){
-          var htmlSelect = "";          
+          var htmlSelect = "";
           for (var i = 0; i < objeto.length; i++) {
               htmlSelect+="<tr>";
               htmlSelect+="<td>"+objeto[i].id+"</td>";
               htmlSelect+="<td>"+objeto[i].nome+"</td>";
-              htmlSelect+="<td>"+objeto[i].regiao+"</td>";              
+              htmlSelect+="<td>"+objeto[i].regiao+"</td>";
               htmlSelect+="<td><button onclick='ObraCidadeRelacionar("+objeto[i].id+")' class='btn btn-success btn-sm' data-toggle='tooltip' data-placement='top' title='marcar'> <i class='fa fa-arrow-right'></i> </button></td>";
               htmlSelect+="</tr>";
           }
@@ -136,20 +133,19 @@
     });
   }
 
-
   function getObraCidadeRelacionados(){
       var obra_id = '<?= $obra->id ?>';
 
       $.ajax({
-          url: url1+"api/obra/"+obra_id+"/cidade_relacionados",
-          method: "post",          
-          async: true,        
+          url: url1+"api/obras/obra/"+obra_id+"/cidade_relacionados",
+          method: "post",
+          async: true,
           success: function(objeto){
             var htmlSelect = "";
             for (var i = 0; i < objeto.length; i++) {
                 htmlSelect+="<tr>";
                 htmlSelect+="<td>"+objeto[i].id+"</td>";
-                htmlSelect+="<td>"+objeto[i].cidade_nome+"</td>";                
+                htmlSelect+="<td>"+objeto[i].cidade_nome+"</td>";
                 htmlSelect+="<td><a href='#' onclick='ObraCidadeExcluir("+objeto[i].id+")' class='btn btn-danger btn-sm'> <i class='fa fa-remove' aria-hidden='true'></i> </a> </td>";
                 htmlSelect+="</tr>";
             }
@@ -158,12 +154,11 @@
       });
   }
 
-
   function ObraCidadeRelacionar(cidade_id){
       var obra_id = '<?= $obra->id ?>';
 
-      $.ajax({          
-          url: url1+"api/obra/"+obra_id+"/cidade/"+cidade_id+"/relacionar",
+      $.ajax({
+          url: url1+"api/obras/obra/"+obra_id+"/cidade/"+cidade_id+"/relacionar",
           method: "post",
           async: true,
           success: function(objeto){
@@ -174,10 +169,9 @@
       getObraCidadeRelacionados();
   }
 
-
   function ObraCidadeExcluir(id){
-      $.ajax({          
-          url: url1+"api/obraCidade/"+id+"/excluir",
+      $.ajax({
+          url: url1+"api/obras/obraCidade/"+id+"/excluir",
           method: "post",
           async: true,
           success: function(objeto){

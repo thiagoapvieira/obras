@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Obras;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -27,23 +27,23 @@ class ApiObraController extends Controller
   		$sql .= " where sigla like '%".$request->name."%' ";
   		$sql .= " or nome like '%".$request->name."%' ";
   		$sql .= " order by sigla, nome ";
-  		
+
   		return DB::select($sql);
 	  }
 
 
     public function getObraOrgaoRelacionados($obra_id)
-    {      
+    {
       return DB::table('obra_orgao_view')->where('obra_id',$obra_id)->get();
     }
 
 
     public function getObraOrgaoRelacionar($obra_id, $orgao_id)
-    {      
+    {
       DB::table('obra_orgao_view')->insert([
       	'obra_id'=>$obra_id,
       	'orgao_id'=>$orgao_id,
-      ]);      
+      ]);
 
       return 'ok';
     }
@@ -66,7 +66,7 @@ class ApiObraController extends Controller
       // if($a == 1){
 
       //   return'ok';
-      // }  
+      // }
 
 
     }
@@ -75,20 +75,20 @@ class ApiObraController extends Controller
 
     /*
       cidade
-    */  
+    */
 
     public function getObraCidadeRelacionados($obra_id)
-    {      
+    {
       return DB::table('obra_cidade_view')->where('obra_id',$obra_id)->get();
     }
 
 
     public function getObraCidadeRelacionar($obra_id, $cidade_id)
-    {      
+    {
       DB::table('obra_cidade')->insert([
         'obra_id'=>$obra_id,
         'cidade_id'=>$cidade_id,
-      ]);      
+      ]);
 
       return 'ok';
     }
@@ -101,9 +101,9 @@ class ApiObraController extends Controller
     public function filterCidade(Request $request)
     {
       $sql  = " select * from cidade_view ";
-      $sql .= " where nome like '%".$request->name."%' ";      
+      $sql .= " where nome like '%".$request->name."%' ";
       $sql .= " order by nome ";
-      
+
       return DB::select($sql);
     }
 
@@ -113,18 +113,18 @@ class ApiObraController extends Controller
       Adicionar valor das obras
     */
     public function lista($obra_id)
-    {      
+    {
       return DB::table('obra_valor')->where('obra_id', $obra_id)->get();
     }
 
     public function find_valor($obra_id,$valor_id)
-    {      
+    {
       return DB::table('obra_valor')->where('id', $valor_id)->get();
 
     }
 
     public function valor_novo(Request $request)
-    {      
+    {
       DB::table('obra_valor')->insert([
         'obra_id'=>$request->obra_id,
         'fonte'=>$request->fonte,
@@ -144,20 +144,20 @@ class ApiObraController extends Controller
 
       $usuario = DB::table('usuario')->where('id', $request->usuario_id)->first();
 
-      
+
       $t = 'Fonte de recurso';
       if( ($obra_valor_aux->fonte != $request->fonte) or ($obra_valor_aux->valor != $request->valor) ){
 
         $texto .= "<div><b>(".$obra_aux->id.") ".$obra_aux->descricao."</b></div>";
         $texto .= "<div> <i>".$usuario->nome."</i> alterou registros. </div>";
         $texto .= "<br>";
-        
+
         $texto .= "<div><b>".$t.":</b></div>";
         $texto .= "<div style='color:#990000;'> ( - ) " .$obra_valor_aux->fonte." ". $obra_valor_aux->valor ."</div>";
         $texto .= "<div style='color:#2d862d;'> ( + ) " .$request->fonte." ". $request->valor ."</div>";
         $texto .= "<br>";
         $atualizar=1;
-        
+
       }
 
       if($atualizar == 1){
@@ -165,7 +165,7 @@ class ApiObraController extends Controller
         $n = DB::table('obra_historico')->insert(
           ['acao' => 'edição',
            'obra_id' => $obra_id,
-           'usuario_id' => 1,         
+           'usuario_id' => 1,
            'texto' => $texto,
           ]
         );
@@ -177,8 +177,8 @@ class ApiObraController extends Controller
           'obra_id'=>$request->obra_id,
           'fonte'=>$request->fonte,
           'valor'=>$request->valor,
-      ]);  
-    
+      ]);
+
 
     }
 
@@ -189,6 +189,6 @@ class ApiObraController extends Controller
 
 
 
-    
+
 
 }

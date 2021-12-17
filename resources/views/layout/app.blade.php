@@ -40,22 +40,22 @@
         .table-data2.table thead th {
             padding: 5px 5px;
         }
-         
+
         .table-data2.table tbody td {
-            font-size: 13px;            
+            font-size: 13px;
             padding: 5px 5px;
-                
+
             padding-right: 10px;
             border: none;
         }
 
-        .table-data2.table tbody tr td:last-child {         
+        .table-data2.table tbody tr td:last-child {
             padding-right: 0px;
-        } 
+        }
 
         .statistic__item {
-            min-height: 0px;         
-        }   
+            min-height: 0px;
+        }
 
     </style>
 
@@ -67,16 +67,16 @@
             @include('layout.menu_home')
             @yield('content')
 
-            <!-- COPYRIGHT-->            
+            <!-- COPYRIGHT-->
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="copyright">                                
+                        <div class="copyright">
                             <p>Desenvolvido por <a href="https://colorlib.com">SUPEC/DTIN</a>.</p>
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <!-- END COPYRIGHT-->
         </div>
 
@@ -105,7 +105,7 @@
 
     <!--mascara-->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>   -->
-    <script src="{{asset('cool_admin_master/js/jquery.mask.min.js')}}"></script>      
+    <script src="{{asset('cool_admin_master/js/jquery.mask.min.js')}}"></script>
 
     <script>
       $("#dt_atualizacao, #dt_inicio, #dt_conclusao_prevista, #dt_conclusao_realizada, #dt_assinatura_contrato, #dt_termino").mask("00/00/0000");
