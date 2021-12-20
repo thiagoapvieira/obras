@@ -2584,6 +2584,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -39391,81 +39420,142 @@ var render = function() {
                                       "\n\n                            "
                                   ),
                                   _vm._v(" "),
-                                  _vm._l(
-                                    _vm.perspectiva[key].objeto[key2]
-                                      .estrategia[key3].indicador,
-                                    function(ind) {
-                                      return _c(
-                                        "div",
-                                        {
-                                          staticClass: "indicadores",
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.set_indicador(
-                                                ind.id,
-                                                e.id
-                                              )
-                                            }
-                                          }
-                                        },
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "indicadores",
+                                      staticStyle: {
+                                        margin: "10px 0 10px 30px"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "table",
+                                        { staticClass: "table table-data2" },
                                         [
+                                          _vm._m(1, true),
+                                          _vm._v(" "),
                                           _c(
-                                            "div",
-                                            {
-                                              staticStyle: {
-                                                margin: "10px 0 10px 30px"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "a",
-                                                {
-                                                  attrs: {
-                                                    href: "#",
-                                                    "data-toggle": "modal",
-                                                    "data-target": "#modal_ind"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                        #" +
-                                                      _vm._s(ind.id) +
-                                                      " -" +
-                                                      _vm._s(ind.nome) +
-                                                      "\n                                    "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "btn btn-outline-danger btn-sm",
-                                                  on: {
-                                                    click: function($event) {
-                                                      $event.preventDefault()
-                                                      return _vm.delete_indicador(
-                                                        ind.id
-                                                      )
+                                            "tbody",
+                                            _vm._l(
+                                              _vm.perspectiva[key].objeto[key2]
+                                                .estrategia[key3].indicador,
+                                              function(ind) {
+                                                return _c(
+                                                  "tr",
+                                                  {
+                                                    staticClass: "tr-shadow",
+                                                    on: {
+                                                      click: function($event) {
+                                                        $event.preventDefault()
+                                                        return _vm.set_indicador(
+                                                          ind.id,
+                                                          e.id
+                                                        )
+                                                      }
                                                     }
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass: "fas fa-trash"
-                                                  })
-                                                ]
-                                              )
-                                            ]
+                                                  },
+                                                  [
+                                                    _c("td", [
+                                                      _vm._v(
+                                                        " " +
+                                                          _vm._s(ind.id) +
+                                                          " "
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("td", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          attrs: {
+                                                            href: "#",
+                                                            "data-toggle":
+                                                              "modal",
+                                                            "data-target":
+                                                              "#modal_ind"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            " " +
+                                                              _vm._s(ind.nome) +
+                                                              " "
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("td", [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          ind.meta_agregada
+                                                        )
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("td", [_vm._v("-")]),
+                                                    _vm._v(" "),
+                                                    _c("td", [_vm._v("-")]),
+                                                    _vm._v(" "),
+                                                    _c("td", [_vm._v("-")]),
+                                                    _vm._v(" "),
+                                                    _c("td", [_vm._v("Ses")]),
+                                                    _vm._v(" "),
+                                                    _c("td", [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "btn-group btn-group-sm mr-2",
+                                                          attrs: {
+                                                            role: "group",
+                                                            "aria-label":
+                                                              "Second group"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._m(2, true),
+                                                          _vm._v(" "),
+                                                          _vm._m(3, true),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "button",
+                                                            {
+                                                              staticClass:
+                                                                "btn btn-outline-danger btn-sm",
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  $event.preventDefault()
+                                                                  return _vm.delete_indicador(
+                                                                    ind.id
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "fas fa-trash"
+                                                              })
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
                                           )
                                         ]
                                       )
-                                    }
+                                    ]
                                   )
-                                ],
-                                2
+                                ]
                               )
                             }
                           )
@@ -39506,7 +39596,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39595,7 +39685,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39684,7 +39774,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(6),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39773,7 +39863,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _vm._m(7),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -40005,7 +40095,7 @@ var render = function() {
                               },
                               [
                                 _c("div", { staticClass: "form-group" }, [
-                                  _vm._m(5),
+                                  _vm._m(8),
                                   _vm._v(" "),
                                   _c("input", {
                                     directives: [
@@ -40581,6 +40671,58 @@ var staticRenderFns = [
         attrs: { type: "text", id: "fonte", name: "fonte", placeholder: "" }
       })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("id")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("meta agregada")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("realizado acumulado")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Execução agregada")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Responsável")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-outline-secondary",
+        attrs: {
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#indicador",
+          onclick: "IndicadorCreateEdit(11,15)"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-pencil-square-o" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-outline-danger", attrs: { type: "button" } },
+      [_c("i", { staticClass: "fas fa-trash" })]
+    )
   },
   function() {
     var _vm = this

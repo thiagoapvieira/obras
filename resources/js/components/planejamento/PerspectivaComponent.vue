@@ -133,18 +133,47 @@
                             #{{e.id}} - {{e.nome}}
 
                             <!-- indicadores -->
-                            <div class="indicadores" v-for="ind of perspectiva[key].objeto[key2].estrategia[key3].indicador"
-                            v-on:click.prevent="set_indicador(ind.id,e.id)">
-                                <div style="margin: 10px 0 10px 30px;">
-                                    <a href="#" data-toggle="modal" data-target="#modal_ind">
-                                        #{{ind.id}} -{{ind.nome}}
-                                    </a>
-                                    <!-- delete indicador -->
-                                    <button class="btn btn-outline-danger btn-sm" v-on:click.prevent="delete_indicador(ind.id)">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
+                            <div class="indicadores" style="margin: 10px 0 10px 30px;">
+                                <table class="table table-data2">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>name</th>
+                                            <th>meta agregada</th>
+                                            <th>realizado acumulado</th>
+                                            <th>Execução agregada</th>
+                                            <th>Status</th>
+                                            <th>Responsável</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr class="tr-shadow" v-for="ind of perspectiva[key].objeto[key2].estrategia[key3].indicador" v-on:click.prevent="set_indicador(ind.id,e.id)">
+                                            <td> {{ind.id}} </td>
+                                            <td> <a href="#" data-toggle="modal" data-target="#modal_ind"> {{ind.nome}} </a> </td>
+                                            <td>{{ind.meta_agregada}}</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>Ses</td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
+                                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#indicador" onclick="IndicadorCreateEdit(11,15)">
+                                                    <i class="fa fa-pencil-square-o"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                                    <button class="btn btn-outline-danger btn-sm" v-on:click.prevent="delete_indicador(ind.id)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
                             </div>
+
                         </div>
 
                 </div>
@@ -556,7 +585,6 @@
 
 
             get_responsaveis(){
-
                 //consulte responsaveis
                 axios.get(this.url+'api/planejamento/indicador/'+this.indicador_id+'/responsavel/all',)
                 .then(response => {
@@ -565,7 +593,6 @@
                   .catch(e => {
                     this.errors.push(e);
                 });
-
             },
 
 
