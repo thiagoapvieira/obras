@@ -58,13 +58,13 @@
                         <div class="login-logo">
                             <a href="#">
                                 <!-- <img src="images/icon/logo.png" alt="CoolAdmin"> -->
-                                <h1><i>SISGPR</i></h1>
+                                <h1><i>SISGPR - NOVO</i></h1>
                             </a>
                         </div>
-                        
+
                         <form action="" method="post" class="login-form">
                         {{ csrf_field() }}
-                        
+
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label>Email Address</label>
@@ -73,11 +73,11 @@
                                 <div class="form-group">
                                     <label>Senha</label>
                                     <input class="au-input au-input--full" type="password" name="senha" placeholder="Senha">
-                                </div>                                
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button> 
+                                </div>
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
                             </form>
                             <div class="register-link">
-                                <p>                                    
+                                <p>
                                     <a href="#">Esqueceu sua senha?</a>
                                 </p>
                             </div>
