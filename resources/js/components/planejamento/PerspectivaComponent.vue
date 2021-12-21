@@ -20,36 +20,49 @@
     <div class="row">
         <div class="col-md-12">
 
-                <div class="row">
-                    <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
 
-                      <div class="form-row">
-                        <div class="col-md-3 mb-3">
-                          <label for="descricao">Descricão</label>
-                          <input type="text" class="input-sm form-control-sm form-control" v-model="descricao"  placeholder="">
+                    <div class="form-row">
+                        <div class="col-md-1 mb-3">
+                            <label for="nivel_pesq">nível</label>
+                            <!-- <input type="text" class="input-sm form-control-sm form-control" v-model="nivel_pesq" value="ind"> -->
+                            <select class="form-control-sm form-control" v-model="nivel_pesq">
+                                <option value="ind">Indicador</option>
+                                <option value="est">Estrutura</option>
+                            </select>
                         </div>
+
                         <div class="col-md-3 mb-3">
-                          <label for="fonte">Fonte</label>
-                          <input type="text" class="input-sm form-control-sm form-control" id="fonte" name="fonte" placeholder="">
+                            <label for="descricao">Descricão</label>
+                            <input type="text" class="input-sm form-control-sm form-control" v-model="descricao"  placeholder="">
                         </div>
-                      </div>
-
                     </div>
+
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-lg-10">
-                        <button class="btn btn-primary btn-sm" v-on:click.prevent="consulta()">Filtrar</button>
-                        <button class="btn btn-warning btn-sm">Limpar</button>
-                    </div>
+            <div class="row">
+                <div class="col-lg-10">
+                    <button class="btn btn-primary btn-sm" v-on:click.prevent="consulta()">Filtrar</button>
+                    <button class="btn btn-warning btn-sm" @click="limpar()">Limpar</button>
                 </div>
+            </div>
 
-
-            </h2>
         </div>
     </div>
     <br>
+
+
+    <div class="row" v-if="caixa_load">
+        <div class="col-md-4 offset-4">
+            <div class="alert alert-info text-center" role="alert">
+                Carregando ...
+            </div>
+        </div>
     <br>
+    </div>
+
 
     <div class="row mb-2">
         <div class="col-sm-12">
@@ -525,6 +538,8 @@
 
                 //variaveis filtro
                 descricao: null,
+                nivel_pesq: "ind",
+                caixa_load: false,
 
                 //outros
                 box_main: true,
@@ -618,14 +633,19 @@
                 var body = {
                   plano_id: this.plano_id,
                   descricao: this.descricao,
+                  nivel_pesq: this.nivel_pesq,
                 };
 
+                this.caixa_load = true
                 axios.post(this.url+'api/planejamento/consulta', body)
                 .then(response => {
                     this.perspectiva = response.data;
+
+                    this.caixa_load = false
                 })
                   .catch(e => {
                     this.errors.push(e);
+                    this.caixa_load = false
                 });
 
             },
@@ -896,7 +916,11 @@
                 }else{
                     this.show_tabela_orgao = true;
                 }
-            }
+            },
+
+            limpar(){
+                this.descricao = null
+            },
 
         },
 

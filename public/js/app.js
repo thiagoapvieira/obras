@@ -2613,6 +2613,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2647,6 +2660,8 @@ __webpack_require__.r(__webpack_exports__);
       indicador_soma_peso: null,
       //variaveis filtro
       descricao: null,
+      nivel_pesq: "ind",
+      caixa_load: false,
       //outros
       box_main: true,
       box_indicador: false,
@@ -2724,12 +2739,17 @@ __webpack_require__.r(__webpack_exports__);
 
       var body = {
         plano_id: this.plano_id,
-        descricao: this.descricao
+        descricao: this.descricao,
+        nivel_pesq: this.nivel_pesq
       };
+      this.caixa_load = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/consulta', body).then(function (response) {
         _this5.perspectiva = response.data;
+        _this5.caixa_load = false;
       })["catch"](function (e) {
         _this5.errors.push(e);
+
+        _this5.caixa_load = false;
       });
     },
     //--------perspectiva--------------------------------------------//
@@ -2957,6 +2977,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.show_tabela_orgao = true;
       }
+    },
+    limpar: function limpar() {
+      this.descricao = null;
     }
   }
 });
@@ -39086,6 +39109,51 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-lg-12" }, [
                   _c("div", { staticClass: "form-row" }, [
+                    _c("div", { staticClass: "col-md-1 mb-3" }, [
+                      _c("label", { attrs: { for: "nivel_pesq" } }, [
+                        _vm._v("nível")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.nivel_pesq,
+                              expression: "nivel_pesq"
+                            }
+                          ],
+                          staticClass: "form-control-sm form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.nivel_pesq = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "ind" } }, [
+                            _vm._v("Indicador")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "est" } }, [
+                            _vm._v("Estrutura")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c("div", { staticClass: "col-md-3 mb-3" }, [
                       _c("label", { attrs: { for: "descricao" } }, [
                         _vm._v("Descricão")
@@ -39112,9 +39180,7 @@ var render = function() {
                           }
                         }
                       })
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(0)
+                    ])
                   ])
                 ])
               ]),
@@ -39135,9 +39201,18 @@ var render = function() {
                     [_vm._v("Filtrar")]
                   ),
                   _vm._v(" "),
-                  _c("button", { staticClass: "btn btn-warning btn-sm" }, [
-                    _vm._v("Limpar")
-                  ])
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-sm",
+                      on: {
+                        click: function($event) {
+                          return _vm.limpar()
+                        }
+                      }
+                    },
+                    [_vm._v("Limpar")]
+                  )
                 ])
               ])
             ])
@@ -39145,7 +39220,13 @@ var render = function() {
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _c("br"),
+          _vm.caixa_load
+            ? _c("div", { staticClass: "row" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("br")
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-2" }, [
             _c(
@@ -40663,13 +40744,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 mb-3" }, [
-      _c("label", { attrs: { for: "fonte" } }, [_vm._v("Fonte")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "input-sm form-control-sm form-control",
-        attrs: { type: "text", id: "fonte", name: "fonte", placeholder: "" }
-      })
+    return _c("div", { staticClass: "col-md-4 offset-4" }, [
+      _c(
+        "div",
+        {
+          staticClass: "alert alert-info text-center",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n                Carregando ...\n            ")]
+      )
     ])
   },
   function() {

@@ -11,7 +11,7 @@ class ConsultaController extends Controller
     {
         //dd($request->all());
 
-        $campo = 'ind';
+        $campo = $request->nivel_pesq;
 
         $sql  = " select P.id, P.plano_id, P.nome, P.ativo ";
         $sql .= " from perspectiva P ";
