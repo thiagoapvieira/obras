@@ -32,7 +32,6 @@
 
     <!-- Main CSS-->
     <link href="{{asset('cool_admin_master/css/theme.css')}}" rel="stylesheet" media="all">
-
 </head>
 
 <body class="animsition">
