@@ -54,7 +54,7 @@
     }
 
     $.ajax({
-        url: url1+"api/obra/"+obra_id+"/valor/"+modo,
+        url: url1+"api/obras/obra/"+obra_id+"/valor/"+modo,
         method: "post",
         async: false  ,
         data: {'obra_id':obra_id, 'fonte':fonte, 'valor':valor, 'usuario_id':usuario_id},
@@ -70,7 +70,7 @@
 
   // function editar_valor(id){
   //   $.ajax({
-  //       url: url1+"api/obra/142/valor/"+id+"/editar",
+  //       url: url1+"api/obras/obra/142/valor/"+id+"/editar",
   //       method: "post",        
   //       async: false,        
   //       success: function(objeto){
