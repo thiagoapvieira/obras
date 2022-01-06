@@ -10,7 +10,6 @@ use App\Http\Controllers\Planejamento\EstrategiaController;
 use App\Http\Controllers\Planejamento\IndicadorController;
 use App\Http\Controllers\Planejamento\OrgaoController;
 use App\Http\Controllers\Planejamento\ProblemaController;
-
 use App\Http\Controllers\Obras\ApiObraController;
 
 Route::middleware(['cors'])->group(function(){
@@ -90,6 +89,14 @@ Route::middleware(['cors'])->group(function(){
             }
             return $regiao;
         });
+
+        //valor da obras
+        Route::get('obra/{obra_id}/valor/lista', [ApiObraController::class,'lista']);
+        Route::get('obra/{obra_id}/valor/{valor_id}', [ApiObraController::class,'find_valor']);
+        Route::post('obra/{obra_id}/valor/novo', [ApiObraController::class,'valor_novo']);
+        // Route::get('obra/{obra_id}/valor/{id}/editar', [ApiObraController::class,'valor_editar']);
+        Route::post('obra/{obra_id}/valor/{id}/update', [ApiObraController::class,'valor_update']);
+        Route::post('obra/{obra_id}/valor/{id}/delete', [ApiObraController::class,'valor_delete']);
 
     });
 
