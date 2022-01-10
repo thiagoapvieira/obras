@@ -47,9 +47,7 @@
 
             get_plano(){
                 //pegue o torneio
-                const headers = { "Content-Type": "application/json" };
-                axios.get(this.url+'api/planejamento/get_plano',{headers})
-                // axios.get('https://obrasdogoverno.se.gov.br/api/planejamento/get_plano',{headers})
+                axios.get(this.url+'api/planejamento/get_plano')
                 .then(response => {
                     this.plano = response.data;
 

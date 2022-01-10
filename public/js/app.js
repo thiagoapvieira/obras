@@ -2109,13 +2109,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       //pegue o torneio
-      var headers = {
-        "Content-Type": "application/json"
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/get_plano', {
-        headers: headers
-      }) // axios.get('https://obrasdogoverno.se.gov.br/api/planejamento/get_plano',{headers})
-      .then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/get_plano').then(function (response) {
         _this.plano = response.data;
         console.log(response.data);
       })["catch"](function (e) {
