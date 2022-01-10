@@ -18,8 +18,6 @@
     </div>
     </section>
 
-    <button @click="get_plano()"> ok </button>
-
 </div>
 </template>
 

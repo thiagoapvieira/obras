@@ -2090,8 +2090,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url'],
@@ -39052,19 +39050,7 @@ var render = function() {
           )
         ])
       ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function($event) {
-            return _vm.get_plano()
-          }
-        }
-      },
-      [_vm._v(" ok ")]
-    )
+    ])
   ])
 }
 var staticRenderFns = []
