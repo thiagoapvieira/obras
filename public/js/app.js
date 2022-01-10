@@ -2109,8 +2109,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       //pegue o torneio
-      //axios.get(this.url+'api/planejamento/get_plano/')
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('https://obrasdogoverno.se.gov.br/api/planejamento/get_plano/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/get_plano/') //axios.get('https://obrasdogoverno.se.gov.br/api/planejamento/get_plano/')
+      .then(function (response) {
         _this.plano = response.data;
         console.log(response.data);
       })["catch"](function (e) {
