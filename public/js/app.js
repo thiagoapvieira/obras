@@ -2090,11 +2090,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url'],
   data: function data() {
     return {
+      errors: [],
       plano: []
     };
   },
@@ -2106,8 +2109,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       //pegue o torneio
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/get_plano/').then(function (response) {
+      // axios.get(this.url+'api/planejamento/get_plano/')
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost/obras2/public/api/planejamento/get_plano/').then(function (response) {
         _this.plano = response.data;
+        console.log(response.data);
       })["catch"](function (e) {
         _this.errors.push(e);
       });
@@ -39048,7 +39053,19 @@ var render = function() {
           )
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            return _vm.get_plano()
+          }
+        }
+      },
+      [_vm._v(" ok ")]
+    )
   ])
 }
 var staticRenderFns = []
