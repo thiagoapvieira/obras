@@ -100,4 +100,86 @@ Route::middleware(['cors'])->group(function(){
 
     });
 
+
+    Route::get('webservice/obras', function(){
+
+        $sql  = " select o.* from obra o ";
+        $sql .= " inner join obra_orgao oo on oo.obra_id = o.id ";
+        $sql .= " where oo.obra_id = 8 ";
+        $sql .= " order by o.id ";
+        $obras = DB::select($sql);
+
+        $a = array();
+        foreach ($obras as $value){
+            $obj = new \stdClass();
+            $obj->id = $value->id;
+            $obj->descricao = $value->descricao;
+            $obj->prioritaria = $value->prioritaria;
+            $obj->dt_atualizacao = $value->dt_atualizacao;
+            $obj->igesp = $value->igesp;
+            $obj->setor_id = $value->setor_id;
+            $obj->modalidade_id = $value->modalidade_id;
+            $obj->tipologia_id = $value->tipologia_id;
+            $obj->percentual_execucao_financeira = $value->percentual_execucao_financeira;
+            $obj->status_fases = $value->status_fases;
+            $obj->fase_licitacao_id = $value->fase_licitacao_id;
+            $obj->inaugurada = $value->inaugurada;
+            $obj->local = $value->local;
+            $obj->valor_inicial = $value->valor_inicial;
+            $obj->valor_investido = $value->valor_investido;
+            $obj->fonte = $value->fonte;
+            $obj->percentual = $value->percentual;
+            $obj->paralisacao = $value->paralisacao;
+            $obj->obracol = $value->obracol;
+            $obj->status_id = $value->status_id;
+            $obj->desapropriacao = $value->desapropriacao;
+            $obj->licenca_ambiental_previa = $value->licenca_ambiental_previa;
+            $obj->licenca_ambiental_instalacao = $value->licenca_ambiental_instalacao;
+            $obj->projeto_basico = $value->projeto_basico;
+            $obj->projeto_executivo = $value->projeto_executivo;
+            $obj->titularidade = $value->titularidade;
+            $obj->licenca_outros_orgaos = $value->licenca_outros_orgaos;
+            $obj->especifique_orgaos = $value->especifique_orgaos;
+            $obj->dt_inicio = $value->dt_inicio;
+            $obj->dt_conclusao_prevista = $value->dt_conclusao_prevista;
+            $obj->dt_conclusao_realizada = $value->dt_conclusao_realizada;
+            $obj->prazo_entrega = $value->prazo_entrega;
+            $obj->percentual_execucao_fisica = $value->percentual_execucao_fisica;
+            $obj->dt_assinatura_contrato = $value->dt_assinatura_contrato;
+            $obj->obs = $value->obs;
+            $obj->descricao_estagio = $value->descricao_estagio;
+            $obj->descricao_proxima_fase = $value->descricao_proxima_fase;
+            $obj->descricao_pendencias_prazo = $value->descricao_pendencias_prazo;
+            $obj->status = $value->status;
+            $obj->created_at = $value->created_at;
+            $obj->updated_at = $value->updated_at;
+            $obj->updated_at_user = $value->updated_at_user;
+            $obj->projeto_id = $value->projeto_id;
+            
+            $sql  = " select o.sigla, o.nome from obra_orgao oo ";
+            $sql .= " inner join orgao o on o.id = oo.orgao_id ";
+            $sql .= " where oo.obra_id = ". $obj->id;
+            $obra_orgao = DB::select($sql);
+            $b = array();
+            foreach ($obra_orgao as $key => $value) {
+                $obj1 = new \stdClass();
+                $obj1->sigla = $value->sigla;
+                $obj1->nome = $value->nome;
+                //$obj1->orgao_id = $value->orgao_id;
+
+                array_push($b, $obj1);
+            }
+
+            $obj->orgaos_responsaveis = $b;
+            
+
+            array_push($a, $obj);
+        }
+
+
+        // dd($obra);
+
+        return response()->json($a);
+    });
+
 });
