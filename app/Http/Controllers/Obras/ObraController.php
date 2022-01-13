@@ -119,7 +119,7 @@ class ObraController extends Controller
     );
 
     $query->leftJoin('tipologia', 'obra.tipologia_id', '=', 'tipologia.id');
-    
+
     $query->leftJoin('obra_cidade', 'obra_cidade.obra_id', '=', 'obra.id');
 
     $query->leftJoin('cidade', 'cidade.id', '=', 'obra_cidade.cidade_id');
@@ -135,7 +135,7 @@ class ObraController extends Controller
     $query->where('status','>=',0);
     $query->where('status','<>',99); //rascunho
 
-    
+
     if( isset($filtro['codigo'])) {
       if($filtro['codigo'] <> null and $filtro['codigo'] <> null){
            $query->where('obra.id', 'like', '%'.$filtro['codigo'].'%');
@@ -143,7 +143,7 @@ class ObraController extends Controller
     }
 
     $obras = $query->paginate(50);
-    
+
 
 
     if( isset($filtro['descricao'])) {
@@ -156,7 +156,7 @@ class ObraController extends Controller
       if($filtro['fonte'] <> null and $filtro['fonte'] <> null){
           $query->where('fonte', 'like', '%'.$filtro['fonte'].'%');
       }
-    }    
+    }
 
     //regiao
     if( isset($filtro['regiao_id'])) {
@@ -207,7 +207,7 @@ class ObraController extends Controller
       }
     }
 
-    //status    
+    //status
     if( isset($filtro['status_id'])) {
       if($filtro['status_id'] >= 0){
         $query->where('obra.status_fases',$filtro['status_id']);
@@ -233,7 +233,7 @@ class ObraController extends Controller
         $query->whereBetween('obra.dt_inicio', [$data_inicio, $data_fim]);
       }
     }
-    
+
 
     $query->groupBy(
       'obra.id',
@@ -267,7 +267,7 @@ class ObraController extends Controller
       //   echo $i . ' ' . $value->id . ' ' . $value->descricao;
       //   echo '<br>';
       //   $i++;
-      // }      
+      // }
 
       // dd($obras);
 
@@ -281,7 +281,7 @@ class ObraController extends Controller
       $entregue = DB::table('obra')->where('status', '=', 4)->count();
       $total = $em_andamento + $paralisado + $finalizado + $entregue;
 
-    
+
 
       return view('obras.obra.obra',[
         'obra'=>$obras,
@@ -320,13 +320,13 @@ class ObraController extends Controller
       $fase_licitacao = DB::table('fase_licitacao')->orderBy('nome')->get();
       $projeto = DB::table('projeto')->orderBy('nome')->get();
 
-      return view('obras.obra.obra_frm', compact('id', 'obra', 'setor', 'modalidade', 'tipologia', 'fase_licitacao', 'projeto'));      
+      return view('obras.obra.obra_frm', compact('id', 'obra', 'setor', 'modalidade', 'tipologia', 'fase_licitacao', 'projeto'));
     }
 
 
     public function update(Request $request, $id)
     {
-      
+
       //verifique o antes e o depois e monte o log
       log_hitorico($request, $id);
 
@@ -438,8 +438,8 @@ class ObraController extends Controller
       $obra_valor = DB::table('obra_valor')->where('obra_id', $id)->get();
       $texto = '';
       foreach ($obra_valor as $key => $value) {
-         $texto .= $value->fonte; 
-      } 
+         $texto .= $value->fonte;
+      }
       DB::table('obra') ->where('id', $id)->update(['fonte' => $texto]);
 
 
@@ -659,7 +659,7 @@ class ObraController extends Controller
 
 
 
-  public function excel(){    
+  public function excel(){
 
     $filtro = session()->get('obra_filtro');
 

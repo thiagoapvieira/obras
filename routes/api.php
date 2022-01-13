@@ -101,11 +101,12 @@ Route::middleware(['cors'])->group(function(){
     });
 
 
-    Route::get('webservice/obras', function(){
+    Route::get('webservice/obras', function(Request $request){
 
         $sql  = " select o.* from obra o ";
         $sql .= " inner join obra_orgao oo on oo.obra_id = o.id ";
-        $sql .= " where oo.obra_id = 8 ";
+        $sql .= " where 1 = 1 ";
+        $sql .= " and oo.obra_id = 39 ";
         $sql .= " order by o.id ";
         $obras = DB::select($sql);
 
@@ -114,15 +115,15 @@ Route::middleware(['cors'])->group(function(){
             $obj = new \stdClass();
             $obj->id = $value->id;
             $obj->descricao = $value->descricao;
-            $obj->prioritaria = $value->prioritaria;
+            $obj->prioritaria = $value->prioritaria==1?"Sim":"Não";
             $obj->dt_atualizacao = $value->dt_atualizacao;
             $obj->igesp = $value->igesp;
-            $obj->setor_id = $value->setor_id;
-            $obj->modalidade_id = $value->modalidade_id;
-            $obj->tipologia_id = $value->tipologia_id;
+            $obj->setor = setor($value->setor_id);
+            $obj->modalidade = modalidade($value->modalidade_id);
+            $obj->tipologia = tipologia($value->tipologia_id);
             $obj->percentual_execucao_financeira = $value->percentual_execucao_financeira;
-            $obj->status_fases = $value->status_fases;
-            $obj->fase_licitacao_id = $value->fase_licitacao_id;
+            $obj->status_fases = status_fases($value->status_fases);
+            $obj->fase_licitacao = fase_licitacao($value->fase_licitacao_id);
             $obj->inaugurada = $value->inaugurada;
             $obj->local = $value->local;
             $obj->valor_inicial = $value->valor_inicial;
@@ -131,7 +132,7 @@ Route::middleware(['cors'])->group(function(){
             $obj->percentual = $value->percentual;
             $obj->paralisacao = $value->paralisacao;
             $obj->obracol = $value->obracol;
-            $obj->status_id = $value->status_id;
+            $obj->status = status($value->status_id);
             $obj->desapropriacao = $value->desapropriacao;
             $obj->licenca_ambiental_previa = $value->licenca_ambiental_previa;
             $obj->licenca_ambiental_instalacao = $value->licenca_ambiental_instalacao;
@@ -150,12 +151,26 @@ Route::middleware(['cors'])->group(function(){
             $obj->descricao_estagio = $value->descricao_estagio;
             $obj->descricao_proxima_fase = $value->descricao_proxima_fase;
             $obj->descricao_pendencias_prazo = $value->descricao_pendencias_prazo;
-            $obj->status = $value->status;
+            $obj->status = status($value->status);
             $obj->created_at = $value->created_at;
             $obj->updated_at = $value->updated_at;
             $obj->updated_at_user = $value->updated_at_user;
-            $obj->projeto_id = $value->projeto_id;
-            
+            $obj->projeto = projeto($value->projeto_id);
+
+            //CIDADES
+            $sql  = " select c.nome from obra_cidade oc ";
+            $sql .= " inner join cidade c on c.id = oc.cidade_id ";
+            $sql .= " where oc.obra_id = ". $obj->id;
+            $obra_cidade = DB::select($sql);
+            $b = array();
+            foreach ($obra_cidade as $key => $value) {
+                $obj1 = new \stdClass();
+                $obj1->nome = $value->nome;
+                array_push($b, $obj1);
+            }
+            $obj->cidades = $b;
+
+            //ORGAOS RESPONSAVEIS
             $sql  = " select o.sigla, o.nome from obra_orgao oo ";
             $sql .= " inner join orgao o on o.id = oo.orgao_id ";
             $sql .= " where oo.obra_id = ". $obj->id;
@@ -165,13 +180,23 @@ Route::middleware(['cors'])->group(function(){
                 $obj1 = new \stdClass();
                 $obj1->sigla = $value->sigla;
                 $obj1->nome = $value->nome;
-                //$obj1->orgao_id = $value->orgao_id;
-
                 array_push($b, $obj1);
             }
-
             $obj->orgaos_responsaveis = $b;
-            
+
+            //FONTE DE RECURSOS
+            $sql  = " select fonte, valor from obra_valor ";
+            $sql .= " where obra_id = ". $obj->id;
+            $obra_valor = DB::select($sql);
+            $b = array();
+            foreach ($obra_valor as $key => $value) {
+                $obj2 = new \stdClass();
+                $obj2->fonte = $value->fonte;
+                $obj2->valor = $value->valor;
+                array_push($b, $obj2);
+            }
+            $obj->fonte_de_recusrso = $b;
+
 
             array_push($a, $obj);
         }

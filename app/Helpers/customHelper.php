@@ -230,6 +230,12 @@ if (! function_exists('fase_licitacao')) {
     }
 }
 
+if (! function_exists('projeto')) {
+  function projeto($n){
+      return DB::table('projeto')->where('id',$n)->value('nome');
+  }
+}
+
 if (! function_exists('sim_nao')) {
     function sim_nao($n){
 
