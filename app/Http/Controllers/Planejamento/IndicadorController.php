@@ -77,7 +77,7 @@ class IndicadorController extends Controller
                 ]);
             }
 
-            return 'edicao';
+            return $request->id;
 
         }
 
@@ -114,7 +114,7 @@ class IndicadorController extends Controller
                 ]);
             }
 
-            return 'insert';
+            return $n;
 
         }
 

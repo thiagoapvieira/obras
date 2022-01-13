@@ -106,7 +106,7 @@ Route::middleware(['cors'])->group(function(){
         $sql  = " select o.* from obra o ";
         $sql .= " inner join obra_orgao oo on oo.obra_id = o.id ";
         $sql .= " where 1 = 1 ";
-        //$sql .= " and oo.obra_id = 39 ";
+        $sql .= " and oo.obra_id = 39 ";
         $sql .= " order by o.id ";
         $obras = DB::select($sql);
 

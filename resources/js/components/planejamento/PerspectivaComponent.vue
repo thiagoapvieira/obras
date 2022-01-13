@@ -166,16 +166,17 @@
                                             <td> {{ind.id}} </td>
                                             <td> <a href="#" data-toggle="modal" data-target="#modal_ind"> {{ind.nome}} </a> </td>
                                             <td>{{ind.meta_agregada}}</td>
+                                            <td>{{ind.realizado_acumulado}}</td>
+                                            <td>{{ind.execucao_agregada}}</td>
                                             <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>Ses</td>
+                                            <td>{{ind.responsavel}}</td>
                                             <td>
                                                 <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
-                                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#indicador" onclick="IndicadorCreateEdit(11,15)">
+
+                                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal_ind">
                                                     <i class="fa fa-pencil-square-o"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+
                                                     <button class="btn btn-outline-danger btn-sm" v-on:click.prevent="delete_indicador(ind.id)">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -295,7 +296,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Indicador</h5>
+        <h5 class="modal-title" id="exampleModalLabel"> #{{this.indicador_id}} Indicador</h5>
         <!-- <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_editar_indicador()"> editar </button> -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -310,41 +311,37 @@
                     <input type="text" v-model="indicador_nome" class="form-control form-control-sm">
                 </div>
             </div>
-            <div class="col-md-6 espaco1">
+            <div class="col-md-6" v-if="this.indicador_id>0">
                 <div class="form-group">
                     <label for="complexidade">Complexidade</label>
                     <input type="text" v-model="indicador_complexidade" class="form-control form-control-sm">
                 </div>
             </div>
-            <div class="col-md-6 espaco1">
+            <div class="col-md-6" v-if="this.indicador_id>0">
                 <div class="form-group">
-                    <label for="utilizacao_recurso_finan">utilizacao_recurso_finan</label>
+                    <label for="utilizacao_recurso_finan">Utilizacao de recurso financeiros</label>
                     <input type="text" v-model="indicador_utilizacao_recurso_finan" class="form-control form-control-sm">
                 </div>
             </div>
-
-            <div class="col-md-6 espaco1">
+            <div class="col-md-6 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
-                    <label for="capacidade_transformacao">capacidade_transformacao</label>
+                    <label for="capacidade_transformacao">Capacidade de transformação</label>
                     <input type="text" v-model="indicador_capacidade_transformacao" class="form-control form-control-sm">
                 </div>
             </div>
-            <div class="col-md-6 espaco1">
+            <div class="col-md-6 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
-                    <label for="soma_peso">soma_peso</label>
+                    <label for="soma_peso">Soma do peso</label>
                     <input type="text" v-model="indicador_soma_peso" class="form-control form-control-sm">
                 </div>
             </div>
-
-
-            <div class="col-md-12 espaco1">
+            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
                     <label for="indicador_meta_agregada">Meta agregada</label>
                     <input type="text" v-model="indicador_meta_agregada" class="form-control form-control-sm">
                 </div>
             </div>
-
-            <div  v-if="!caixa_escolha_ano_para_meta" class="col-md-12 espaco1">
+            <div  v-if="!caixa_escolha_ano_para_meta && this.indicador_id>0" class="col-md-12 espaco1">
                 <div class="form-group">
                     <button type="button" class="btn btn-outline-info btn-sm" v-on:click.prevent="show_caixa_ano_meta(1)">
                         <i class="fas fa-plus"></i> ANO
@@ -352,116 +349,124 @@
                 </div>
             </div>
 
-            <!-- ************************************************************************************************* -->
-            <section v-if="caixa_escolha_ano_para_meta">
-                <div class="col-md-12 espaco1">
+                    <!-- ************************************************************************************************* -->
+                    <section v-if="caixa_escolha_ano_para_meta">
+                        <div class="col-md-12 espaco1">
 
-                    <div class="card">
-                      <div class="card-body" style="background-color: #eee;">
+                            <div class="card">
+                            <div class="card-body" style="background-color: #eee;">
 
-                            <div class="form-group">
-                                <label>
-                                <b>Digite o ano para inserir ( Meta, Realizado e Situação ) no indicador!</b>
-                                </label>
-                                <input type="text" v-model="ano_de_indicador_meta" class="form-control form-control-sm">
+                                    <div class="form-group">
+                                        <label>
+                                        <b>Digite o ano para inserir ( Meta, Realizado e Situação ) no indicador!</b>
+                                        </label>
+                                        <input type="text" v-model="ano_de_indicador_meta" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="inserir_novo_ano_meta_indicador()">Inserir</a>
+                                            <button class="btn btn-danger btn-sm" v-on:click.prevent="delete_ano_meta_indicador()">Delete</button>
+                                        </div>
+                                        <div class="col-2">
+                                            <button class="btn btn-secondary btn-sm btn-block" v-on:click.prevent="show_caixa_ano_meta(0)">Fechar</button>
+                                        </div>
+                                    </div>
+
+                            </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-10">
-                                    <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="inserir_novo_ano_meta_indicador()">Inserir</a>
-                                    <button class="btn btn-danger btn-sm" v-on:click.prevent="delete_ano_meta_indicador()">Delete</button>
+                        </div>
+                    </section>
+
+                    <div class="col-md-12 espaco1">
+                        <div class="row">
+                            <div class="col-md-4" v-for="n of indicador_meta">
+                                <div v-if="n.tipo !='problema' && n.tipo !='situacao'" class="form-group">
+                                    <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
+                                    <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                                 </div>
-                                <div class="col-2">
-                                    <button class="btn btn-secondary btn-sm btn-block" v-on:click.prevent="show_caixa_ano_meta(0)">Fechar</button>
+
+                                <div v-if="n.tipo =='problema'" class="form-group">
+                                    <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
+                                    <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
+                                        <option disabled value="">Escolha um item</option>
+                                        <option v-for="p in problema" v-bind:value="p.id">
+                                            {{ p.nome }}
+                                        </option>
+                                    </select>
                                 </div>
+
+                                <div v-if="n.tipo =='situacao'" class="form-group">
+                                    <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
+                                    <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
+                                        <option disabled value="">Escolha um item</option>
+                                        <option v-for="option in situacoes" v-bind:value="option.value">
+                                            {{ option.text }}
+                                        </option>
+                                    </select>
+                                </div>
+
                             </div>
-
-                      </div>
+                        </div>
+                        <br>
                     </div>
+                    <!-- ************************************************************************************************* -->
 
-                </div>
-            </section>
-
-            <div class="col-md-12 espaco1">
-                <div class="row">
-                    <div class="col-md-4" v-for="n of indicador_meta">
-                        <div v-if="n.tipo !='problema' && n.tipo !='situacao'" class="form-group">
-                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
-                            <input type="text" :name="n.tipo+'_'+n.ano+'_'+n.id"  v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
-                        </div>
-
-                        <div v-if="n.tipo =='problema'" class="form-group">
-                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
-                            <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
-                                <option disabled value="">Escolha um item</option>
-                                <option v-for="p in problema" v-bind:value="p.id">
-                                    {{ p.nome }}
-                                </option>
-                            </select>
-                        </div>
-
-                         <div v-if="n.tipo =='situacao'" class="form-group">
-                            <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
-                            <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
-                                <option disabled value="">Escolha um item</option>
-                                <option v-for="option in situacoes" v-bind:value="option.value">
-                                    {{ option.text }}
-                                </option>
-                            </select>
-                        </div>
-
-                    </div>
-                </div>
-                <br>
-            </div>
-            <!-- ************************************************************************************************* -->
-
-            <div class="col-md-12 espaco1">
+            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
                     <label for="indicador_realizado_acumulado">Realizado acumulado</label>
                     <input type="text" v-model="indicador_realizado_acumulado" class="form-control form-control-sm">
                 </div>
             </div>
 
-            <div class="col-md-12 espaco1">
+            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
                     <label for="indicador_execucao_agregada">Execução agregada</label>
                     <input type="text" v-model="indicador_execucao_agregada" class="form-control form-control-sm">
                 </div>
             </div>
 
-            <div class="col-md-12 espaco1">
+            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
                     <label for="indicador_status">Status</label>
                     <input type="text" v-model="indicador_status" class="form-control form-control-sm">
                 </div>
             </div>
 
-            <div class="col-md-12 espaco1">
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="form-group">
-                        <label for="indicador_responsavel">Responsável</label>
-                        <input type="text" v-model="indicador_responsavel" class="form-control form-control-sm">
+            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
+                <div class="row">
+                    <div class="col-md-11">
+                        <div class="form-group">
+                            <label for="indicador_responsavel">Responsável</label>
+                            <input type="text" v-model="indicador_responsavel" class="form-control form-control-sm">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <label for="indicador_responsavel" style="color:transparent;">Responsável</label>
-                        <button class="btn btn-warning btn-sm" v-on:click.prevent="show_orgaos()">incluir/excluir</button>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="indicador_responsavel" style="color:transparent;">Responsável</label>
+                            <button class="btn btn-warning btn-sm btn-block" v-on:click.prevent="show_orgaos()"> <i class="fa fa-expand" aria-hidden="true"></i> </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
 
 
-            <div v-show="show_tabela_orgao">
+            <div v-show="show_tabela_orgao" v-if="this.indicador_id>0">
             <div class="col-md-12">
                 <div class="form-group">
 
-                    <div class="row">
-                    <div class="col-md-12">
+                    <!-- <div class="row">
+                    <div class="col-md-12"> -->
                     <table class="table table-borderless table-data3">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>sigla</th>
+                                <th>nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class="tr-shadow" v-for="orgao of orgaos">
                                 <td>{{orgao.id}}</td>
@@ -471,13 +476,14 @@
                             </tr>
                         </tbody>
                     </table>
-                    </div>
-                    </div>
+                    <!-- </div>
+                    </div> -->
 
                 </div>
             </div>
             </div>
 
+            
 
         </div>
 
@@ -509,6 +515,11 @@
                 perspectiva: [],
                 orgaos: [],
                 problema: [],
+
+                situacoes: [
+                    { text: 'Ativo - exemplo01', value: 'A' },
+                    { text: 'Negativo - exemplo02', value: 'B' },
+                ],
 
                 //variaveis
                 perspectiva_id: null,
@@ -554,14 +565,6 @@
                 //objeto
                 meta_input_dinamico: {},
                 meta_select_dinamico: {},
-
-
-                situacoes: [
-                    { text: 'Ativo - exemplo01', value: 'A' },
-                    { text: 'Negativo - exemplo02', value: 'B' },
-                ],
-
-
             }
         },
 
@@ -758,7 +761,7 @@
             set_indicador(id,est_id){
 
                 if (id == 0) {
-                    this.indicador_id = "";
+                    this.indicador_id = 0;
                     this.indicador_est_id = est_id;
                     this.indicador_nome = "";
                     this.indicador_meta_agregada = "";
@@ -831,14 +834,15 @@
                   utilizacao_recurso_finan: this.indicador_utilizacao_recurso_finan,
                   capacidade_transformacao: this.indicador_capacidade_transformacao,
                   soma_peso: this.indicador_soma_peso,
-
                   meta: this.meta_input_dinamico,
                 };
 
                 axios.post(this.url+'api/planejamento/indicador/save', body)
                 .then(response => {
-
+                    
                     console.log(response.data);
+                    
+                    this.indicador_id = response.data;
 
                     this.consulta();
                 })
