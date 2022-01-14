@@ -1,14 +1,14 @@
 <header class="header-desktop3 d-none d-lg-block">
 <div class="section__content section__content--p35">
 <div class="header3-wrap">
-            
+
             <div class="header__logo">
                 <a href="{{url('home')}}">
                     <!-- <img src="{{asset('images/icon/logo_branca.png')}}" alt="CoolAdmin" /> -->
                     <h2 style="color:#fff;">SISGPR - Planejamento</h2>
                 </a>
             </div>
-            
+
             <div class="header__navbar">
                 <ul class="list-unstyled">
                     <li>
@@ -16,22 +16,21 @@
                             <i class="fas fa-home"></i>
                             <span class="bot-line"></span>Home
                         </a>
-                    </li>                    
+                    </li>
                     <li>
                         <a href="{{url('planejamento/inicio')}}">
                             <i class="fas fa-home"></i>
                             <span class="bot-line"></span>Início
                         </a>
-                    </li>                    
+                    </li>
                     <li class="has-sub">
                         <a href="#">
                             <i class="fas fa-copy"></i>
                             <span class="bot-line"></span>Cadastros</a>
                         <ul class="header3-sub-list list-unstyled">
-                            <li> <a href="{{url('planejamento/plano')}}">Plano</a> </li>
-                            <li> <a href="{{url('planejamento/valor_institucional')}}">Valores</a> </li>                            
+                            <li> <a href="{{url('planejamento/problema')}}">Problema</a> </li>
                         </ul>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
 

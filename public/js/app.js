@@ -40785,7 +40785,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success btn-sm",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
                         $event.preventDefault()

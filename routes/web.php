@@ -36,6 +36,14 @@ Route::middleware(['userLogado'])->group(function(){
         Route::get('plano/{plano_id}/perspectiva', 'App\Http\Controllers\Planejamento\PerspectivaController@index');
         //Route::post('perspectiva/novo/editar', 'App\Http\Controllers\Planejamento\PerspectivaController@save_update');
 
+		//problema
+        Route::get('problema', 'App\Http\Controllers\Planejamento\ProblemaController@index');
+		Route::get('problema/novo', 'App\Http\Controllers\Planejamento\ProblemaController@create');
+	  	Route::post('problema/novo', 'App\Http\Controllers\Planejamento\ProblemaController@save');
+		Route::get('problema/{id}/editar', 'App\Http\Controllers\Planejamento\ProblemaController@edit');
+		Route::post('problema/{id}/editar', 'App\Http\Controllers\Planejamento\ProblemaController@update');
+	  	Route::get('problema/{id}/excluir', 'App\Http\Controllers\Planejamento\ProblemaController@delete');
+
     });
 
 

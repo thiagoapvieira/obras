@@ -483,14 +483,14 @@
             </div>
             </div>
 
-            
+
 
         </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-success btn-sm" v-on:click.prevent="save_indicador()">Salvar</button>
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" v-on:click.prevent="save_indicador()">Salvar</button>
       </div>
     </div>
   </div>
@@ -839,9 +839,9 @@
 
                 axios.post(this.url+'api/planejamento/indicador/save', body)
                 .then(response => {
-                    
+
                     console.log(response.data);
-                    
+
                     this.indicador_id = response.data;
 
                     this.consulta();
