@@ -2634,6 +2634,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['url', 'plano_id'],
@@ -2645,11 +2649,24 @@ __webpack_require__.r(__webpack_exports__);
       orgaos: [],
       problema: [],
       situacoes: [{
-        text: 'Ativo - exemplo01',
-        value: 'A'
+        value: 'A',
+        text: 'Ativo - exemplo01'
       }, {
-        text: 'Negativo - exemplo02',
-        value: 'B'
+        value: 'B',
+        text: 'Negativo - exemplo02'
+      }],
+      status: [{
+        value: 0,
+        text: 'Pendente'
+      }, {
+        value: 1,
+        text: 'A iniciar'
+      }, {
+        value: 2,
+        text: 'Em andamento'
+      }, {
+        value: 3,
+        text: 'Concluído'
       }],
       //variaveis
       perspectiva_id: null,
@@ -39600,7 +39617,9 @@ var render = function() {
                                                       )
                                                     ]),
                                                     _vm._v(" "),
-                                                    _c("td", [_vm._v("-")]),
+                                                    _c("td", [
+                                                      _vm._v(_vm._s(ind.status))
+                                                    ]),
                                                     _vm._v(" "),
                                                     _c("td", [
                                                       _vm._v(
@@ -40593,39 +40612,71 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   this.indicador_id > 0
-                    ? _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    ? _c("div", { staticClass: "col-md-4 espaco1" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "indicador_status" } }, [
                             _vm._v("Status")
                           ]),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.indicador_status,
-                                expression: "indicador_status"
-                              }
-                            ],
-                            staticClass: "form-control form-control-sm",
-                            attrs: { type: "text" },
-                            domProps: { value: _vm.indicador_status },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.indicador_status,
+                                  expression: "indicador_status"
                                 }
-                                _vm.indicador_status = $event.target.value
+                              ],
+                              staticClass:
+                                "form-control-sm form-control form-control-sm",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.indicador_status = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
                               }
-                            }
-                          })
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("Escolha um item")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.situacoes, function(p) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: p.id } },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(p.text) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              })
+                            ],
+                            2
+                          )
                         ])
                       ])
                     : _vm._e(),
                   _vm._v(" "),
                   this.indicador_id > 0
-                    ? _c("div", { staticClass: "col-md-12 espaco1" }, [
+                    ? _c("div", { staticClass: "col-md-8 espaco1" }, [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-11" }, [
                             _c("div", { staticClass: "form-group" }, [
@@ -40707,7 +40758,8 @@ var render = function() {
                               value: _vm.show_tabela_orgao,
                               expression: "show_tabela_orgao"
                             }
-                          ]
+                          ],
+                          staticStyle: { height: "400px", overflow: "auto" }
                         },
                         [
                           _c("div", { staticClass: "col-md-12" }, [
@@ -40728,8 +40780,6 @@ var render = function() {
                                         "tr",
                                         { staticClass: "tr-shadow" },
                                         [
-                                          _c("td", [_vm._v(_vm._s(orgao.id))]),
-                                          _vm._v(" "),
                                           _c("td", [
                                             _vm._v(_vm._s(orgao.sigla))
                                           ]),
@@ -40753,7 +40803,7 @@ var render = function() {
                                                   }
                                                 }
                                               },
-                                              [_vm._v("incluir")]
+                                              [_vm._v("vincular")]
                                             )
                                           ])
                                         ]
@@ -40970,8 +41020,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("id")]),
-        _vm._v(" "),
         _c("th", [_vm._v("sigla")]),
         _vm._v(" "),
         _c("th", [_vm._v("nome")]),

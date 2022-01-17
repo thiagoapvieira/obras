@@ -168,7 +168,7 @@
                                             <td>{{ind.meta_agregada}}</td>
                                             <td>{{ind.realizado_acumulado}}</td>
                                             <td>{{ind.execucao_agregada}}</td>
-                                            <td>-</td>
+                                            <td>{{ind.status}}</td>
                                             <td>{{ind.responsavel}}</td>
                                             <td>
                                                 <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Second group">
@@ -427,14 +427,19 @@
                 </div>
             </div>
 
-            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
+            <div class="col-md-4 espaco1" v-if="this.indicador_id>0">
                 <div class="form-group">
                     <label for="indicador_status">Status</label>
-                    <input type="text" v-model="indicador_status" class="form-control form-control-sm">
+                    <select class="form-control-sm form-control form-control-sm" v-model="indicador_status">
+                        <option disabled value="">Escolha um item</option>
+                        <option v-for="p in situacoes" v-bind:value="p.id">
+                            {{p.text}}
+                        </option>
+                    </select>
                 </div>
             </div>
 
-            <div class="col-md-12 espaco1" v-if="this.indicador_id>0">
+            <div class="col-md-8 espaco1" v-if="this.indicador_id>0">
                 <div class="row">
                     <div class="col-md-11">
                         <div class="form-group">
@@ -451,8 +456,7 @@
                 </div>
             </div>
 
-
-            <div v-show="show_tabela_orgao" v-if="this.indicador_id>0">
+            <div v-show="show_tabela_orgao" v-if="this.indicador_id>0" style="height: 400px; overflow:auto;">
             <div class="col-md-12">
                 <div class="form-group">
 
@@ -461,7 +465,7 @@
                     <table class="table table-borderless table-data3">
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <!-- <th>id</th> -->
                                 <th>sigla</th>
                                 <th>nome</th>
                                 <th></th>
@@ -469,10 +473,10 @@
                         </thead>
                         <tbody>
                             <tr class="tr-shadow" v-for="orgao of orgaos">
-                                <td>{{orgao.id}}</td>
+                                <!-- <td>{{orgao.id}}</td> -->
                                 <td>{{orgao.sigla}}</td>
                                 <td>{{orgao.nome}}</td>
-                                <td><button class="btn btn-secondary btn-sm" v-on:click.prevent="incluir_responsavel_indicador(orgao.id)">incluir</button></td>
+                                <td><button class="btn btn-secondary btn-sm" v-on:click.prevent="incluir_responsavel_indicador(orgao.id)">vincular</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -517,8 +521,15 @@
                 problema: [],
 
                 situacoes: [
-                    { text: 'Ativo - exemplo01', value: 'A' },
-                    { text: 'Negativo - exemplo02', value: 'B' },
+                    {value:'A', text: 'Ativo - exemplo01'},
+                    {value:'B', text: 'Negativo - exemplo02'},
+                ],
+
+                status: [
+                    {value:0, text:'Pendente'},
+                    {value:1, text:'A iniciar'},
+                    {value:2, text:'Em andamento'},
+                    {value:3, text:'Concluído'},
                 ],
 
                 //variaveis
