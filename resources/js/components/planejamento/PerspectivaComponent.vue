@@ -427,12 +427,12 @@
                 </div>
             </div>
 
-            <div class="col-md-4 espaco1" v-if="this.indicador_id>0">
+            <div class="col-md-4 espaco1">
                 <div class="form-group">
                     <label for="indicador_status">Status</label>
                     <select class="form-control-sm form-control form-control-sm" v-model="indicador_status">
                         <option disabled value="">Escolha um item</option>
-                        <option v-for="p in situacoes" v-bind:value="p.id">
+                        <option v-for="p in status" v-bind:value="p.valeu">
                             {{p.text}}
                         </option>
                     </select>
@@ -526,10 +526,13 @@
                 ],
 
                 status: [
-                    {value:0, text:'Pendente'},
-                    {value:1, text:'A iniciar'},
-                    {value:2, text:'Em andamento'},
-                    {value:3, text:'Concluído'},
+                    {valeu:0, text:'Em planejamento'},
+                    {valeu:1, text:'Em licitação'},
+                    {valeu:2, text:'A iniciar'},
+                    {valeu:3, text:'Em execução'},
+                    {valeu:4, text:'Paralisado'},
+                    {valeu:5, text:'Concluído'},
+                    {valeu:6, text:'Cancelada'},
                 ],
 
                 //variaveis

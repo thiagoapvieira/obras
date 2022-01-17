@@ -2656,17 +2656,26 @@ __webpack_require__.r(__webpack_exports__);
         text: 'Negativo - exemplo02'
       }],
       status: [{
-        value: 0,
-        text: 'Pendente'
+        valeu: 0,
+        text: 'Em planejamento'
       }, {
-        value: 1,
+        valeu: 1,
+        text: 'Em licitação'
+      }, {
+        valeu: 2,
         text: 'A iniciar'
       }, {
-        value: 2,
-        text: 'Em andamento'
+        valeu: 3,
+        text: 'Em execução'
       }, {
-        value: 3,
+        valeu: 4,
+        text: 'Paralisado'
+      }, {
+        valeu: 5,
         text: 'Concluído'
+      }, {
+        valeu: 6,
+        text: 'Cancelada'
       }],
       //variaveis
       perspectiva_id: null,
@@ -40611,69 +40620,64 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  this.indicador_id > 0
-                    ? _c("div", { staticClass: "col-md-4 espaco1" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "indicador_status" } }, [
-                            _vm._v("Status")
+                  _c("div", { staticClass: "col-md-4 espaco1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "indicador_status" } }, [
+                        _vm._v("Status")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.indicador_status,
+                              expression: "indicador_status"
+                            }
+                          ],
+                          staticClass:
+                            "form-control-sm form-control form-control-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.indicador_status = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { disabled: "", value: "" } }, [
+                            _vm._v("Escolha um item")
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.indicador_status,
-                                  expression: "indicador_status"
-                                }
-                              ],
-                              staticClass:
-                                "form-control-sm form-control form-control-sm",
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.indicador_status = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                { attrs: { disabled: "", value: "" } },
-                                [_vm._v("Escolha um item")]
-                              ),
-                              _vm._v(" "),
-                              _vm._l(_vm.situacoes, function(p) {
-                                return _c(
-                                  "option",
-                                  { domProps: { value: p.id } },
-                                  [
-                                    _vm._v(
-                                      "\n                            " +
-                                        _vm._s(p.text) +
-                                        "\n                        "
-                                    )
-                                  ]
+                          _vm._l(_vm.status, function(p) {
+                            return _c(
+                              "option",
+                              { domProps: { value: p.valeu } },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(p.text) +
+                                    "\n                        "
                                 )
-                              })
-                            ],
-                            2
-                          )
-                        ])
-                      ])
-                    : _vm._e(),
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
                   this.indicador_id > 0
                     ? _c("div", { staticClass: "col-md-8 espaco1" }, [

@@ -13,7 +13,7 @@ if (! function_exists('getIndicadorMeta')){
         ->where('tipo', $tipo)
         ->where('ano', $ano)
         ->value('valor');
-        
+
         return $f;
     }
 }
@@ -40,7 +40,7 @@ if (! function_exists('getIndicador')) {
 
 if (! function_exists('usuario_nome')) {
     function usuario_nome($id) {
-        $nome = DB::table('usuario')->where('id', $id)->value('nome');        
+        $nome = DB::table('usuario')->where('id', $id)->value('nome');
         return $nome;
     }
 }
@@ -60,13 +60,13 @@ if (! function_exists('status_fases')) {
     function status_fases($status_fases)
     {
         switch ($status_fases) {
-            case 0: $status_fases = 'Em planejamento'; break; 
-            case 1: $status_fases = 'Em licitação'; break; 
-            case 2: $status_fases = 'A iniciar'; break; 
-            case 3: $status_fases = 'Em execução'; break; 
-            case 4: $status_fases = 'Paralisado'; break; 
-            case 5: $status_fases = 'Concluído'; break; 
-            case 6: $status_fases = 'Cancelada'; break; 
+            case 0: $status_fases = 'Em planejamento'; break;
+            case 1: $status_fases = 'Em licitação'; break;
+            case 2: $status_fases = 'A iniciar'; break;
+            case 3: $status_fases = 'Em execução'; break;
+            case 4: $status_fases = 'Paralisado'; break;
+            case 5: $status_fases = 'Concluído'; break;
+            case 6: $status_fases = 'Cancelada'; break;
         }
         return $status_fases;
     }
@@ -92,11 +92,11 @@ if (! function_exists('obra_status')) {
 if (! function_exists('statusCronograma')) {
     function statusCronograma($status)
     {
-        switch ($status) {            
+        switch ($status) {
             case 0: $status = 'A iniciar';  break;
             case 1: $status = 'Em andamento';  break;
             case 2: $status = 'Atrasado';  break;
-            case 3: $status = 'Concluído';  break;            
+            case 3: $status = 'Concluído';  break;
         }
         return $status;
     }
@@ -128,7 +128,7 @@ if (! function_exists('dateBR2')) {
     {
         if($date == '' or $date == null){
             return '';
-        }    
+        }
 
         if (!$date instanceof \DateTime) {
             $date = new \DateTime($date);
@@ -144,10 +144,10 @@ if (! function_exists('status')) {
     function status($status)
     {
         switch ($status) {
-            case 0: $status = 'Ruim'; break; 
-            case 1: $status = 'Regular'; break; 
-            case 2: $status = 'Bom'; break;             
-            case 3: $status = 'Não informado'; break;             
+            case 0: $status = 'Ruim'; break;
+            case 1: $status = 'Regular'; break;
+            case 2: $status = 'Bom'; break;
+            case 3: $status = 'Não informado'; break;
         }
         return $status;
     }
@@ -159,10 +159,10 @@ if (! function_exists('caixa_cinza')) {
     function caixa_cinza($caixa_cinza)
     {
         switch ($caixa_cinza) {
-            case 0: $caixa_cinza = 'Não'; break; 
-            case 1: $caixa_cinza = 'Sim'; break;             
-            case 2: $caixa_cinza = 'Não informado'; break;             
-            case 3: $caixa_cinza = 'Não aplicável'; break;             
+            case 0: $caixa_cinza = 'Não'; break;
+            case 1: $caixa_cinza = 'Sim'; break;
+            case 2: $caixa_cinza = 'Não informado'; break;
+            case 3: $caixa_cinza = 'Não aplicável'; break;
         }
         return $caixa_cinza;
     }
@@ -174,7 +174,7 @@ if (! function_exists('caixa_cinza')) {
 //     {
 //         $sql  = " select  sum(investido) as investido from ";
 //         $sql .= " (select O.id, O.percentual_execucao_financeira as perc, ";
-//         $sql .= " (sum(V.valor)) as investido ";        
+//         $sql .= " (sum(V.valor)) as investido ";
 //         $sql .= " from obra O ";
 //         $sql .= " inner join obra_valor V on V.obra_id = O.id ";
 //         $sql .= " where O.setor_id = ".$id;
@@ -344,7 +344,7 @@ if (! function_exists('log_hitorico')) {
           $atualizar=1;
         }
 
-        
+
 
 
 
@@ -483,7 +483,7 @@ if (! function_exists('log_hitorico')) {
             $texto .= "<br>";
             $atualizar=1;
           }
-        }        
+        }
 
         $t = 'Prazo de entrega';
         $table = 'prazo_entrega';
@@ -571,15 +571,15 @@ if (! function_exists('log_hitorico')) {
           $n = DB::table('obra_historico')->insert(
             ['acao' => 'edição',
              'obra_id' => $id,
-             'usuario_id' => $usuario_id,         
+             'usuario_id' => $usuario_id,
              'texto' => $texto,
             ]
           );
-        }  
-        
+        }
+
 
         // echo $texto;
-        
+
     }
 }
 
