@@ -24,11 +24,15 @@
                         </a>
                     </li>
                     <li class="has-sub">
-                        <a href="#">
-                            <i class="fas fa-copy"></i>
-                            <span class="bot-line"></span>Cadastros</a>
+                        <a href="#"> <i class="fas fa-copy"></i> <span class="bot-line"></span>Cadastros</a>
                         <ul class="header3-sub-list list-unstyled">
                             <li> <a href="{{url('planejamento/problema')}}">Problema</a> </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="#"> <i class="fas fa-copy"></i> <span class="bot-line"></span>Relatórios</a>
+                        <ul class="header3-sub-list list-unstyled">
+                            <li> <a href="{{url('planejamento/relatorio/por_orgao')}}">Por orgao</a> </li>
                         </ul>
                     </li>
                 </ul>

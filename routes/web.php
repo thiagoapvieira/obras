@@ -44,6 +44,9 @@ Route::middleware(['userLogado'])->group(function(){
 		Route::post('problema/{id}/editar', 'App\Http\Controllers\Planejamento\ProblemaController@update');
 	  	Route::get('problema/{id}/excluir', 'App\Http\Controllers\Planejamento\ProblemaController@delete');
 
+		//relatorio
+        Route::get('relatorio/por_orgao', 'App\Http\Controllers\Planejamento\RelatorioController@index_por_orgao');
+
     });
 
 
