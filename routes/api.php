@@ -11,7 +11,13 @@ use App\Http\Controllers\Planejamento\IndicadorController;
 use App\Http\Controllers\Planejamento\OrgaoController;
 use App\Http\Controllers\Planejamento\ProblemaController;
 use App\Http\Controllers\Planejamento\RelatorioController;
+
 use App\Http\Controllers\Obras\ApiObraController;
+
+use Illuminate\Pagination\LengthAwarePaginator;
+
+
+use Illuminate\Pagination\Paginator;
 
 Route::middleware(['cors'])->group(function(){
 
@@ -74,8 +80,8 @@ Route::middleware(['cors'])->group(function(){
     });
 
     //OBRAS ------------------------------------------------------------------------------
-    Route::prefix('obras')->group(function(){
-
+    Route::prefix('obras')->group(function()
+    {
         //orgao
         Route::post('obra/{id}/orgao_relacionados', [ApiObraController::class, 'getObraOrgaoRelacionados']);
         Route::post('obra/{obra_id}/orgao/{orgao_id}/relacionar', [ApiObraController::class, 'getObraOrgaoRelacionar']);
@@ -110,20 +116,45 @@ Route::middleware(['cors'])->group(function(){
 
 
     //webserver api
-    Route::get('webservice/obras/all', function(Request $request)
+    Route::get('webservice/obras/filter/textual/{pesq}', function(Request $request, $pesq)
     {
         $sql  = " select o.* from obra o ";
         $sql .= " inner join obra_orgao oo on oo.obra_id = o.id ";
         $sql .= " where 1 = 1 ";
         $sql .= " and oo.orgao_id = 39 ";
-        $sql .= " order by o.id ";
-        $obras = DB::select($sql);
+        $sql .= " and ( ";
+        $sql .= " o.descricao like '%".$pesq."%' ";
+        $sql .= " or o.obs like '%".$pesq."%' ";
+        $sql .= " ) ";
+        $sql .= " order by o.id desc ";
+
+        $size = 10;
+        $data = DB::select($sql);
+        $collect = collect($data);
+
+        //paginação customizada
+        if(isset(request()->all()['page'])){
+            if(request()->all()['page'] == null){
+                $page = 1;
+            }else{
+                $page = request()->all()['page'];
+            }
+        }else{
+            $page = 1;
+        }
+
+        $obras = new LengthAwarePaginator(
+            $collect->forPage($page, $size),
+            $collect->count(),
+            $size
+        );
+        
 
         $a = array();
         foreach ($obras as $value){
             $obj = new \stdClass();
             $obj->id = $value->id;
-            $obj->descricao = $value->descricao;
+            $obj->descricao = $value->descricao;            
             $obj->prioritaria = $value->prioritaria==1?"Sim":"Não";
             $obj->dt_atualizacao = $value->dt_atualizacao;
             $obj->igesp = $value->igesp;
@@ -204,7 +235,7 @@ Route::middleware(['cors'])->group(function(){
                 $obj2->valor = $value->valor;
                 array_push($b, $obj2);
             }
-            $obj->fonte_de_recusrso = $b;
+            $obj->fonte_de_recusrso = $b;            
 
             array_push($a, $obj);
         }
