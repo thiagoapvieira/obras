@@ -109,12 +109,13 @@ Route::middleware(['cors'])->group(function(){
     });
 
 
-    Route::get('webservice/obras', function(Request $request){
-
+    //webserver api
+    Route::get('webservice/obras/all', function(Request $request)
+    {
         $sql  = " select o.* from obra o ";
         $sql .= " inner join obra_orgao oo on oo.obra_id = o.id ";
         $sql .= " where 1 = 1 ";
-        $sql .= " and oo.obra_id = 39 ";
+        $sql .= " and oo.orgao_id = 39 ";
         $sql .= " order by o.id ";
         $obras = DB::select($sql);
 
@@ -204,7 +205,6 @@ Route::middleware(['cors'])->group(function(){
                 array_push($b, $obj2);
             }
             $obj->fonte_de_recusrso = $b;
-
 
             array_push($a, $obj);
         }
