@@ -10,6 +10,7 @@ class PlanoController extends Controller
     public function index()
     {
       $plano = DB::table('plano')->where('ativo',1)->get();
+
       return view('planejamento.plano.plano',['plano'=>$plano]);
     }
 }

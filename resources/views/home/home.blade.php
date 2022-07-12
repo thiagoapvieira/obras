@@ -13,14 +13,14 @@
              <a href="{{url('obras/painel')}}" class="btn btn-secondary btn-lg btn-block">Obras</a>
             </div>
             <div class="col-md-6">
-             <a href="{{url('planejamento/inicio')}}" class="btn btn-primary btn-lg btn-block">Planejamento</a>
+             <a href="{{url('planejamento/plano')}}" class="btn btn-primary btn-lg btn-block">Planejamento</a>
             </div>
         </div>
         <br><br><br><br>
 
-    </div>    
-    </div>    
-    </div>    
+    </div>
+    </div>
+    </div>
     </section>
 
 </div>

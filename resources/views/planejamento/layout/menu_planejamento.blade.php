@@ -18,7 +18,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{url('planejamento/inicio')}}">
+                        <a href="{{url('planejamento/plano')}}">
                             <i class="fas fa-home"></i>
                             <span class="bot-line"></span>Início
                         </a>

@@ -30,7 +30,7 @@ Route::middleware(['userLogado'])->group(function(){
     Route::prefix('planejamento')->group(function(){
 
         //inicio
-        Route::get('inicio', 'App\Http\Controllers\Planejamento\InicioController@index');
+        Route::get('plano', 'App\Http\Controllers\Planejamento\PlanoController@index');
 
         //perspectiva
         Route::get('plano/{plano_id}/perspectiva', 'App\Http\Controllers\Planejamento\PerspectivaController@index');
@@ -45,7 +45,7 @@ Route::middleware(['userLogado'])->group(function(){
 	  	Route::get('problema/{id}/excluir', 'App\Http\Controllers\Planejamento\ProblemaController@delete');
 
 		//relatorio
-        Route::get('relatorio/por_orgao', 'App\Http\Controllers\Planejamento\RelatorioController@index_por_orgao');
+        Route::get('relatorio/por_orgao', 'App\Http\Controllers\Planejamento\RelatorioController@index');
 
     });
 
@@ -149,5 +149,30 @@ Route::middleware(['userLogado'])->group(function(){
 	  	Route::get('projeto/{id}/excluir', 'App\Http\Controllers\Obras\ProjetoController@delete');
 
     });
+
+
+
+	Route::get('teste', function(){
+
+		$sql  = " select id, nome,responsavel from indicador ";
+		$sql .= " where responsavel is not null and responsavel = 'SES' ";
+		$indicador = DB::select($sql);
+		// dd($indicador);
+
+		foreach($indicador as $v){
+
+			
+
+			echo $v->id;
+			// echo $v->responsavel;
+		}
+
+	});
+
+
+
+
+
+
 
 });
