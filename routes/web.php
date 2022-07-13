@@ -45,7 +45,7 @@ Route::middleware(['userLogado'])->group(function(){
 	  	Route::get('problema/{id}/excluir', 'App\Http\Controllers\Planejamento\ProblemaController@delete');
 
 		//relatorio
-        Route::get('relatorio/por_orgao', 'App\Http\Controllers\Planejamento\RelatorioController@index');
+        Route::get('relatorio/por_orgao/{orgao_id}/{ano}', 'App\Http\Controllers\Planejamento\RelatorioController@index');
 
     });
 
@@ -155,23 +155,30 @@ Route::middleware(['userLogado'])->group(function(){
 	Route::get('teste', function(){
 
 		$sql  = " select id, nome,responsavel from indicador ";
-		$sql .= " where responsavel is not null and responsavel = 'SES' ";
+		$sql .= " where responsavel is not null ";
+		// $sql .= " and responsavel = 'SES' ";
 		$indicador = DB::select($sql);
-		// dd($indicador);
+		//dd($indicador);
 
-		foreach($indicador as $v){
+		foreach($indicador as $v)
+		{
+			//echo $v->responsavel;
+			$n = DB::table('orgao')->where('sigla',rtrim($v->responsavel,',') )->first();
+			$aux = 0;
+			if($n <> null){ $aux = $n->id; }
 
-			
+			if($aux > 0){
+				echo $v->id." | ".$v->responsavel." || ".$aux;
+				echo '<br>';
 
-			echo $v->id;
-			// echo $v->responsavel;
+				DB::table('indicador_responsavel')->insert([
+					'indicador_id'=>$v->id,
+					'orgao_id'=>$aux,
+				]);
+			}
 		}
 
 	});
-
-
-
-
 
 
 

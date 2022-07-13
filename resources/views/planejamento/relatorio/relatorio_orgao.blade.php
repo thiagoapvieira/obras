@@ -10,8 +10,8 @@
 	    <div class="row">
 		    <div class="col-md-10 offset-md-1" >
 
-		    	<h4 class="text-center">SECRETARIA DE ESTADO DA SEGURNÇA PÚBLICA</h4>
-		    	<h4 class="text-center">2019</h4>
+		    	<h4 class="text-center">{{$orgao->nome}}</h4>
+		    	<h4 class="text-center">{{$ano}}</h4>
 		    	<br>
 
 		    </div>
@@ -28,14 +28,14 @@
 		    	  	    <div class="row">
 		    	  		    <div class="col-md-6" >
 		    	  		    	<div class="card" style="margin-top: 20px;">
-		    	  		    		<div class="text-center" style="padding: 30px 0 0 0">Nota:</div>
-		    	  		    		<div class="text-center" style="padding: 30px 0 30px 0">{{$nota==null?0:$nota->nota}}</div>
+		    	  		    		<div class="text-center" style="padding: 30px 0 0 0">NOTA:</div>
+		    	  		    		<div class="text-center" style="padding: 30px 0 30px 0; font-size: 50px;">{{$nota==null?0:$nota->nota}}%</div>
 		    	  		    	</div>
 		    	  		    </div>
 		    	  		    <div class="col-md-6" >
 		    	  		    	<div class="card" style="margin-top: 20px;">
-		    	  		    		<div class="text-center" style="padding: 30px 0 0 0">Índice:</div>
-		    	  		    		<div class="text-center" style="padding: 30px 0 30px 0">{{$nota==null?0:$nota->indice}}</div>
+		    	  		    		<div class="text-center" style="padding: 30px 0 0 0">ÍNDICE DE DESAFIO SETORIAL:</div>
+		    	  		    		<div class="text-center" style="padding: 30px 0 30px 0; font-size: 50px;">{{$nota==null?0:$nota->indice}}%</div>
 		    	  		    	</div>
 		    	  		    </div>
 		    	  		</div>
@@ -62,7 +62,8 @@
     	    	  		    <div class="col-md-4" >
     	    	  		    	<div class="card">
     	    	  		    		<div class="text-center" style="padding: 30px 0 0 0"> {{$value->nome}} </div>
-    	    	  		    		<div class="text-center" style="padding: 30px 0 30px 0">{{$value->ano}}</div>
+    	    	  		    		<div class="text-center" style="padding: 30px 0 30px 0">Realizado em {{$value->ano}} <br> 0%</div>
+    	    	  		    		<div class="text-center" style="padding: 10px 0 10px 0"> {{ number_format($value->realizado, 2, '.', '') }}%</div>
     	    	  		    	</div>
     	    	  		    </div>
     	    	  	    	@endforeach
