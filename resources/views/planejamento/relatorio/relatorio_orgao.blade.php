@@ -62,8 +62,7 @@
     	    	  		    <div class="col-md-4" >
     	    	  		    	<div class="card">
     	    	  		    		<div class="text-center" style="padding: 30px 0 0 0"> {{$value->nome}} </div>
-    	    	  		    		<div class="text-center" style="padding: 30px 0 30px 0">Realizado em {{$value->ano}} <br> 0%</div>
-    	    	  		    		<div class="text-center" style="padding: 10px 0 10px 0"> {{ number_format($value->realizado, 2, '.', '') }}%</div>
+    	    	  		    		<div class="text-center" style="padding: 30px 0 30px 0">Realizado em {{$value->ano}} <br> {{ number_format($value->realizado, 2, '.', '') }}%</div>
     	    	  		    	</div>
     	    	  		    </div>
     	    	  	    	@endforeach
