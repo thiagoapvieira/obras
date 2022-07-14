@@ -10,6 +10,7 @@ use App\Http\Controllers\Planejamento\EstrategiaController;
 use App\Http\Controllers\Planejamento\IndicadorController;
 use App\Http\Controllers\Planejamento\OrgaoController;
 use App\Http\Controllers\Planejamento\ProblemaController;
+use App\Http\Controllers\Planejamento\SituacaoController;
 use App\Http\Controllers\Planejamento\RelatorioController;
 use App\Http\Controllers\Obras\ApiObraController;
 use App\Http\Controllers\WebService\WebServiceController;
@@ -64,6 +65,9 @@ Route::middleware(['cors'])->group(function(){
 
         //problema
         Route::get('problema/all', [ProblemaController::class, 'all']);
+
+        //situacao
+        Route::get('situacao/all', [SituacaoController::class, 'all']);
 
         //relatorio
         Route::get('relatorio/objetivo/orgao_id/{orgao_id}', [RelatorioController::class, 'get_objetivo_por_orgao']);

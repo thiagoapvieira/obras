@@ -2656,55 +2656,65 @@ __webpack_require__.r(__webpack_exports__);
     this.consulta();
     this.get_orgaos("");
     this.get_problema();
+    this.get_situacao();
   },
   methods: {
-    get_problema: function get_problema() {
+    get_situacao: function get_situacao() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/problema/all').then(function (response) {
-        _this.problema = response.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/situacao/all').then(function (response) {
+        _this.situacoes = response.data;
       })["catch"](function (e) {
         _this.errors.push(e);
       });
     },
-    get_orgaos: function get_orgaos(pesq) {
+    get_problema: function get_problema() {
       var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/problema/all').then(function (response) {
+        _this2.problema = response.data;
+      })["catch"](function (e) {
+        _this2.errors.push(e);
+      });
+    },
+    get_orgaos: function get_orgaos(pesq) {
+      var _this3 = this;
 
       var body = {
         pesq: pesq
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/orgao/find', body).then(function (response) {
-        _this2.orgaos = response.data;
-        console.log(_this2.orgaos);
-      })["catch"](function (e) {
-        _this2.errors.push(e);
-      });
-    },
-    get_responsaveis: function get_responsaveis() {
-      var _this3 = this;
-
-      //consulte responsaveis
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + this.indicador_id + '/responsavel/all').then(function (response) {
-        _this3.indicador_responsavel = response.data;
+        _this3.orgaos = response.data;
+        console.log(_this3.orgaos);
       })["catch"](function (e) {
         _this3.errors.push(e);
       });
     },
-    incluir_responsavel_indicador: function incluir_responsavel_indicador(orgao_id) {
+    get_responsaveis: function get_responsaveis() {
       var _this4 = this;
+
+      //consulte responsaveis
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + this.indicador_id + '/responsavel/all').then(function (response) {
+        _this4.indicador_responsavel = response.data;
+      })["catch"](function (e) {
+        _this4.errors.push(e);
+      });
+    },
+    incluir_responsavel_indicador: function incluir_responsavel_indicador(orgao_id) {
+      var _this5 = this;
 
       var body = {
         indicador_id: this.indicador_id,
         orgao_id: orgao_id
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/incluir_responsavel', body).then(function (response) {
-        _this4.get_responsaveis();
+        _this5.get_responsaveis();
       })["catch"](function (e) {
-        _this4.errors.push(e);
+        _this5.errors.push(e);
       });
     },
     consulta: function consulta() {
-      var _this5 = this;
+      var _this6 = this;
 
       var body = {
         plano_id: this.plano_id,
@@ -2713,12 +2723,12 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.caixa_load = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/consulta', body).then(function (response) {
-        _this5.perspectiva = response.data;
-        _this5.caixa_load = false;
+        _this6.perspectiva = response.data;
+        _this6.caixa_load = false;
       })["catch"](function (e) {
-        _this5.errors.push(e);
+        _this6.errors.push(e);
 
-        _this5.caixa_load = false;
+        _this6.caixa_load = false;
       });
     },
     //--------perspectiva--------------------------------------------//
@@ -2727,7 +2737,7 @@ __webpack_require__.r(__webpack_exports__);
       this.perspectiva_nome = nome;
     },
     save_perspectiva: function save_perspectiva() {
-      var _this6 = this;
+      var _this7 = this;
 
       var body = {
         id: this.perspectiva_id,
@@ -2735,20 +2745,20 @@ __webpack_require__.r(__webpack_exports__);
         nome: this.perspectiva_nome
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/perspectiva/save', body).then(function (response) {
-        _this6.consulta();
+        _this7.consulta();
       })["catch"](function (e) {
-        _this6.errors.push(e);
+        _this7.errors.push(e);
       });
     },
     delete_perspectiva: function delete_perspectiva(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/perspectiva/delete/' + id).then(function (response) {
         console.log(response.data);
 
-        _this7.consulta();
+        _this8.consulta();
       })["catch"](function (e) {
-        _this7.errors.push(e);
+        _this8.errors.push(e);
       });
     },
     //------ objetivo ----------------------------------------------//
@@ -2758,7 +2768,7 @@ __webpack_require__.r(__webpack_exports__);
       this.objetivo_nome = nome;
     },
     save_objetivo: function save_objetivo() {
-      var _this8 = this;
+      var _this9 = this;
 
       var body = {
         id: this.objetivo_id,
@@ -2766,20 +2776,20 @@ __webpack_require__.r(__webpack_exports__);
         nome: this.objetivo_nome
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_objetivo', body).then(function (response) {
-        _this8.consulta();
+        _this9.consulta();
       })["catch"](function (e) {
-        _this8.errors.push(e);
+        _this9.errors.push(e);
       });
     },
     delete_objetivo: function delete_objetivo(id) {
-      var _this9 = this;
+      var _this10 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/objetivo/delete/' + id).then(function (response) {
         console.log(response.data);
 
-        _this9.consulta();
+        _this10.consulta();
       })["catch"](function (e) {
-        _this9.errors.push(e);
+        _this10.errors.push(e);
       });
     },
     //------ estrategia -------------------------------------------//
@@ -2792,7 +2802,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.estrategia_nome);
     },
     save_estrategia: function save_estrategia() {
-      var _this10 = this;
+      var _this11 = this;
 
       var body = {
         id: this.estrategia_id,
@@ -2802,25 +2812,25 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/save_estrategia', body).then(function (response) {
         console.log(response.data);
 
-        _this10.consulta();
-      })["catch"](function (e) {
-        _this10.errors.push(e);
-      });
-    },
-    delete_estrategia: function delete_estrategia(id) {
-      var _this11 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/estrategia/delete/' + id).then(function (response) {
-        console.log(response.data);
-
         _this11.consulta();
       })["catch"](function (e) {
         _this11.errors.push(e);
       });
     },
+    delete_estrategia: function delete_estrategia(id) {
+      var _this12 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/estrategia/delete/' + id).then(function (response) {
+        console.log(response.data);
+
+        _this12.consulta();
+      })["catch"](function (e) {
+        _this12.errors.push(e);
+      });
+    },
     //------ indicador -------------------------------------------------------------//
     set_indicador: function set_indicador(id, est_id) {
-      var _this12 = this;
+      var _this13 = this;
 
       if (id == 0) {
         this.indicador_id = 0;
@@ -2841,35 +2851,35 @@ __webpack_require__.r(__webpack_exports__);
 
       if (id > 0) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/find/' + id).then(function (response) {
-          _this12.indicador_id = response.data[0].id;
-          _this12.indicador_est_id = response.data[0].est_id;
-          _this12.indicador_nome = response.data[0].nome;
-          _this12.indicador_meta_agregada = response.data[0].meta_agregada;
-          _this12.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
-          _this12.indicador_execucao_agregada = response.data[0].execucao_agregada;
-          _this12.indicador_status = response.data[0].status;
-          _this12.indicador_responsavel = response.data[0].responsavel;
-          _this12.indicador_complexidade = response.data[0].complexidade;
-          _this12.indicador_utilizacao_recurso_finan = response.data[0].utilizacao_recurso_finan;
-          _this12.indicador_capacidade_transformacao = response.data[0].capacidade_transformacao;
-          _this12.indicador_soma_peso = response.data[0].soma_peso;
-          _this12.indicador_meta = response.data[0].meta;
+          _this13.indicador_id = response.data[0].id;
+          _this13.indicador_est_id = response.data[0].est_id;
+          _this13.indicador_nome = response.data[0].nome;
+          _this13.indicador_meta_agregada = response.data[0].meta_agregada;
+          _this13.indicador_realizado_acumulado = response.data[0].realizado_acumulado;
+          _this13.indicador_execucao_agregada = response.data[0].execucao_agregada;
+          _this13.indicador_status = response.data[0].status;
+          _this13.indicador_responsavel = response.data[0].responsavel;
+          _this13.indicador_complexidade = response.data[0].complexidade;
+          _this13.indicador_utilizacao_recurso_finan = response.data[0].utilizacao_recurso_finan;
+          _this13.indicador_capacidade_transformacao = response.data[0].capacidade_transformacao;
+          _this13.indicador_soma_peso = response.data[0].soma_peso;
+          _this13.indicador_meta = response.data[0].meta;
 
-          for (var i = 0; i <= _this12.indicador_meta.length - 1; i++) {
-            var variavel = _this12.indicador_meta[i].tipo + '_' + _this12.indicador_meta[i].ano + '_' + _this12.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
+          for (var i = 0; i <= _this13.indicador_meta.length - 1; i++) {
+            var variavel = _this13.indicador_meta[i].tipo + '_' + _this13.indicador_meta[i].ano + '_' + _this13.indicador_meta[i].id; //essa foi boa! convertendo string em variavel
 
-            _this12.meta_input_dinamico[variavel] = _this12.indicador_meta[i].valor;
-            _this12.meta_select_dinamico[variavel] = _this12.indicador_meta[i].valor;
+            _this13.meta_input_dinamico[variavel] = _this13.indicador_meta[i].valor;
+            _this13.meta_select_dinamico[variavel] = _this13.indicador_meta[i].valor;
           }
 
-          _this12.get_responsaveis();
+          _this13.get_responsaveis();
         })["catch"](function (e) {
-          _this12.errors.push(e);
+          _this13.errors.push(e);
         });
       }
     },
     save_indicador: function save_indicador() {
-      var _this13 = this;
+      var _this14 = this;
 
       var body = {
         id: this.indicador_id,
@@ -2888,46 +2898,46 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/save', body).then(function (response) {
         console.log(response.data);
-        _this13.indicador_id = response.data;
+        _this14.indicador_id = response.data;
 
-        _this13.consulta();
-      })["catch"](function (e) {
-        _this13.errors.push(e);
-      });
-    },
-    inserir_novo_ano_meta_indicador: function inserir_novo_ano_meta_indicador() {
-      var _this14 = this;
-
-      var body = {
-        indicador_id: this.indicador_id,
-        ano: this.ano_de_indicador_meta
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body).then(function (response) {
-        _this14.set_indicador(_this14.indicador_id);
+        _this14.consulta();
       })["catch"](function (e) {
         _this14.errors.push(e);
       });
     },
-    delete_ano_meta_indicador: function delete_ano_meta_indicador() {
+    inserir_novo_ano_meta_indicador: function inserir_novo_ano_meta_indicador() {
       var _this15 = this;
 
       var body = {
         indicador_id: this.indicador_id,
         ano: this.ano_de_indicador_meta
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/delete_ano_meta_indicador', body).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/inserir_novo_ano_meta_indicador', body).then(function (response) {
         _this15.set_indicador(_this15.indicador_id);
       })["catch"](function (e) {
         _this15.errors.push(e);
       });
     },
-    delete_indicador: function delete_indicador(id) {
+    delete_ano_meta_indicador: function delete_ano_meta_indicador() {
       var _this16 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + id + '/delete').then(function (response) {
-        _this16.consulta();
+      var body = {
+        indicador_id: this.indicador_id,
+        ano: this.ano_de_indicador_meta
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url + 'api/planejamento/indicador/delete_ano_meta_indicador', body).then(function (response) {
+        _this16.set_indicador(_this16.indicador_id);
       })["catch"](function (e) {
         _this16.errors.push(e);
+      });
+    },
+    delete_indicador: function delete_indicador(id) {
+      var _this17 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url + 'api/planejamento/indicador/' + id + '/delete').then(function (response) {
+        _this17.consulta();
+      })["catch"](function (e) {
+        _this17.errors.push(e);
       });
     },
 
@@ -40626,11 +40636,11 @@ var render = function() {
                                     _vm._l(_vm.situacoes, function(option) {
                                       return _c(
                                         "option",
-                                        { domProps: { value: option.value } },
+                                        { domProps: { value: option.id } },
                                         [
                                           _vm._v(
                                             "\n                                            " +
-                                              _vm._s(option.text) +
+                                              _vm._s(option.nome) +
                                               "\n                                        "
                                           )
                                         ]

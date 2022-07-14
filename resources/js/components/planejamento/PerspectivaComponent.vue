@@ -401,8 +401,8 @@
                                     <label for="indicador_meta_agregada">{{n.tipo+' '+n.ano}}</label>
                                     <select :name="n.tipo+'_'+n.ano+'_'+n.id" v-model="meta_input_dinamico[n.tipo+'_'+n.ano+'_'+n.id]" class="form-control form-control-sm">
                                         <option disabled value="">Escolha um item</option>
-                                        <option v-for="option in situacoes" v-bind:value="option.value">
-                                            {{ option.text }}
+                                        <option v-for="option in situacoes" v-bind:value="option.id">
+                                            {{ option.nome }}
                                         </option>
                                     </select>
                                 </div>
@@ -586,9 +586,20 @@
             this.consulta();
             this.get_orgaos("");
             this.get_problema();
+            this.get_situacao();
         },
 
         methods: {
+
+            get_situacao(){
+                axios.get(this.url+'api/planejamento/situacao/all',)
+                .then(response => {
+                    this.situacoes = response.data;
+                })
+                  .catch(e => {
+                    this.errors.push(e);
+                });
+            },
 
             get_problema(){
                 axios.get(this.url+'api/planejamento/problema/all',)

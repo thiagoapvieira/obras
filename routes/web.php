@@ -44,6 +44,14 @@ Route::middleware(['userLogado'])->group(function(){
 		Route::post('problema/{id}/editar', 'App\Http\Controllers\Planejamento\ProblemaController@update');
 	  	Route::get('problema/{id}/excluir', 'App\Http\Controllers\Planejamento\ProblemaController@delete');
 
+	  	//situacao
+        Route::get('situacao', 'App\Http\Controllers\Planejamento\SituacaoController@index');
+    	Route::get('situacao/novo', 'App\Http\Controllers\Planejamento\SituacaoController@create');
+      	Route::post('situacao/novo', 'App\Http\Controllers\Planejamento\SituacaoController@save');
+    	Route::get('situacao/{id}/editar', 'App\Http\Controllers\Planejamento\SituacaoController@edit');
+    	Route::post('situacao/{id}/editar', 'App\Http\Controllers\Planejamento\SituacaoController@update');
+      	Route::get('situacao/{id}/excluir', 'App\Http\Controllers\Planejamento\SituacaoController@delete');
+
 		//relatorio
         Route::get('relatorio/por_orgao/{orgao_id}/{ano}', 'App\Http\Controllers\Planejamento\RelatorioController@index');
 
