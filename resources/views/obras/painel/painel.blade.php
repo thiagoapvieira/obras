@@ -38,22 +38,22 @@
         .table-data2.table thead th {
             padding: 5px 5px;
         }
-         
+
         .table-data2.table tbody td {
-            font-size: 13px;            
+            font-size: 13px;
             padding: 5px 5px;
-                
+
             padding-right: 10px;
             border: none;
         }
 
-        .table-data2.table tbody tr td:last-child {         
+        .table-data2.table tbody tr td:last-child {
             padding-right: 0px;
-        } 
+        }
 
         .statistic__item {
-            min-height: 0px;         
-        }   
+            min-height: 0px;
+        }
 
     </style>
 
@@ -68,13 +68,13 @@
         <?php
 
         /*calculo de porcentagem */
-        $total = $rel_obra_status_fase[0]->qtd + 
-                 $rel_obra_status_fase[1]->qtd + 
-                 $rel_obra_status_fase[2]->qtd + 
-                 $rel_obra_status_fase[3]->qtd + 
-                 $rel_obra_status_fase[4]->qtd + 
+        $total = $rel_obra_status_fase[0]->qtd +
+                 $rel_obra_status_fase[1]->qtd +
+                 $rel_obra_status_fase[2]->qtd +
+                 $rel_obra_status_fase[3]->qtd +
+                 $rel_obra_status_fase[4]->qtd +
                  $rel_obra_status_fase[5]->qtd +
-                 $rel_obra_status_fase[6]->qtd;        
+                 $rel_obra_status_fase[6]->qtd;
 
                  $p0 = ($rel_obra_status_fase[0]->qtd * 100) / $total;
                  $p1 = ($rel_obra_status_fase[1]->qtd * 100) / $total;
@@ -97,11 +97,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="title-4">
-                                Painel de controle  
-                                <a href="{{url('obras/painel/consolidar_calculo')}}" class="btn btn-dark btn-sm" type="submit">Consolidar cálculos</a> 
+                                Painel de controle
+                                <a href="{{url('obras/painel/consolidar_calculo')}}" class="btn btn-dark btn-sm" type="submit">Consolidar cálculos</a>
                             </h1>
                             <hr class="line-seprate">
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </section>
@@ -146,8 +146,8 @@
                                 </div>
                             </div>
                             </div>
-                        </div>                      
-                        
+                        </div>
+
                         <div class="col-xs-12 col-md-5 col-lg-5">
                             <div class="row">
                             <div class="col-xs-12 col-md-6 col-lg-6">
@@ -246,7 +246,7 @@
                 </div>
             </section>
             -->
-            
+
 
             <!-- STATISTIC CHART-->
             <section class="statistic-chart">
@@ -268,7 +268,7 @@
                                         </div>
                                     </div>
                                     <span class="au-progress__title">Em planejamento - {{round($p0,2)}} %</span>
-                                </div>                                
+                                </div>
                                 <div class="au-progress">
                                     <div class="au-progress__bar">
                                         <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="{{$p1}}">
@@ -300,7 +300,7 @@
                                         </div>
                                     </div>
                                     <span class="au-progress__title">Paralisada - {{round($p4,2)}} %</span>
-                                </div>                                
+                                </div>
                                 <div class="au-progress">
                                     <div class="au-progress__bar">
                                         <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="{{$p5}}">
@@ -323,7 +323,7 @@
                         </div>
 
                         <!--
-                        <div class="col-md-6 col-lg-4">                            
+                        <div class="col-md-6 col-lg-4">
                             <div class="chart-percent-2">
                                 <h3 class="title-3 m-b-30">Situação</h3>
                                 <div class="chart-wrap">
@@ -332,7 +332,7 @@
                                         <table></table>
                                     </div>
                                 </div>
-                                
+
                                 <div class="chart-info">
                                     <div class="chart-note">
                                         <span class="dot dot--blue"></span>
@@ -354,22 +354,22 @@
                                         <span class="dot dot--red"></span>
                                         <span>Paralisada</span>
                                     </div>
-                                </div>                                
-                            </div>                            
+                                </div>
+                            </div>
                         </div>
                         -->
 
-                        <div class="col-md-8 col-lg-8">                            
+                        <div class="col-md-8 col-lg-8">
                             <div class="top-campaign" style="padding-top: 15px; padding-right: 20px; padding-left: 20px; padding-bottom: 15px; border: solid thin #ccc;">
                                 <h3 class="title-3" style="color: #4272d7; margin-bottom: 10px;">Obras por setor</h3>
                                 <div class="table-responsive">
                                     <table class="table table-data2">
                                         <thead>
-                                            <tr>                                               
+                                            <tr>
                                                 <th>Setor</th>
                                                 <th>Quantidade</th>
                                                 <th>Total investido</th>
-                                                <th>Total executado</th> 
+                                                <th>Total executado</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -379,32 +379,32 @@
                                                 <td>{{$value->setor}}</td>
                                                 <td>{{$value->qtd}}</td>
                                                 <td>R$ {{ number_format($value->investido,2,",",".") }}</td>
-                                                <td>R$ {{ number_format($value->executado,2,",",".") }}</td>                                                
+                                                <td>R$ {{ number_format($value->executado,2,",",".") }}</td>
                                             </tr>
                                             <?php $soma = $soma + $value->qtd; ?>
-                                            @endforeach                                           
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <?= '<br>Total: '.$soma.' obras'; ?>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
-                        
+
                     </div>
             </div>
             </section>
             <!-- END STATISTIC CHART-->
 
-            
+
             <div class="container">
             <div class="row">
-            <div class="col-md-6 col-lg-6">                            
+            <div class="col-md-6 col-lg-6">
                 <div class="top-campaign" style="padding-top: 15px; padding-right: 20px; padding-left: 20px; padding-bottom: 15px; border: solid thin #ccc;">
                     <h3 class="title-3" style="color: #4272d7; margin-bottom: 10px;">Valor investido</h3>
                     <div class="table-responsive">
                         <table class="table table-data2">
                             <thead>
-                                <tr>                                               
+                                <tr>
                                     <!-- <th>Id</th> -->
                                     <th>Situação</th>
                                     <th class="text-center">Quantidade</th>
@@ -413,31 +413,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $soma=0; ?>                                
+                                <?php $soma=0; ?>
                                 @foreach ($rel_obra_status_fase as $value)
                                 <tr>
                                     <!-- <td>{{$value->id}}</td> -->
                                     <td>{{status_fases($value->id_status_fase)}}</td>
                                     <td class="text-center">{{$value->qtd}}</td>
                                     <td>R$ {{ number_format($value->investido,2,",",".") }}</td>
-                                    <td>R$ {{ number_format($value->executado,2,",",".") }}</td> 
+                                    <td>R$ {{ number_format($value->executado,2,",",".") }}</td>
                                 </tr>
                                 <?php $soma = $soma + $value->qtd; ?>
-                                @endforeach                                           
+                                @endforeach
                             </tbody>
                         </table>
                         <?= '<br>Total: '.$soma.' obras'; ?>
                     </div>
-                </div>                            
+                </div>
             </div>
 
-            <div class="col-md-6 col-lg-6">                            
+            <div class="col-md-6 col-lg-6">
                 <div class="top-campaign" style="padding-top: 15px; padding-right: 20px; padding-left: 20px; padding-bottom: 15px; border: solid thin #ccc;">
                     <h3 class="title-3" style="color: #4272d7; margin-bottom: 10px;">Obras por território</h3>
                     <div class="table-responsive">
                         <table class="table table-data2">
                             <thead>
-                                <tr>                                               
+                                <tr>
                                     <!-- <th>Id</th>-->
                                     <th>Cidade</th>
                                     <th class="text-center">Quantidade</th>
@@ -446,20 +446,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @foreach ($rel_obra_regiao as $value)
                                 <tr>
                                     <!-- <td>{{$value->id}}</td>-->
-                                    <td>{{$value->regiao}}</td>                                    
-                                    <td class="text-center">{{$value->qtd}}</td>                                    
+                                    <td>{{$value->regiao}}</td>
+                                    <td class="text-center">{{$value->qtd}}</td>
                                     <td>R$ {{ number_format($value->investido,2,",",".") }}</td>
-                                    <td>R$ {{ number_format($value->executado,2,",",".") }}</td>  
-                                </tr>                                
-                                @endforeach 
+                                    <td>R$ {{ number_format($value->executado,2,",",".") }}</td>
+                                </tr>
+                                @endforeach
                             </tbody>
-                        </table>                        
+                        </table>
                     </div>
-                </div>                            
+                </div>
             </div>
             </div>
             </div>
@@ -467,49 +467,49 @@
 
             <div class="container">
             <div class="row">
-            <div class="col-md-12 col-lg-12">                            
+            <div class="col-md-12 col-lg-12">
                 <div class="top-campaign" style="padding-top: 15px; padding-right: 20px; padding-left: 20px; padding-bottom: 15px; border: solid thin #ccc;">
                     <h3 class="title-3" style="color: #4272d7; margin-bottom: 10px;">Obras por município</h3>
                     <div class="table-responsive table-data">
                         <table class="table table-data2">
                             <thead>
-                                <tr>                                               
+                                <tr>
                                     <th>Cidade</th>
                                     <th class="text-center">Quantidade</th>
                                     <th>Total investido</th>
                                     <th>Total executado</th>
                                 </tr>
                             </thead>
-                            <tbody>                                
+                            <tbody>
                                 @foreach ($rel_obra_cidade as $value)
                                 <tr>
-                                    <td>{{$value->cidade}}</td>                                    
-                                    <td class="text-center">{{$value->qtd}}</td>                                    
+                                    <td>{{$value->cidade}}</td>
+                                    <td class="text-center">{{$value->qtd}}</td>
                                     <td>R$ {{ number_format($value->investido,2,",",".") }}</td>
-                                    <td>R$ {{ number_format($value->executado,2,",",".") }}</td>  
-                                </tr>                        
-                                @endforeach                                           
+                                    <td>R$ {{ number_format($value->executado,2,",",".") }}</td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
-                        
+
                     </div>
-                </div>                            
+                </div>
             </div>
             </div>
             </div>
-            
 
 
-            <!-- COPYRIGHT-->            
+
+            <!-- COPYRIGHT-->
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="copyright">                                
+                        <div class="copyright">
                             <p>Desenvolvido por <a href="https://colorlib.com">SECOM/DTIN</a>.</p>
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <!-- END COPYRIGHT-->
         </div>
 
@@ -547,12 +547,12 @@
               ctx.height = 209;
               var myChart = new Chart(ctx, {
                 type: 'doughnut',
-               
+
                 data: {
                   datasets: [
                     {
                       label: "My First dataset",
-                      data: [100, 100, 100, 100, 100], 
+                      data: [100, 100, 100, 100, 100],
                       backgroundColor: ['#00b5e9', '#fa4251','#000','#fa4251','#000'],
                       hoverBackgroundColor: ['#00b5e9', '#fa4251','pink','#fa4251','pink'],
                       borderWidth: [0, 0, 0, 0, 0 ],

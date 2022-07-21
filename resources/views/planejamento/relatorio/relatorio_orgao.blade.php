@@ -4,16 +4,14 @@
 
     <br>
     <section class="p-t-20">
-    <div class="container">
+    <div class="container-fluid">
 
 	    <!-- TITULO -->
 	    <div class="row">
 		    <div class="col-md-10 offset-md-1" >
-
 		    	<h4 class="text-center">{{$orgao->nome}}</h4>
 		    	<h4 class="text-center">{{$ano}}</h4>
 		    	<br>
-
 		    </div>
 	    </div>
 
@@ -135,7 +133,7 @@
     	    	  <h5 class="card-header">PRINCIPAIS PROBLEMAS</h5>
     	    	  <div class="card-body">
 
-	    	  	    	<table class="table table-data2">
+	    	  	    	<table class="table">
 	    	  	    	    <thead>
 	    	  	    	        <tr>
 	    	  	    	            <th>Problemas enfrentados {{2019}}</th>
@@ -167,22 +165,50 @@
 
     	    	<div class="card">
     	    	  <h5 class="card-header">LISTA DE INDICADORES</h5>
-    	    	  <div class="card-body" style="font-size: 10px;">
+    	    	  <div class="card-body">
 
     	    	  		@foreach ($array_per as $perspectiva)
-    	    	  			<span style="color:blue;">* {{$perspectiva->nome}}</span> <br>
+    	    	  			<span style="color:blue;"> <b>PERSPECTIVA: {{$perspectiva->nome}}</b> </span> <br>
 
     	    	  			@foreach ($perspectiva->objeto as $objeto)
-    	    	  				<span style="color:yellow;"> &nbsp;&nbsp; - {{$objeto->nome}} </span> <br>
+    	    	  				<span> <b> OBEJTIVO: {{$objeto->nome}} </b> </span> <br><br>
 
     	    	  				@foreach ($objeto->estrategia as $estrategia)
-    	    	  					&nbsp;&nbsp;&nbsp; - {{$estrategia->nome}}<br>
+    	    	  					{{$estrategia->nome}} <br><br>
 
-    	    	  					@foreach ($estrategia->indicador as $indicador)
+    	    	  					<div style="margin:0 0 50px 50px;">
+				    	  	    	<table class="table table-data2">
+				    	  	    	    <thead>
+				    	  	    	        <tr>
+				    	  	    	            <th width="40%">Indicador/Macro</th>
+				    	  	    	            <th width="30%" class="text-center">Meta {{$ano}}</th>
+				    	  	    	            <th width="20%" class="text-center">Realizado em {{$ano}}</th>
+				    	  	    	            <th width="10%" class="text-center">Situação</th>
+				    	  	    	        </tr>
+				    	  	    	    </thead>
+				    	  	    	    <tbody>
+				    	    	  	    	@foreach ($estrategia->indicador as $indicador)
+				    	    	  	    	<tr class="tr-shadow">
+				    	    	  	    	    <td>{{$indicador->nome}}</td>
+				    	    	  	    	    <td class="text-center">@isset($indicador->meta_ano){{$indicador->meta_ano}}@endisset</td>
+				    	    	  	    	    <td class="text-center">@isset($indicador->realizado_ano){{$indicador->realizado_ano}}@endisset</td>
 
-    	    	  						&nbsp;&nbsp;&nbsp;&nbsp; - {{$indicador->nome}}<br>
+				    	    	  	    	    <?php 
+				    	    	  	    	    	$cor = 'black';
+				    	    	  	    	    	switch($indicador->situacao_id){
+				    	    	  	    	    		case 1: $cor = 'green'; break;
+				    	    	  	    	    		case 2: $cor = 'orange'; break;
+				    	    	  	    	    		case 3: $cor = 'red'; break;
+				    	    	  	    	    	}
+				    	    	  	    	    ?>
 
-    	    	  					@endforeach
+				    	    	  	    	    <td class="text-center" style="color: <?=$cor;?>;">@isset($indicador->situacao_ano){{$indicador->situacao_ano}}@endisset</td>
+				    	    	  	    	</tr>
+				    	    	  	    	<tr class="spacer"></tr>
+				    	    	  	    	@endforeach
+			    	    	  	        </tbody>
+			    	    	  	    </table>
+			    	    	  		</div>
 
     	    	  				@endforeach
 

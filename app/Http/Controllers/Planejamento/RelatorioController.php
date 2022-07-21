@@ -151,6 +151,25 @@ class RelatorioController extends Controller
                                 $obj4->status = $value->status;
                                 $obj4->responsavel = $value->responsavel;
                                 $obj4->ativo = $value->ativo;
+
+                                $sql  = " select m.indicador_id, m.tipo, m.ano, m.ano, m.valor, s.nome as situacao_nome ";
+                                $sql .= " from indicador_meta m ";
+                                $sql .= " left join indicador_situacao s on (s.id = m.valor and m.tipo = 'situacao') ";
+                                $sql .= " where ";
+                                $sql .= " m.ativo = 1 ";
+                                $sql .= " and m.indicador_id = ".$value->id;
+                                $sql .= " and m.ano = ".$ano;
+                                $sql .= " and (m.tipo = 'meta' or m.tipo = 'realizado' or m.tipo = 'situacao') ";
+                                $meta_aux = DB::select($sql);
+
+                                foreach ($meta_aux as $aux1) {
+                                    if($aux1->tipo == 'meta'){ $obj4->meta_ano = $aux1->valor; }
+                                    if($aux1->tipo == 'realizado'){ $obj4->realizado_ano = $aux1->valor; }
+                                    if($aux1->tipo == 'situacao'){
+                                        $obj4->situacao_id = $aux1->valor;  $obj4->situacao_ano = $aux1->situacao_nome;
+                                    }
+                                }
+
                                 array_push($array_ind, $obj4);
                             }
                             $obj3->indicador = $array_ind;
@@ -168,79 +187,6 @@ class RelatorioController extends Controller
         }
 
         // dd($array_per);
-
-
-
-
-        // dd($qtd_indicadores_ano);
-        // $cumprimento_total = 0;
-        // $cumprimento_parcial = 0;
-        // $nao_cumprimento = 0;
-
-
-
-
-        /*
-        $sql  = " select o.id, o.nome, im.ano ";
-
-        $sql .= " ,( ";
-        $sql .= " select (im.valor/i.soma_peso) as realizado ";
-        $sql .= " FROM indicador_meta im ";
-        $sql .= " inner join indicador i on i.id  = im.indicador_id ";
-        $sql .= " inner join estrategia e on e.id  = i.est_id ";
-        $sql .= " inner join indicador_responsavel ir on ir.indicador_id  = i.id ";
-        $sql .= " where e.obj_id = 7 and ano = 2019 and tipo = 'ponderada' ";
-        $sql .= " group by i.id, i.soma_peso, im.tipo, im.ano, im.valor, im.ativo, i.est_id, e.obj_id ";
-        $sql .= " ) as realizado ";
-
-        $sql .= " from indicador_responsavel ir ";
-        $sql .= " join indicador_meta im on im.indicador_id = ir.indicador_id ";
-        $sql .= " join indicador i on i.id = ir.indicador_id ";
-        $sql .= " join estrategia e on e.id = i.est_id ";
-        $sql .= " join objetivo o on o.id = e.obj_id ";
-        $sql .= " where ir.orgao_id = ".$orgao_id." and im.ano = " . $ano;
-        echo $sql .= " group by o.id, o.nome, im.ano ";
-        $indicador = DB::select($sql);
-        dd($indicador);
-        */
-
-        /*
-        $sql  = " select ";
-        $sql .= " i.id, im.valor, i.soma_peso, (im.valor / i.soma_peso) as calculo ";
-        $sql .= " FROM indicador_meta im ";
-        $sql .= " inner join indicador i on i.id  = im.indicador_id ";
-        $sql .= " where i.id = 2 and ano = ".$ano." and tipo = 'ponderada' ";
-        $sql .= " order by id desc; ";
-        $soma_peso = DB::select($sql)[0];
-        // dd($soma_peso);
-        */
-
-        /*
-        // soma de soma de peso
-        $sql  = " select sum(soma) as soma_de_peso from ( ";
-        $sql .= " select i.soma_peso as soma ";
-        $sql .= " FROM indicador_meta im ";
-        $sql .= " inner join indicador i on i.id  = im.indicador_id ";
-        $sql .= " inner join indicador_responsavel ir on ir.indicador_id  = i.id ";
-        $sql .= " where ir.orgao_id = ".$orgao_id." and ano = ".$ano." ";
-        $sql .= " group by i.id, i.soma_peso ";
-        $sql .= " ) as tabela where soma is not null; ";
-        $soma_peso = DB::select($sql)[0]->soma_de_peso;
-
-
-        // soma de ponderada
-        $sql  = " select sum(valor) as ponderada from ( ";
-        $sql .= " select i.id, i.soma_peso, im.tipo, im.ano, im.valor, im.ativo, i.responsavel, ir.orgao_id as teste ";
-        $sql .= " FROM indicador_meta im ";
-        $sql .= " inner join indicador i on i.id  = im.indicador_id ";
-        $sql .= " inner join indicador_responsavel ir on ir.indicador_id  = i.id ";
-        $sql .= " where ir.orgao_id = ".$orgao_id." and ano = ".$ano." and tipo = 'ponderada' ";
-        $sql .= " order by id desc ";
-        $sql .= " ) as tabela where valor is not null ";
-        $soma_ponderada = DB::select($sql)[0]->ponderada;
-        //dd($soma_ponderada);
-        */
-
 
         return view('planejamento.relatorio.relatorio_orgao',
         compact('orgao',
