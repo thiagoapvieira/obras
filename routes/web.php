@@ -31,6 +31,11 @@ Route::middleware(['userLogado'])->group(function(){
 
         //inicio
         Route::get('plano', 'App\Http\Controllers\Planejamento\PlanoController@index');
+        Route::get('plano/novo', 'App\Http\Controllers\Planejamento\PlanoController@create');
+	  	Route::post('plano/novo', 'App\Http\Controllers\Planejamento\PlanoController@save');
+		Route::get('plano/{id}/editar', 'App\Http\Controllers\Planejamento\PlanoController@edit');
+		Route::post('plano/{id}/editar', 'App\Http\Controllers\Planejamento\PlanoController@update');
+	  	Route::get('plano/{id}/excluir', 'App\Http\Controllers\Planejamento\PlanoController@delete');
 
         //perspectiva
         Route::get('plano/{plano_id}/perspectiva', 'App\Http\Controllers\Planejamento\PerspectivaController@index');
@@ -53,7 +58,9 @@ Route::middleware(['userLogado'])->group(function(){
       	Route::get('situacao/{id}/excluir', 'App\Http\Controllers\Planejamento\SituacaoController@delete');
 
 		//relatorio
-        Route::get('relatorio/por_orgao/{orgao_id}/{ano}', 'App\Http\Controllers\Planejamento\RelatorioController@index');
+		Route::get('relatorio/por_orgao', 'App\Http\Controllers\Planejamento\RelatorioController@index');
+		Route::post('relatorio/por_orgao', 'App\Http\Controllers\Planejamento\RelatorioController@filter');
+        // Route::get('relatorio/por_orgao/orgao/{orgao_id}/ano/{ano}', 'App\Http\Controllers\Planejamento\RelatorioController@index');
 
     });
 

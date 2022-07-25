@@ -1,14 +1,14 @@
 <header class="header-desktop3 d-none d-lg-block">
 <div class="section__content section__content--p35">
 <div class="header3-wrap">
-            
+
             <div class="header__logo">
                 <a href="{{url('home')}}">
                     <!-- <img src="{{asset('images/icon/logo_branca.png')}}" alt="CoolAdmin" /> -->
                     <h2 style="color:#fff;">SISGPR</h2>
                 </a>
             </div>
-            
+
             <!-- <div class="header__navbar">
                 <ul class="list-unstyled">
                     <li>

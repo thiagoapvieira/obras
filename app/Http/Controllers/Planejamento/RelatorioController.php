@@ -1,17 +1,21 @@
 <?php
-
 namespace App\Http\Controllers\Planejamento;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RelatorioController extends Controller
 {
-    public function index($orgao_id, $ano)
+    public function index()
     {
-        // $orgao_id = 52;
-        // $ano = 2019;
+        $orgao = DB::table('orgao')->orderBy('sigla')->get();
+        return view('planejamento.relatorio.relatorio_orgao_index', compact('orgao'));
+    }
+
+    public function filter(Request $request)
+    {
+        $orgao_id = $request->orgao_id;
+        $ano = $request->ano;
 
         $orgao = DB::table('orgao')->where('id',$orgao_id)->first();
 
@@ -203,13 +207,3 @@ class RelatorioController extends Controller
     }
 
 }
-
-
-
-
-
-
-
-
-
-

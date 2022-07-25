@@ -19,7 +19,6 @@
                     </li>
                     <li>
                         <a href="{{url('planejamento/plano')}}">
-                            <i class="fas fa-home"></i>
                             <span class="bot-line"></span>Início
                         </a>
                     </li>
@@ -33,7 +32,7 @@
                     <li class="has-sub">
                         <a href="#"> <i class="fas fa-copy"></i> <span class="bot-line"></span>Relatórios</a>
                         <ul class="header3-sub-list list-unstyled">
-                            <li> <a href="{{url('planejamento/relatorio/por_orgao/36/2020')}}">Por orgao</a> </li>
+                            <li> <a href="{{url('planejamento/relatorio/por_orgao')}}">Por orgao</a> </li>
                         </ul>
                     </li>
                 </ul>

@@ -12,7 +12,7 @@ class ProblemaController extends Controller
 
         return response()->json($problema);
     }
-    
+
     public function index()
     {
       $problema = DB::table('problema')->get();
@@ -51,14 +51,11 @@ class ProblemaController extends Controller
       return redirect('planejamento/problema/'.$id.'/editar')->with('msg', 'Registro salvo com sucesso!');
     }
 
-
     public function delete($id){
       DB::table('problema')->where('id', $id)->delete();
 
       return redirect('planejamento/problema');
     }
-
-
 }
 
 
