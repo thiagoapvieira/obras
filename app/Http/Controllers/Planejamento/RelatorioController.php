@@ -14,8 +14,12 @@ class RelatorioController extends Controller
 
     public function filter(Request $request)
     {
-        $orgao_id = $request->orgao_id;
-        $ano = $request->ano;
+        echo 'plano_id: ' . $plano_id = $request->plano_id;
+        echo '<br>';
+        echo 'orgao_id: ' . $orgao_id = $request->orgao_id;
+        echo '<br>';
+        echo 'ano: ' . $ano = $request->ano;
+        echo '<br>';
 
         $orgao = DB::table('orgao')->where('id',$orgao_id)->first();
 
@@ -33,8 +37,10 @@ class RelatorioController extends Controller
         $sql .= " FROM indicador_meta im ";
         $sql .= " inner join indicador i on i.id = im.indicador_id ";
         $sql .= " inner join estrategia e on e.id = i.est_id ";
+        $sql .= " inner join objetivo ob on ob.id = e.obj_id ";
+        $sql .= " inner join perspectiva per on per.id = ob.per_id ";
         $sql .= " inner join indicador_responsavel ir on ir.indicador_id = i.id ";
-        $sql .= " where e.obj_id = o.id and ano = ".$ano." and tipo = 'ponderada' ";
+        $sql .= " where per.plano_id = ".$plano_id." and e.obj_id = o.id and ano = ".$ano." and tipo = 'ponderada' ";
         $sql .= " group by i.id, im.valor, i.soma_peso ";
         $sql .= " )as tabela_aux ";
 
@@ -44,9 +50,12 @@ class RelatorioController extends Controller
         $sql .= " join indicador i on i.id = ir.indicador_id ";
         $sql .= " join estrategia e on e.id = i.est_id ";
         $sql .= " join objetivo o on o.id = e.obj_id ";
-        $sql .= " where ir.orgao_id = ".$orgao_id." and im.ano = ".$ano;
+        $sql .= " inner join perspectiva per on per.id = o.per_id ";
+        $sql .= " where per.plano_id = ".$plano_id." and ir.orgao_id = ".$orgao_id." and im.ano = ".$ano;
         $sql .= " group by o.id, o.nome, im.ano; ";
         $indicador = DB::select($sql);
+
+        // dd($indicador);
 
 
 
@@ -54,8 +63,12 @@ class RelatorioController extends Controller
         $sql  = " select count(indicador_id) as qtd from ( ";
         $sql .= " select ir.indicador_id ";
         $sql .= " FROM indicador_responsavel ir ";
+        $sql .= " inner join indicador i on i.id = ir.indicador_id ";
+        $sql .= " inner join estrategia e on e.id = i.est_id ";
+        $sql .= " inner join objetivo ob on ob.id = e.obj_id ";
+        $sql .= " inner join perspectiva per on per.id = ob.per_id ";
         $sql .= " inner join indicador_meta im on im.indicador_id = ir.indicador_id ";
-        $sql .= " where ir.orgao_id = ".$orgao_id." and im.ano = ".$ano;
+        $sql .= " where per.plano_id = ".$plano_id." and ir.orgao_id = ".$orgao_id." and im.ano = ".$ano;
         $sql .= " group by ir.indicador_id ";
         $sql .= " ) as tabela ";
         $qtd_indicadores_ano = DB::select($sql)[0]->qtd;
@@ -112,10 +125,8 @@ class RelatorioController extends Controller
         // dd($principais_problemas);
 
 
-
-
         //INDICADORES
-        $perspectiva = DB::table('perspectiva')->where('plano_id', 3)->get();
+        $perspectiva = DB::table('perspectiva')->where('plano_id', $plano_id)->get();
 
         $array_per = array();
         foreach ($perspectiva as $value) {
@@ -142,7 +153,11 @@ class RelatorioController extends Controller
                             $obj3->nome = $value->nome;
                             array_push($array_est, $obj3);
 
-                            $indicador_found = DB::table('indicador')->where('ativo',1)->where('est_id',$value->id)->get();
+                            $sql  = " select i.* from indicador i ";
+                            $sql .= " inner join indicador_responsavel ir on ir.indicador_id = i.id ";
+                            $sql .= " where i.est_id = ".$value->id;
+                            $indicador_found = DB::select($sql);
+
                             $array_ind = array();
                             foreach ($indicador_found as $value) {
                                 $obj4 = new \stdClass();

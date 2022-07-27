@@ -44,8 +44,6 @@
 		    </div>
 	    </div>
 
-
-
 	    <!-- OBJETIVOS ESTRATÉGICOS -->
         <div class="row">
     	    <div class="col-md-10 offset-md-1" >
@@ -174,7 +172,7 @@
     	    	  				<span> <b> OBEJTIVO: {{$objeto->nome}} </b> </span> <br><br>
 
     	    	  				@foreach ($objeto->estrategia as $estrategia)
-    	    	  					{{$estrategia->nome}} <br><br>
+    	    	  					#{{$estrategia->id}} - {{$estrategia->nome}} <br><br>
 
     	    	  					<div style="margin:0 0 50px 50px;">
 				    	  	    	<table class="table table-data2">
@@ -184,6 +182,7 @@
 				    	  	    	            <th width="30%" class="text-center">Meta {{$ano}}</th>
 				    	  	    	            <th width="20%" class="text-center">Realizado em {{$ano}}</th>
 				    	  	    	            <th width="10%" class="text-center">Situação</th>
+				    	  	    	            <th width="10%" class="text-center">Responsável</th>
 				    	  	    	        </tr>
 				    	  	    	    </thead>
 				    	  	    	    <tbody>
@@ -193,16 +192,20 @@
 				    	    	  	    	    <td class="text-center">@isset($indicador->meta_ano){{$indicador->meta_ano}}@endisset</td>
 				    	    	  	    	    <td class="text-center">@isset($indicador->realizado_ano){{$indicador->realizado_ano}}@endisset</td>
 
-				    	    	  	    	    <?php 
+				    	    	  	    	    <?php
 				    	    	  	    	    	$cor = 'black';
-				    	    	  	    	    	switch($indicador->situacao_id){
-				    	    	  	    	    		case 1: $cor = 'green'; break;
-				    	    	  	    	    		case 2: $cor = 'orange'; break;
-				    	    	  	    	    		case 3: $cor = 'red'; break;
-				    	    	  	    	    	}
+				    	    	  	    	    	if( isset($indicador->situacao_id) )
+				    	    	  	    	    	{
+					    	    	  	    	    	switch($indicador->situacao_id){
+					    	    	  	    	    		case 1: $cor = 'green'; break;
+					    	    	  	    	    		case 2: $cor = 'orange'; break;
+					    	    	  	    	    		case 3: $cor = 'red'; break;
+					    	    	  	    	    	}
+					    	    	  	    	    }
 				    	    	  	    	    ?>
 
 				    	    	  	    	    <td class="text-center" style="color: <?=$cor;?>;">@isset($indicador->situacao_ano){{$indicador->situacao_ano}}@endisset</td>
+				    	    	  	    	    <td class="text-center">@isset($indicador->responsavel){{$indicador->responsavel}}@endisset</td>
 				    	    	  	    	</tr>
 				    	    	  	    	<tr class="spacer"></tr>
 				    	    	  	    	@endforeach
@@ -247,10 +250,6 @@
 
     	    </div>
         </div>
-
-
-
-
 
     </div>
     </section>

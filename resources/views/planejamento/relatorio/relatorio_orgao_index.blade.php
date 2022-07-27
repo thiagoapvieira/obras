@@ -21,6 +21,11 @@
 				<form action="" method="post" novalidate="novalidate">
 				{{ csrf_field() }}
 
+			    	<div class="form-group">
+			    	    <label for="plano_id" class="control-label mb-1">Digite o plano</label>
+			    	    <input id="plano_id" name="plano_id" type="text" class="form-control" aria-required="true" aria-invalid="false">
+			    	</div>
+
 				    <div class="form-group">
 				        <label for="orgao_id" class="control-label mb-1">Selecione um orgão</label>
 
@@ -40,7 +45,7 @@
 				    </div>
 
 				    <div class="box-footer">
-				      <button type="submit" class="btn btn-primary">Buscar</button> 	
+				      <button type="submit" class="btn btn-primary">Buscar</button>
 				      <a href="{{url('planejamento/plano')}}" class="btn btn-danger">Voltar</a>
 				    </div>
 
@@ -48,7 +53,6 @@
 
 		    </div>
 	    </div>
-
 
     </div>
     </section>
