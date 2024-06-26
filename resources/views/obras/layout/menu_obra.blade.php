@@ -1,22 +1,22 @@
 <header class="header-desktop3 d-none d-lg-block">
 <div class="section__content section__content--p35">
 <div class="header3-wrap">
-            
+
             <div class="header__logo">
                 <a href="{{url('home')}}">
                     <!-- <img src="{{asset('images/icon/logo_branca.png')}}" alt="CoolAdmin" /> -->
                     <h2 style="color:#fff;">SISGPR - OBRAS</h2>
                 </a>
             </div>
-            
+
             <div class="header__navbar">
                 <ul class="list-unstyled">
-                    <li>
+                    {{-- <li>
                         <a href="{{url('home')}}">
                             <i class="fas fa-home"></i>
                             <span class="bot-line"></span>Home
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="{{url('obras/painel')}}">
                             <i class="fas fa-home"></i>
@@ -28,21 +28,21 @@
                             <i class="fas fa-trophy"></i>
                             <span class="bot-line"></span>Obras
                         </a>
-                    </li>                    
+                    </li>
 
                     <li class="has-sub">
                         <a href="#">
                             <i class="fas fa-copy"></i>
                             <span class="bot-line"></span>Cadastros</a>
-                        <ul class="header3-sub-list list-unstyled">                           
+                        <ul class="header3-sub-list list-unstyled">
                             <li> <a href="{{url('usuario')}}">Usuários</a> </li>
                             <li> <a href="{{url('obras/setor')}}">Setor</a> </li>
                             <li> <a href="{{url('obras/modalidade')}}">Modalidade</a> </li>
-                            <li> <a href="{{url('obras/tipologia')}}">Tipologia</a> </li>                            
-                            <li> <a href="{{url('obras/fase_licitacao')}}">Fase da Licitação</a> </li> 
+                            <li> <a href="{{url('obras/tipologia')}}">Tipologia</a> </li>
+                            <li> <a href="{{url('obras/fase_licitacao')}}">Fase da Licitação</a> </li>
                             <li> <a href="{{url('obras/projeto')}}">Projeto</a> </li>
                         </ul>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
 

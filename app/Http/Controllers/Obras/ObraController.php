@@ -144,6 +144,8 @@ class ObraController extends Controller
 
     $obras = $query->paginate(50);
 
+    // dd($obras);
+
 
 
     if( isset($filtro['descricao'])) {

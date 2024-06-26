@@ -26,8 +26,8 @@ class LoginController extends Controller
 
     public function validar(Request $request)
     {
-        $user = DB::table('usuario')->where('email', $request->email)->first();        
-        // echo $user->encrypted_password;        
+        $user = DB::table('usuario')->where('email', $request->email)->first();
+        // echo $user->encrypted_password;
         // echo '<br>';
         // echo $request->senha;
         // echo '<br>';
@@ -49,11 +49,11 @@ class LoginController extends Controller
                 "nome" => $user->nome,
                 "email" => $user->email,
                 "role_id" => $user->role_id,
-            ];            
+            ];
 
             session(['userLogado' => $userLogado]);
 
-            return redirect('home');
+            return redirect('obras/painel');
         }
         else{
             return redirect('/')->with('danger','Acesso inválido!');

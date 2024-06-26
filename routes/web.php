@@ -22,9 +22,6 @@ Route::middleware(['userLogado'])->group(function(){
     Route::get('usuario', 'App\Http\Controllers\UsuariosController@index');
     Route::post('usuario', 'App\Http\Controllers\UsuariosController@filter');
 
-
-
-
     // --SUPLAN -----------------------------------------------------------------------------------------
 
     Route::prefix('planejamento')->group(function(){
