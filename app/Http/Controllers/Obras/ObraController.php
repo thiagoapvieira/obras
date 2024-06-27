@@ -66,7 +66,6 @@ class ObraController extends Controller
     return redirect('obras/obra');
   }
 
-
   public function obra(){
 
     $filtro = session()->get('obra_filtro');
@@ -304,30 +303,29 @@ class ObraController extends Controller
       ])->with('items', $obras);
   }
 
+  //cria um registro temporario
+  public function create() {
+    $n = DB::table('obra')->insertGetId(['status' => 99]);
+    return redirect('obras/obra/'.$n.'/editar');
+  }
 
 
-    //cria um registro temporario
-    public function create() {
-      $n = DB::table('obra')->insertGetId(['status' => 99]);
-      return redirect('obras/obra/'.$n.'/editar');
-    }
+  public function edit($id)
+  {
+    $obra = DB::table('obra')->where('id', $id)->first();
+    $tipologia = DB::table('tipologia')->orderBy('nome')->get();
+    $setor = DB::table('setor')->orderBy('nome')->get();
+    $modalidade = DB::table('modalidade')->orderBy('nome')->get();
+    $fase_licitacao = DB::table('fase_licitacao')->orderBy('nome')->get();
+    $projeto = DB::table('projeto')->orderBy('nome')->get();
 
-
-    public function edit($id)
-    {
-      $obra = DB::table('obra')->where('id', $id)->first();
-      $tipologia = DB::table('tipologia')->orderBy('nome')->get();
-      $setor = DB::table('setor')->orderBy('nome')->get();
-      $modalidade = DB::table('modalidade')->orderBy('nome')->get();
-      $fase_licitacao = DB::table('fase_licitacao')->orderBy('nome')->get();
-      $projeto = DB::table('projeto')->orderBy('nome')->get();
-
-      return view('obras.obra.obra_frm', compact('id', 'obra', 'setor', 'modalidade', 'tipologia', 'fase_licitacao', 'projeto'));
-    }
+    return view('obras.obra.obra_frm', compact('id', 'obra', 'setor', 'modalidade', 'tipologia', 'fase_licitacao', 'projeto'));
+  }
 
 
     public function update(Request $request, $id)
     {
+      // dd($request->all());
 
       //verifique o antes e o depois e monte o log
       log_hitorico($request, $id);
@@ -341,8 +339,12 @@ class ObraController extends Controller
       }
 
       // //formate o valor para moeda banco (9999.99)
-      $valor_inicial = str_replace(',', '.', str_replace('.', '', $request->valor_inicial));
-      $valor_investido = str_replace(',', '.', str_replace('.', '', $request->valor_investido));
+      if($request->valor_inicial){
+        $valor_inicial = str_replace(',', '.', str_replace('.', '', $request->valor_inicial));
+      }
+      if($request->valor_investido){
+        $valor_investido = str_replace(',', '.', str_replace('.', '', $request->valor_investido));
+      }
 
       if($request->dt_inicio <> '' or $request->dt_inicio <> null){
         /*ajuste o formato data e hora*/
@@ -397,6 +399,8 @@ class ObraController extends Controller
          'projeto_id' => $request->projeto_id,
 
          'percentual_execucao_financeira' => $request->percentual_execucao_financeira,
+
+         'percentual_pagamento' => $request->percentual_pagamento,
 
          'status_fases' => $request->status_fases,
          'inaugurada' => $request->inaugurada,

@@ -77,8 +77,7 @@
               <br>
 
               <form action="" method="post" novalidate="novalidate">
-              {{ csrf_field() }}
-
+                  {{ csrf_field() }}
 
                   <div class="form-group">
                       <label for="descricao" class="control-label mb-1">Descrição da Obra</label>
@@ -156,8 +155,8 @@
 
                   <div id="teste"></div>
 
-                  <div class="row form-group">
-                      <div class="col-12 col-md-7">
+                      <div class="row form-group">
+                        <div class="col-12 col-md-7">
                           <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="novo_valor()">
                             <i class="fa fa-plus"></i>&nbsp; Novo
                           </button>
@@ -176,28 +175,57 @@
                               </thead>
                               <tbody id="tabela_obra_valor"></tbody>
                           </table>
-                          </div>
+                        </div>
+
+                        <div>
+                        <b>Valor total</b>
+                        <input id="valor_total" name="valor_total" type="text" class="form-control" aria-required="true" aria-invalid="false" value="0" disabled="">
+                        </div>
                       </div>
 
                       <div class="col-12 col-md-3 offset-md-1">
                           <div class="row form-group">
-                              <label for="percentual_execucao_financeira" class="control-label mb-1">Percentual de execução financeira (%)</label>
+                              <label for="percentual_execucao_financeira" class="control-label mb-1">Percentual de Execução Financeira (%)</label>
                               <input id="percentual_execucao_financeira" name="percentual_execucao_financeira" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?= isset($obra->percentual_execucao_financeira)?$obra->percentual_execucao_financeira:'0' ?>">
                           </div>
 
+                          <!--
                           <div class="row form-group">
                               <label for="valor_total" class="control-label mb-1">Valor total</label>
                               <input id="valor_total" name="valor_total" type="text" class="form-control" aria-required="true" aria-invalid="false" value="0" disabled="">
                           </div>
+                          -->
 
                           <div class="row form-group">
                               <label for="valor_executado" class="control-label mb-1">Valor executado</label>
-                              <input id="valor_executado" name="valor_executado" type="text" class="form-control" aria-required="true" aria-invalid="false" value="R$ 0" disabled="">
+                              <input id="valor_executado" name="valor_executado" type="text" class="form-control" aria-required="true" aria-invalid="false" value="R$ 0" disabled>
                           </div>
 
                           <div class="row form-group">
+                            <label for="valor_a_faturar" class="control-label mb-1">Valor a faturar</label>
+                            <input id="valor_a_faturar" name="valor_a_faturar" type="text" class="form-control" aria-required="true" aria-invalid="false" value="R$ 0" disabled>
+                          </div>
+
+                          {{-- <div class="row form-group">
                               <label for="valor_a_executar" class="control-label mb-1">Valor a executar</label>
                               <input id="valor_a_executar" name="valor_a_executar" type="text" class="form-control" aria-required="true" aria-invalid="false" value="R$ 0" disabled="">
+                          </div> --}}
+
+                          <hr>
+
+                          <div class="row form-group">
+                            <label for="percentual_pagamento" class="control-label mb-1">Percentual de Pagamento (%)</label>
+                            <input id="percentual_pagamento" name="percentual_pagamento" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?= isset($obra->percentual_pagamento)?$obra->percentual_pagamento:'0' ?>">
+                          </div>
+
+                          <div class="row form-group">
+                            <label for="valor_pago" class="control-label mb-1">Valor Pago</label>
+                            <input id="valor_pago" name="valor_pago" type="text" class="form-control" aria-required="true" aria-invalid="false" value="R$ 0" disabled="">
+                          </div>
+
+                          <div class="row form-group">
+                            <label for="valor_a_pagar" class="control-label mb-1">Valor à Pagar</label>
+                            <input id="valor_a_pagar" name="valor_a_pagar" type="text" class="form-control" aria-required="true" aria-invalid="false" value="R$ 0" disabled>
                           </div>
                       </div>
                   </div>
@@ -240,101 +268,101 @@
 
 
                   <div id="box_cinza" class="row form-group">
-                  <div class="col-md-12">
-                      <div class="card">
-                          <div class="card-body" style="background-color: #ccc;">
-                          <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body" style="background-color: #ccc;">
+                            <div class="row">
 
-                              <div class="col-md-9">
-                                  <div class="row">
-                                      <div class="col-md-4">
-                                        <label for="desapropriacao" class="control-label mb-1">Requer <br>desapropriação? </label>
-                                        <select name="desapropriacao" id="desapropriacao" class="form-control">
-                                           <option value="0" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 0?'selected':'':''?>>Não</option>
-                                           <option value="1" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 1?'selected':'':''?>>Sim</option>
-                                           <option value="2" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 2?'selected':'':''?>>Não informado</option>
-                                           <option value="3" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 3?'selected':'':''?>>Não aplicável</option>
-                                         </select>
-                                      </div>
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                          <label for="desapropriacao" class="control-label mb-1">Requer <br>desapropriação? </label>
+                                          <select name="desapropriacao" id="desapropriacao" class="form-control">
+                                            <option value="0" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 0?'selected':'':''?>>Não</option>
+                                            <option value="1" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 1?'selected':'':''?>>Sim</option>
+                                            <option value="2" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 2?'selected':'':''?>>Não informado</option>
+                                            <option value="3" <?=isset($obra->desapropriacao)?$obra->desapropriacao == 3?'selected':'':''?>>Não aplicável</option>
+                                          </select>
+                                        </div>
 
-                                      <div class="col-md-4">
-                                        <label for="licenca_ambiental_previa" class="control-label mb-1">Licenca ambiental <br>prévia?</label>
-                                        <select name="licenca_ambiental_previa" id="licenca_ambiental_previa" class="form-control">
-                                           <option value="0" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 0?'selected':'':''?>>Não</option>
-                                           <option value="1" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 1?'selected':'':''?>>Sim</option>
-                                           <option value="2" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 2?'selected':'':''?>>Não informado</option>
-                                            <option value="3" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 3?'selected':'':''?>>Não aplicável</option>
-                                        </select>
-                                      </div>
+                                        <div class="col-md-4">
+                                          <label for="licenca_ambiental_previa" class="control-label mb-1">Licenca ambiental <br>prévia?</label>
+                                          <select name="licenca_ambiental_previa" id="licenca_ambiental_previa" class="form-control">
+                                            <option value="0" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 0?'selected':'':''?>>Não</option>
+                                            <option value="1" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 1?'selected':'':''?>>Sim</option>
+                                            <option value="2" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 2?'selected':'':''?>>Não informado</option>
+                                              <option value="3" <?=isset($obra->licenca_ambiental_previa)?$obra->licenca_ambiental_previa == 3?'selected':'':''?>>Não aplicável</option>
+                                          </select>
+                                        </div>
 
-                                      <div class="col-md-4">
-                                        <label for="licenca_ambiental_instalacao" class="control-label mb-1">Licenca ambiental de <br>instalação?</label>
-                                        <select name="licenca_ambiental_instalacao" id="licenca_ambiental_instalacao" class="form-control">
-                                           <option value="0" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 0?'selected':'':''?>>Não</option>
-                                           <option value="1" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 1?'selected':'':''?>>Sim</option>
-                                           <option value="2" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 2?'selected':'':''?>>Não informado</option>
-                                           <option value="3" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 3?'selected':'':''?>>Não aplicável</option>
-                                        </select>
-                                      </div>
-                                  </div>
-                                  <br>
+                                        <div class="col-md-4">
+                                          <label for="licenca_ambiental_instalacao" class="control-label mb-1">Licenca ambiental de <br>instalação?</label>
+                                          <select name="licenca_ambiental_instalacao" id="licenca_ambiental_instalacao" class="form-control">
+                                            <option value="0" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 0?'selected':'':''?>>Não</option>
+                                            <option value="1" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 1?'selected':'':''?>>Sim</option>
+                                            <option value="2" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 2?'selected':'':''?>>Não informado</option>
+                                            <option value="3" <?=isset($obra->licenca_ambiental_instalacao)?$obra->licenca_ambiental_instalacao == 3?'selected':'':''?>>Não aplicável</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <br>
 
-                                  <div class="row">
-                                      <div class="col-md-4">
-                                        <label for="projeto_basico" class="control-label mb-1">Projeto básico? </label>
-                                        <select name="projeto_basico" id="projeto_basico" class="form-control">
-                                          <option value="0" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 0?'selected':'':''?>>Não</option>
-                                          <option value="1" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 1?'selected':'':''?>>Sim</option>
-                                          <option value="2" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 2?'selected':'':''?>>Não informado</option>
-                                          <option value="3" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 3?'selected':'':''?>>Não aplicável</option>
-                                        </select>
-                                      </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                          <label for="projeto_basico" class="control-label mb-1">Projeto básico? </label>
+                                          <select name="projeto_basico" id="projeto_basico" class="form-control">
+                                            <option value="0" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 0?'selected':'':''?>>Não</option>
+                                            <option value="1" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 1?'selected':'':''?>>Sim</option>
+                                            <option value="2" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 2?'selected':'':''?>>Não informado</option>
+                                            <option value="3" <?=isset($obra->projeto_basico)?$obra->projeto_basico == 3?'selected':'':''?>>Não aplicável</option>
+                                          </select>
+                                        </div>
 
-                                      <div class="col-md-4">
-                                        <label for="projeto_executivo" class="control-label mb-1">Projeto executivo?</label>
-                                        <select name="projeto_executivo" id="projeto_executivo" class="form-control">
-                                           <option value="0" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 0?'selected':'':''?>>Não</option>
-                                           <option value="1" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 1?'selected':'':''?>>Sim</option>
-                                           <option value="2" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 2?'selected':'':''?>>Não informado</option>
-                                           <option value="3" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 3?'selected':'':''?>>Não aplicável</option>
-                                        </select>
-                                      </div>
+                                        <div class="col-md-4">
+                                          <label for="projeto_executivo" class="control-label mb-1">Projeto executivo?</label>
+                                          <select name="projeto_executivo" id="projeto_executivo" class="form-control">
+                                            <option value="0" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 0?'selected':'':''?>>Não</option>
+                                            <option value="1" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 1?'selected':'':''?>>Sim</option>
+                                            <option value="2" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 2?'selected':'':''?>>Não informado</option>
+                                            <option value="3" <?=isset($obra->projeto_executivo)?$obra->projeto_executivo == 3?'selected':'':''?>>Não aplicável</option>
+                                          </select>
+                                        </div>
 
-                                      <div class="col-md-4">
-                                        <label for="titularidade" class="control-label mb-1">Tem titularidade?</label>
-                                        <select name="titularidade" id="titularidade" class="form-control">
-                                           <option value="0" <?=isset($obra->titularidade)?$obra->titularidade == 0?'selected':'':''?>>Não</option>
-                                           <option value="1" <?=isset($obra->titularidade)?$obra->titularidade == 1?'selected':'':''?>>Sim</option>
-                                           <option value="2" <?=isset($obra->titularidade)?$obra->titularidade == 2?'selected':'':''?>>Não informado</option>
-                                           <option value="3" <?=isset($obra->titularidade)?$obra->titularidade == 3?'selected':'':''?>>Não aplicável</option>
-                                        </select>
-                                      </div>
-                                  </div>
-                              </div>
+                                        <div class="col-md-4">
+                                          <label for="titularidade" class="control-label mb-1">Tem titularidade?</label>
+                                          <select name="titularidade" id="titularidade" class="form-control">
+                                            <option value="0" <?=isset($obra->titularidade)?$obra->titularidade == 0?'selected':'':''?>>Não</option>
+                                            <option value="1" <?=isset($obra->titularidade)?$obra->titularidade == 1?'selected':'':''?>>Sim</option>
+                                            <option value="2" <?=isset($obra->titularidade)?$obra->titularidade == 2?'selected':'':''?>>Não informado</option>
+                                            <option value="3" <?=isset($obra->titularidade)?$obra->titularidade == 3?'selected':'':''?>>Não aplicável</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-                              <div class="col-md-3">
-                                  <div class="col-md-12">
-                                  <label for="licenca_outros_orgaos" class="control-label mb-1">Licenca de outros <br> orgãos? </label>
-                                  <select name="licenca_outros_orgaos" id="licenca_outros_orgaos" class="form-control" onchange="licenca_outros_orgaos1()">
-                                      <option value="0" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 0?'selected':'':''?>>Não</option>
-                                      <option value="1" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 1?'selected':'':''?>>Sim</option>
-                                      <option value="2" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 2?'selected':'':''?>>Não informado</option>
-                                      <option value="3" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 3?'selected':'':''?>>Não aplicável</option>
-                                  </select>
-                                  </div>
-                                  <br>
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                    <label for="licenca_outros_orgaos" class="control-label mb-1">Licenca de outros <br> orgãos? </label>
+                                    <select name="licenca_outros_orgaos" id="licenca_outros_orgaos" class="form-control" onchange="licenca_outros_orgaos1()">
+                                        <option value="0" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 0?'selected':'':''?>>Não</option>
+                                        <option value="1" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 1?'selected':'':''?>>Sim</option>
+                                        <option value="2" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 2?'selected':'':''?>>Não informado</option>
+                                        <option value="3" <?=isset($obra->licenca_outros_orgaos)?$obra->licenca_outros_orgaos == 3?'selected':'':''?>>Não aplicável</option>
+                                    </select>
+                                    </div>
+                                    <br>
 
-                                  <div id="box_especifique_orgaos" class="col-md-12">
-                                    <label for="especifique_orgaos" class="control-label mb-1">Especifique quais orgãos</label>
-                                    <input id="especifique_orgaos" name="especifique_orgaos" type="text" class="form-control" aria-required="true" aria-invalid="false"
-                                    value="<?= isset($obra->especifique_orgaos)?$obra->especifique_orgaos:'' ?>">
-                                  </div>
-                              </div>
+                                    <div id="box_especifique_orgaos" class="col-md-12">
+                                      <label for="especifique_orgaos" class="control-label mb-1">Especifique quais orgãos</label>
+                                      <input id="especifique_orgaos" name="especifique_orgaos" type="text" class="form-control" aria-required="true" aria-invalid="false"
+                                      value="<?= isset($obra->especifique_orgaos)?$obra->especifique_orgaos:'' ?>">
+                                    </div>
+                                </div>
 
-                          </div>
-                          </div>
-                      </div>
-                  </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                   </div>
 
                   <div class="row form-group">
@@ -408,6 +436,7 @@
                       </div>
                   </div>
                   <br>
+
 
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
@@ -487,6 +516,10 @@ function liste_obra_valor(){
           var htmlSelect = "";
           var soma = 0;
           var perc = 0;
+          var perc2 = 0;
+          var valor_pago = 0;
+          var valor_a_pagar = 0;
+
           for (i = 0; i < objeto.length; i++){
             soma = parseFloat(soma) + parseFloat(objeto[i].valor);
             htmlSelect += "<tr>";
@@ -507,22 +540,31 @@ function liste_obra_valor(){
           }
 
           perc = $("#percentual_execucao_financeira").val();
-
           execultado =  parseFloat( ((soma * perc)/100).toFixed(2) );
+          valor_a_faturar = parseFloat( (soma - execultado).toFixed(2) );
 
-          executar = parseFloat( (soma - execultado).toFixed(2) );
+          perc2 = $("#percentual_pagamento").val();
+          valor_pago =  parseFloat( ((soma * perc2)/100).toFixed(2) );
+          valor_a_pagar = parseFloat( (soma - valor_pago).toFixed(2) );
 
-          var execultado = execultado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-          var executar = executar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+          // executar = parseFloat( (soma - execultado).toFixed(2) );
+
           var soma = soma.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+          var execultado = execultado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+          var valor_a_faturar = valor_a_faturar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+          var valor_pago = valor_pago.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+          var valor_a_pagar = valor_a_pagar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+          // var executar = executar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
           // executar = formatarMoeda(executar);
 
           $("#tabela_obra_valor").html(htmlSelect);
           $("#valor_total").val(soma);
           $("#valor_executado").val(execultado);
-          $("#valor_a_executar").val(executar);
+          $("#valor_a_faturar").val(valor_a_faturar);
+          $("#valor_pago").val(valor_pago);
+          $("#valor_a_pagar").val(valor_a_pagar);
         }
     });
 }
