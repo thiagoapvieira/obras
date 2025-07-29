@@ -235,72 +235,78 @@ class ObraController extends Controller
       }
     }
 
-
     $query->groupBy(
-      'obra.id',
-      'obra.tipologia_id',
-      'obra.descricao',
-      'obra.local',
-      'obra.valor_inicial',
-      'obra.valor_investido',
-      'obra.fonte',
-      'obra.dt_inicio',
-      'obra.dt_conclusao_realizada',
-      'obra.prazo_entrega',
-      'obra.percentual',
-      'obra.status',
-      'obra.created_at',
-      'obra.updated_at',
-      'obra.obs',
-      'obra.paralisacao',
-      'tipologia.nome'
-      );
-
-      $query->orderBy('obra.prioritaria', 'desc');
-
-      $query->orderBy('valor_total', 'desc');
-
-      $obras = $query->paginate(50);
-
-      // $obras = $query->get();
-      // $i=0;
-      // foreach ($obras as $key => $value) {
-      //   echo $i . ' ' . $value->id . ' ' . $value->descricao;
-      //   echo '<br>';
-      //   $i++;
-      // }
-
-      // dd($obras);
-
-      $numero_registro = $obras->total();
+        'obra.id',
+        'obra.tipologia_id',
+        'obra.descricao',
+        'obra.local',
+        'obra.valor_inicial',
+        'obra.valor_investido',
+        'obra.fonte',
+        'obra.dt_inicio',
+        'obra.dt_conclusao_realizada',
+        'obra.prazo_entrega',
+        'obra.percentual',
+        'obra.status',
+        'obra.created_at',
+        'obra.updated_at',
+        'obra.obs',
+        'obra.paralisacao',
+        'obra.percentual_execucao_financeira',
+        'obra.percentual_execucao_fisica',
+        'obra.status_fases',
+        'obra.prioritaria',
+        'obra.setor_id',
+        'obra.modalidade_id',
+        'tipologia.nome'
+    );
 
 
-      //estatisticas
-      $em_andamento = DB::table('obra')->where('status', '=', 1)->count();
-      $paralisado = DB::table('obra')->where('status', '=', 2)->count();
-      $finalizado = DB::table('obra')->where('status', '=', 3)->count();
-      $entregue = DB::table('obra')->where('status', '=', 4)->count();
-      $total = $em_andamento + $paralisado + $finalizado + $entregue;
+    $query->orderBy('obra.prioritaria', 'desc');
+
+    $query->orderBy('valor_total', 'desc');
+
+    $obras = $query->paginate(50);
+
+    // $obras = $query->get();
+    // $i=0;
+    // foreach ($obras as $key => $value) {
+    //   echo $i . ' ' . $value->id . ' ' . $value->descricao;
+    //   echo '<br>';
+    //   $i++;
+    // }
+
+    // dd($obras);
+
+    $numero_registro = $obras->total();
+
+
+    //estatisticas
+    $em_andamento = DB::table('obra')->where('status', '=', 1)->count();
+    $paralisado = DB::table('obra')->where('status', '=', 2)->count();
+    $finalizado = DB::table('obra')->where('status', '=', 3)->count();
+    $entregue = DB::table('obra')->where('status', '=', 4)->count();
+    $total = $em_andamento + $paralisado + $finalizado + $entregue;
 
 
 
-      return view('obras.obra.obra',[
-        'obra'=>$obras,
-        'filtro' => $filtro,
-        'setor' => $setor,
-        'modalidade' => $modalidade,
-        'cidade' => $cidade,
-        'regiao' => $regiao,
-        'orgao' => $orgao,
-        'projeto' => $projeto,
-        'tipologia'=>$tipologia,
-        'em_andamento'=>$em_andamento,
-        'paralisado'=>$paralisado,
-        'finalizado'=>$finalizado,
-        'entregue'=>$entregue,
-        'total'=>$total,
-        'numero_registro'=>$numero_registro,
-      ])->with('items', $obras);
+    return view('obras.obra.obra',[
+    'obra'=>$obras,
+    'filtro' => $filtro,
+    'setor' => $setor,
+    'modalidade' => $modalidade,
+    'cidade' => $cidade,
+    'regiao' => $regiao,
+    'orgao' => $orgao,
+    'projeto' => $projeto,
+    'tipologia'=>$tipologia,
+    'em_andamento'=>$em_andamento,
+    'paralisado'=>$paralisado,
+    'finalizado'=>$finalizado,
+    'entregue'=>$entregue,
+    'total'=>$total,
+    'numero_registro'=>$numero_registro,
+    ])->with('items', $obras);
   }
 
   //cria um registro temporario
