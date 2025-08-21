@@ -669,8 +669,6 @@ class ObraController extends Controller
   }
 
 
-
-
   public function excel(){
 
     $filtro = session()->get('obra_filtro');
@@ -683,294 +681,297 @@ class ObraController extends Controller
       }
     }
 
-    $query = DB::table('obra');
 
-    $query->select(
-      'obra.id',
-      'obra.descricao',
-      'obra.prioritaria',
-      'obra.dt_atualizacao',
-      'obra.igesp',
-      'obra.setor_id',
-      'obra.modalidade_id',
-      'obra.tipologia_id',
-      'obra.percentual_execucao_financeira',
-      'obra.status_fases',
-      'obra.fase_licitacao_id',
-      'obra.inaugurada',
-      'obra.local',
-      'obra.valor_inicial',
-      'obra.valor_investido',
-      'obra.fonte',
-      'obra.percentual',
-      'obra.created_at',
-      'obra.updated_at',
-      'obra.paralisacao',
-      'obra.obracol',
-      'obra.status_id',
-      'obra.desapropriacao',
-      'obra.licenca_ambiental_previa',
-      'obra.licenca_ambiental_instalacao',
-      'obra.projeto_basico',
-      'obra.projeto_executivo',
-      'obra.titularidade',
-      'obra.licenca_outros_orgaos',
-      'obra.especifique_orgaos',
-      'obra.dt_inicio',
-      'obra.dt_conclusao_prevista',
-      'obra.dt_conclusao_realizada',
-      'obra.prazo_entrega',
-      'obra.percentual_execucao_fisica',
-      'obra.dt_assinatura_contrato',
-      'obra.obs',
-      'obra.descricao_estagio',
-      'obra.descricao_proxima_fase',
-      'obra.descricao_pendencias_prazo',
-      'obra.status',
-      'tipologia.nome as tipologia',
-      'setor.nome as setor',
-      'modalidade.nome as modalidade',
-      'fase_licitacao.nome as fase_licitacao',
 
-      (DB::raw("(select sum(valor) from obra_valor where obra_id = obra.id) as valor_total"))
-    );
 
-    $query->leftJoin('setor', 'obra.setor_id', '=', 'setor.id');
-    $query->leftJoin('modalidade', 'modalidade.id', '=', 'obra.modalidade_id');
-    $query->leftJoin('fase_licitacao', 'fase_licitacao.id', '=', 'obra.fase_licitacao_id');
-    $query->leftJoin('tipologia', 'obra.tipologia_id', '=', 'tipologia.id');
-    $query->leftJoin('obra_cidade', 'obra_cidade.obra_id', '=', 'obra.id');
-    $query->leftJoin('cidade', 'cidade.id', '=', 'obra_cidade.cidade_id');
-    $query->leftJoin('regiao', 'regiao.id', '=', 'cidade.regiao_id');
 
-    $query->where('status','>=',0);
-    $query->where('status','<>',99);
+$query = DB::table('obra');
 
-    if( isset($filtro['descricao'])) {
-      if($filtro['descricao'] <> null and $filtro['descricao'] <> null){
-          $query->where('descricao', 'like', '%'.$filtro['descricao'].'%');
-      }
+$query->select(
+    'obra.id',
+    'obra.descricao',
+    'obra.prioritaria',
+    'obra.dt_atualizacao',
+    'obra.igesp',
+    'obra.setor_id',
+    'obra.modalidade_id',
+    'obra.tipologia_id',
+    'obra.percentual_execucao_financeira',
+    'obra.status_fases',
+    'obra.fase_licitacao_id',
+    'obra.inaugurada',
+    'obra.local',
+    'obra.valor_inicial',
+    'obra.valor_investido',
+    'obra.fonte',
+    'obra.percentual',
+    'obra.created_at',
+    'obra.updated_at',
+    'obra.paralisacao',
+    'obra.obracol',
+    'obra.status_id',
+    'obra.desapropriacao',
+    'obra.licenca_ambiental_previa',
+    'obra.licenca_ambiental_instalacao',
+    'obra.projeto_basico',
+    'obra.projeto_executivo',
+    'obra.titularidade',
+    'obra.licenca_outros_orgaos',
+    'obra.especifique_orgaos',
+    'obra.dt_inicio',
+    'obra.dt_conclusao_prevista',
+    'obra.dt_conclusao_realizada',
+    'obra.prazo_entrega',
+    'obra.percentual_execucao_fisica',
+    'obra.dt_assinatura_contrato',
+    'obra.obs',
+    'obra.descricao_estagio',
+    'obra.descricao_proxima_fase',
+    'obra.descricao_pendencias_prazo',
+    'obra.status',
+    'tipologia.nome as tipologia',
+    'setor.nome as setor',
+    'modalidade.nome as modalidade',
+    'fase_licitacao.nome as fase_licitacao',
+    DB::raw("(SELECT SUM(valor) FROM obra_valor WHERE obra_valor.obra_id = obra.id) as valor_total")
+);
+
+// Left Joins
+$query->leftJoin('setor', 'obra.setor_id', '=', 'setor.id')
+      ->leftJoin('modalidade', 'modalidade.id', '=', 'obra.modalidade_id')
+      ->leftJoin('fase_licitacao', 'fase_licitacao.id', '=', 'obra.fase_licitacao_id')
+      ->leftJoin('tipologia', 'obra.tipologia_id', '=', 'tipologia.id')
+      ->leftJoin('obra_cidade', 'obra_cidade.obra_id', '=', 'obra.id')
+      ->leftJoin('cidade', 'cidade.id', '=', 'obra_cidade.cidade_id')
+      ->leftJoin('regiao', 'regiao.id', '=', 'cidade.regiao_id');
+
+// Filtros base
+$query->where('status', '>=', 0)
+      ->where('status', '<>', 99);
+
+// Aplicar filtros condicionalmente
+if (!empty($filtro['descricao'])) {
+    $query->where('descricao', 'like', '%' . $filtro['descricao'] . '%');
+}
+
+if (!empty($filtro['regiao_id']) && $filtro['regiao_id'] > 0) {
+    $query->where('regiao.id', $filtro['regiao_id']);
+}
+
+if (!empty($filtro['cidade_id']) && $filtro['cidade_id'] > 0) {
+    $query->where('cidade.id', $filtro['cidade_id']);
+}
+
+if (!empty($filtro['tipologia_id']) && $filtro['tipologia_id'] > 0) {
+    $query->where('tipologia.id', $filtro['tipologia_id']);
+}
+
+if (!empty($filtro['status_id']) && $filtro['status_id'] > 0) {
+    $query->where('obra.status_fases', $filtro['status_id']);
+}
+
+// Filtro por período de datas
+$dataInicio = null;
+$dataFim = null;
+
+if (!empty($filtro['dt_inicio'])) {
+    $arrayData = explode("/", $filtro['dt_inicio']);
+    if (count($arrayData) === 3) {
+        $dataInicio = $arrayData[2] . '-' . $arrayData[1] . '-' . $arrayData[0];
+    }
+}
+
+if (!empty($filtro['dt_conclusao_realizada'])) {
+    $arrayData = explode("/", $filtro['dt_conclusao_realizada']);
+    if (count($arrayData) === 3) {
+        $dataFim = $arrayData[2] . '-' . $arrayData[1] . '-' . $arrayData[0];
+    }
+}
+
+if ($dataInicio && $dataFim) {
+    $query->whereBetween('obra.dt_inicio', [$dataInicio, $dataFim]);
+}
+
+// Remover GROUP BY - não é necessário nesta query
+
+// Ordenação
+$query->orderBy('obra.id', 'desc');
+
+// Executar query
+$obras = $query->get();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*EXCEL *************************************/
+    $html  = "<table>";
+    $html .= "<th>";
+    $html .= "<thead>";
+    $html .= "<tr>";
+    $html .= " <th>Codigo</th>";
+    $html .= " <th>Descricao</th>";
+    $html .= " <th>Cidades</th>";
+    $html .= " <th>Orgao</th>";
+    $html .= " <th>Orgao principal</th>";
+    $html .= " <th>Prioritaria</th>";
+    $html .= " <th>Data de dt_atualizacao</th>";
+    $html .= " <th>IGESP</th>";
+    $html .= " <th>Setor</th>";
+    $html .= " <th>Modalidade</th>";
+    $html .= " <th>Tipologia</th>";
+    $html .= " <th>Percentual execucao financeira</th>";
+    $html .= " <th>Valor total</th>";
+    $html .= " <th>Valor executado</th>";
+    $html .= " <th>Valor a executar</th>";
+    $html .= " <th>Status fases</th>";
+    $html .= " <th>Fase da licitação</th>";
+    $html .= " <th>Requer desapropriação? </th>";
+    $html .= " <th>Licenca ambiental prévia?</th>";
+    $html .= " <th>Licenca ambiental de instalação?</th>";
+    $html .= " <th>Projeto básico? </th>";
+    $html .= " <th>Projeto executivo?</th>";
+    $html .= " <th>Tem titularidade?</th>";
+    $html .= " <th>Licenca de outros orgãos? </th>";
+    $html .= " <th>Especifique quais orgãos </th>";
+    $html .= " <th>Data de inicio </th>";
+    $html .= " <th>Data de conclusão prevista </th>";
+    $html .= " <th>Data de conclusão realizada </th>";
+    $html .= " <th>Prazo entrega (dias) </th>";
+    $html .= " <th>Percentual de execução física</th>";
+    $html .= " <th>Data de assinatura do contrato</th>";
+    $html .= " <th>Observações</th>";
+    $html .= " <th>Detalhar o estágio atual da obra</th>";
+    $html .= " <th>Descrever próxima fase da obra</th>";
+    $html .= " <th>Descrever as pendências (se houver) e o prazo estimado para a obra ir para a próxima fase.</th>";
+    $html .= " <th>alerta de status</th>";
+    $html .= "<tr>";
+    $html .= "</thead>";
+    $html .= "<tbody>";
+
+    foreach ($obras as $key => $value) {
+    //valor
+    $total = DB::select('select sum(valor) as total from obra_valor where obra_id = '.$value->id);
+    $valor_total = $total[0]->total;
+    $valor_executado = (($valor_total * $value->percentual_execucao_financeira)/100);
+    $valor_a_executar = $valor_total - $valor_executado;
+
+    //bloco1
+    $prioritaria = $value->prioritaria==1?'SIM':'NAO';
+    $desapropriacao = caixa_cinza($value->desapropriacao);
+    $licenca_ambiental_previa = caixa_cinza($value->licenca_ambiental_previa);
+    $licenca_ambiental_instalacao = caixa_cinza($value->licenca_ambiental_instalacao);
+    $projeto_basico = caixa_cinza($value->projeto_basico);
+    $projeto_executivo = caixa_cinza($value->projeto_executivo);
+    $titularidade = caixa_cinza($value->titularidade);
+    $licenca_outros_orgaos = caixa_cinza($value->licenca_outros_orgaos);
+
+    //orgaos
+    $sql  = ' select group_concat(O.sigla) as orgao FROM obra_orgao OO ';
+    $sql .= ' left join orgao O on O.id = OO.orgao_id ';
+    $sql .= ' where obra_id = '.$value->id;
+    $orgao = DB::select($sql);
+
+    //orgao principal
+    $sql  = ' select O.sigla as orgao_principal FROM obra_orgao OO ';
+    $sql .= ' left join orgao O on O.id = OO.orgao_id ';
+    $sql .= ' where obra_id = '.$value->id;
+    $sql .= ' and principal = 1';
+    $orgao_principal = DB::select($sql);
+
+    if($orgao_principal == null or $orgao_principal == []){
+        $orgao_principal = 0;
+    }else{
+        $orgao_principal = DB::select($sql)[0]->orgao_principal;
     }
 
-    //regiao
-    if( isset($filtro['regiao_id'])) {
-      if($filtro['regiao_id'] > 0){
-        $query->where('regiao.id',$filtro['regiao_id']);
-      }
+    //cidades
+    $sql  = " select group_concat(c.nome) as cidade from obra_cidade oc ";
+    $sql .= " inner join cidade c on c.id = oc.cidade_id ";
+    $sql .= " where  oc.obra_id = ".$value->id;
+    $cidade = DB::select($sql);
+
+    if($value->status_fases>1){
+        $fase_licitacao = '';
+    }else{
+        $fase_licitacao = $value->fase_licitacao;
     }
 
-    //cidade
-    if( isset($filtro['cidade_id'])) {
-      if($filtro['cidade_id'] > 0){
-        $query->where('cidade.id',$filtro['cidade_id']);
-      }
+    $html .="
+        <tr>
+            <td>".$value->id."</td>
+            <td>".$value->descricao."</td>
+            <td>".$cidade[0]->cidade."</td>
+            <td>".$orgao[0]->orgao."</td>
+            <td>".$orgao_principal."</td>
+            <td>".$prioritaria."</td>
+            <td>".$value->dt_atualizacao."</td>
+            <td>".$value->igesp."</td>
+            <td>".$value->setor."</td>
+            <td>".$value->modalidade."</td>
+            <td>".$value->tipologia."</td>
+            <td>".$value->percentual_execucao_financeira."</td>
+            <td>".$valor_total."</td>
+            <td>".$valor_executado."</td>
+            <td>".$valor_a_executar."</td>
+            <td>".status_fases($value->status_fases)."</td>
+            <td>".$fase_licitacao."</td>
+            <td>".$desapropriacao."</td>
+            <td>".$licenca_ambiental_previa."</td>
+            <td>".$licenca_ambiental_instalacao."</td>
+            <td>".$projeto_basico."</td>
+            <td>".$projeto_executivo."</td>
+            <td>".$titularidade."</td>
+            <td>".$licenca_outros_orgaos."</td>
+            <td>".$value->especifique_orgaos."</td>
+            <td>".$value->dt_inicio."</td>
+            <td>".$value->dt_conclusao_prevista."</td>
+            <td>".$value->dt_conclusao_realizada."</td>
+            <td>".$value->prazo_entrega."</td>
+            <td>".$value->percentual_execucao_fisica."</td>
+            <td>".$value->dt_assinatura_contrato."</td>
+            <td>".$value->obs."</td>
+            <td>".$value->descricao_estagio."</td>
+            <td>".$value->descricao_proxima_fase."</td>
+            <td>".$value->descricao_pendencias_prazo."</td>
+            <td>".status($value->status)."</td>
+        </tr>
+    ";
     }
 
-    //tipologia
-    if( isset($filtro['tipologia_id'])) {
-      if($filtro['tipologia_id'] > 0){
-        $query->where('tipologia.id',$filtro['tipologia_id']);
-      }
-    }
-
-    //status
-    if( isset($filtro['status_id'])) {
-      if($filtro['status_id'] > 0){
-        $query->where('obra.status_fases',$filtro['status_id']);
-      }
-    }
-
-    /*ajuste o formato data e hora*/
-    if( isset($filtro['dt_inicio']) and $filtro['dt_inicio'] <> null){
-      $arrayData = explode("/",$filtro['dt_inicio']);
-      $date = date_create($arrayData[2].'-'.$arrayData[1].'-'.$arrayData[0]);
-      $data_inicio = date_format($date,"Y-m-d");
-    }
-
-    if( isset($filtro['dt_conclusao_realizada']) and ($filtro['dt_conclusao_realizada'] <> null or $filtro['dt_conclusao_realizada'] <> '') ){
-      $arrayData = explode("/",$filtro['dt_conclusao_realizada']);
-      $date = date_create($arrayData[2].'-'.$arrayData[1].'-'.$arrayData[0]);
-      $data_fim = date_format($date,"Y-m-d");
-    }
-
-    //periodo
-    if( isset($filtro['dt_inicio']) and isset($filtro['dt_conclusao_realizada']) ) {
-      if($filtro['dt_inicio'] != '' and $filtro['dt_conclusao_realizada'] != ''){
-        $query->whereBetween('obra.dt_inicio', [$data_inicio, $data_fim]);
-      }
-    }
-
-
-    $query->groupBy(
-      'obra.id',
-      'obra.tipologia_id',
-      'obra.descricao',
-      'obra.local',
-      'obra.valor_inicial',
-      'obra.valor_investido',
-      'obra.fonte',
-      'obra.dt_inicio',
-      'obra.dt_conclusao_realizada',
-      'obra.prazo_entrega',
-      'obra.percentual',
-      'obra.status',
-      'obra.created_at',
-      'obra.updated_at',
-      'obra.obs',
-      'obra.paralisacao',
-      'tipologia.nome'
-      );
-
-      $query->orderBy('obra.id','desc');
-      $obras = $query->get();
-
-
-
-      /*EXCEL *************************************/
-      $html  = "<table>";
-      $html .= "<th>";
-      $html .= "<thead>";
-      $html .= "<tr>";
-      $html .= " <th>Codigo</th>";
-      $html .= " <th>Descricao</th>";
-      $html .= " <th>Cidades</th>";
-      $html .= " <th>Orgao</th>";
-      $html .= " <th>Orgao principal</th>";
-      $html .= " <th>Prioritaria</th>";
-      $html .= " <th>Data de dt_atualizacao</th>";
-      $html .= " <th>IGESP</th>";
-      $html .= " <th>Setor</th>";
-      $html .= " <th>Modalidade</th>";
-      $html .= " <th>Tipologia</th>";
-      $html .= " <th>Percentual execucao financeira</th>";
-      $html .= " <th>Valor total</th>";
-      $html .= " <th>Valor executado</th>";
-      $html .= " <th>Valor a executar</th>";
-      $html .= " <th>Status fases</th>";
-      $html .= " <th>Fase da licitação</th>";
-
-
-      $html .= " <th>Requer desapropriação? </th>";
-      $html .= " <th>Licenca ambiental prévia?</th>";
-      $html .= " <th>Licenca ambiental de instalação?</th>";
-      $html .= " <th>Projeto básico? </th>";
-      $html .= " <th>Projeto executivo?</th>";
-      $html .= " <th>Tem titularidade?</th>";
-      $html .= " <th>Licenca de outros orgãos? </th>";
-      $html .= " <th>Especifique quais orgãos </th>";
-
-      $html .= " <th>Data de inicio </th>";
-      $html .= " <th>Data de conclusão prevista </th>";
-      $html .= " <th>Data de conclusão realizada </th>";
-      $html .= " <th>Prazo entrega (dias) </th>";
-      $html .= " <th>Percentual de execução física</th>";
-      $html .= " <th>Data de assinatura do contrato</th>";
-
-      $html .= " <th>Observações</th>";
-      $html .= " <th>Detalhar o estágio atual da obra</th>";
-      $html .= " <th>Descrever próxima fase da obra</th>";
-      $html .= " <th>Descrever as pendências (se houver) e o prazo estimado para a obra ir para a próxima fase.</th>";
-      $html .= " <th>alerta de status</th>";
-      $html .= "<tr>";
-      $html .= "</thead>";
-      $html .= "<tbody>";
-
-
-      foreach ($obras as $key => $value) {
-
-        //valor
-        $total = DB::select('select sum(valor) as total from obra_valor where obra_id = '.$value->id);
-        $valor_total = $total[0]->total;
-        $valor_executado = (($valor_total * $value->percentual_execucao_financeira)/100);
-        $valor_a_executar = $valor_total - $valor_executado;
-
-        //bloco1
-        $prioritaria = $value->prioritaria==1?'SIM':'NAO';
-        $desapropriacao = caixa_cinza($value->desapropriacao);
-        $licenca_ambiental_previa = caixa_cinza($value->licenca_ambiental_previa);
-        $licenca_ambiental_instalacao = caixa_cinza($value->licenca_ambiental_instalacao);
-        $projeto_basico = caixa_cinza($value->projeto_basico);
-        $projeto_executivo = caixa_cinza($value->projeto_executivo);
-        $titularidade = caixa_cinza($value->titularidade);
-        $licenca_outros_orgaos = caixa_cinza($value->licenca_outros_orgaos);
-
-        //orgaos
-        $sql  = ' select group_concat(O.sigla) as orgao FROM obra_orgao OO ';
-        $sql .= ' left join orgao O on O.id = OO.orgao_id ';
-        $sql .= ' where obra_id = '.$value->id;
-        $orgao = DB::select($sql);
-
-        //orgao principal
-        $sql  = ' select O.sigla as orgao_principal FROM obra_orgao OO ';
-        $sql .= ' left join orgao O on O.id = OO.orgao_id ';
-        $sql .= ' where obra_id = '.$value->id;
-        $sql .= ' and principal = 1';
-        $orgao_principal = DB::select($sql);
-
-        if($orgao_principal == null or $orgao_principal == []){
-          $orgao_principal = 0;
-        }else{
-          $orgao_principal = DB::select($sql)[0]->orgao_principal;
-        }
-
-        //cidades
-        $sql  = " select group_concat(c.nome) as cidade from obra_cidade oc ";
-        $sql .= " inner join cidade c on c.id = oc.cidade_id ";
-        $sql .= " where  oc.obra_id = ".$value->id;
-        $cidade = DB::select($sql);
-
-        if($value->status_fases>1){
-          $fase_licitacao = '';
-        }else{
-          $fase_licitacao = $value->fase_licitacao;
-        }
-
-        $html .="
-            <tr>
-                <td>".$value->id."</td>
-                <td>".$value->descricao."</td>
-                <td>".$cidade[0]->cidade."</td>
-                <td>".$orgao[0]->orgao."</td>
-                <td>".$orgao_principal."</td>
-                <td>".$prioritaria."</td>
-                <td>".$value->dt_atualizacao."</td>
-                <td>".$value->igesp."</td>
-                <td>".$value->setor."</td>
-                <td>".$value->modalidade."</td>
-                <td>".$value->tipologia."</td>
-                <td>".$value->percentual_execucao_financeira."</td>
-                <td>".$valor_total."</td>
-                <td>".$valor_executado."</td>
-                <td>".$valor_a_executar."</td>
-                <td>".status_fases($value->status_fases)."</td>
-                <td>".$fase_licitacao."</td>
-                <td>".$desapropriacao."</td>
-                <td>".$licenca_ambiental_previa."</td>
-                <td>".$licenca_ambiental_instalacao."</td>
-                <td>".$projeto_basico."</td>
-                <td>".$projeto_executivo."</td>
-                <td>".$titularidade."</td>
-                <td>".$licenca_outros_orgaos."</td>
-                <td>".$value->especifique_orgaos."</td>
-
-                <td>".$value->dt_inicio."</td>
-                <td>".$value->dt_conclusao_prevista."</td>
-                <td>".$value->dt_conclusao_realizada."</td>
-                <td>".$value->prazo_entrega."</td>
-                <td>".$value->percentual_execucao_fisica."</td>
-                <td>".$value->dt_assinatura_contrato."</td>
-                <td>".$value->obs."</td>
-                <td>".$value->descricao_estagio."</td>
-                <td>".$value->descricao_proxima_fase."</td>
-                <td>".$value->descricao_pendencias_prazo."</td>
-                <td>".status($value->status)."</td>
-            </tr>
-        ";
-      }
-
-      $html .= "</tbody>";
-      $html .= "</table>";
-
+    $html .= "</tbody>";
+    $html .= "</table>";
 
     //Configurações header para forçar o download
     header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
