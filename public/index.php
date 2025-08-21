@@ -1,5 +1,8 @@
 <?php
 
+//echo "Em manutenção";
+//exit;
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
